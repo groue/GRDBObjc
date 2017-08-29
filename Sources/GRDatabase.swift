@@ -68,4 +68,8 @@ import GRDB
             return error
         }
     }
+    
+    @objc public func __makeUpdateStatement(_ sql: String) throws -> GRUpdateStatement {
+        return try GRUpdateStatement(statement: db.makeUpdateStatement(sql))
+    }
 }

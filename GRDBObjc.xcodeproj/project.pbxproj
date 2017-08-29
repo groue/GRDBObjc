@@ -16,6 +16,9 @@
 		568FC2521F557E3F00E176A4 /* StatementArguments+Objc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568FC2511F557E3F00E176A4 /* StatementArguments+Objc.swift */; };
 		568FC2541F55882E00E176A4 /* GRDatabaseTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 568FC2531F55882E00E176A4 /* GRDatabaseTests.m */; };
 		568FC2561F55B7C800E176A4 /* GRResultSetTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 568FC2551F55B7C800E176A4 /* GRResultSetTests.m */; };
+		568FC25E1F560AE200E176A4 /* GRDatabase.h in Headers */ = {isa = PBXBuildFile; fileRef = 568FC25C1F560AE200E176A4 /* GRDatabase.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		568FC25F1F560AE200E176A4 /* GRDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 568FC25D1F560AE200E176A4 /* GRDatabase.m */; };
+		568FC2611F560C8B00E176A4 /* GRUpdateStatement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568FC2601F560C8B00E176A4 /* GRUpdateStatement.swift */; };
 		56F45A021F55366F00656C1E /* GRDBObjc.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56F459F81F55366F00656C1E /* GRDBObjc.framework */; };
 		56F45A071F55366F00656C1E /* GRDBObjcTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 56F45A061F55366F00656C1E /* GRDBObjcTestCase.m */; };
 		56F45A091F55366F00656C1E /* GRDBObjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 56F459FB1F55366F00656C1E /* GRDBObjc.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -182,6 +185,9 @@
 		568FC2511F557E3F00E176A4 /* StatementArguments+Objc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StatementArguments+Objc.swift"; sourceTree = "<group>"; };
 		568FC2531F55882E00E176A4 /* GRDatabaseTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GRDatabaseTests.m; sourceTree = "<group>"; };
 		568FC2551F55B7C800E176A4 /* GRResultSetTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GRResultSetTests.m; sourceTree = "<group>"; };
+		568FC25C1F560AE200E176A4 /* GRDatabase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GRDatabase.h; sourceTree = "<group>"; };
+		568FC25D1F560AE200E176A4 /* GRDatabase.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GRDatabase.m; sourceTree = "<group>"; };
+		568FC2601F560C8B00E176A4 /* GRUpdateStatement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GRUpdateStatement.swift; sourceTree = "<group>"; };
 		56F459F81F55366F00656C1E /* GRDBObjc.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = GRDBObjc.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		56F459FB1F55366F00656C1E /* GRDBObjc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GRDBObjc.h; sourceTree = "<group>"; };
 		56F45A011F55366F00656C1E /* GRDBObjcMacOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GRDBObjcMacOSTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -274,10 +280,13 @@
 		56F459FA1F55366F00656C1E /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				568FC25C1F560AE200E176A4 /* GRDatabase.h */,
+				568FC25D1F560AE200E176A4 /* GRDatabase.m */,
 				568FC24D1F55423900E176A4 /* GRDatabase.swift */,
 				568FC2411F5537A600E176A4 /* GRDatabaseQueue.swift */,
 				56F459FB1F55366F00656C1E /* GRDBObjc.h */,
 				568FC24F1F557DD300E176A4 /* GRResultSet.swift */,
+				568FC2601F560C8B00E176A4 /* GRUpdateStatement.swift */,
 				568FC2511F557E3F00E176A4 /* StatementArguments+Objc.swift */,
 			);
 			path = Sources;
@@ -313,6 +322,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				56F45A091F55366F00656C1E /* GRDBObjc.h in Headers */,
+				568FC25E1F560AE200E176A4 /* GRDatabase.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -551,8 +561,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				568FC2611F560C8B00E176A4 /* GRUpdateStatement.swift in Sources */,
 				568FC2521F557E3F00E176A4 /* StatementArguments+Objc.swift in Sources */,
 				568FC2421F5537A600E176A4 /* GRDatabaseQueue.swift in Sources */,
+				568FC25F1F560AE200E176A4 /* GRDatabase.m in Sources */,
 				568FC24E1F55423900E176A4 /* GRDatabase.swift in Sources */,
 				568FC2501F557DD300E176A4 /* GRResultSet.swift in Sources */,
 			);
