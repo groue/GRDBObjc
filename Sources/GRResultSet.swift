@@ -60,4 +60,7 @@ import GRDB
     @objc(dataForColumn:) public func data(column: String) -> Data? { return row[column] }
     @objc(objectForColumnIndex:) public func object(columnIndex: Int) -> Any? { return row[columnIndex] }
     @objc(objectForColumn:) public func object(column: String) -> Any? { return row[column] }
+    
+    @objc public subscript(_ columnIndex: Int) -> Any? { return row[columnIndex] }
+    @objc public subscript(_ column: String) -> Any? { return row[column] }
 }

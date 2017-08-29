@@ -241,6 +241,72 @@
     }];
 }
 
+- (void)testIndexedSubscript
+{
+    GRDatabaseQueue *dbQueue = [GRDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath] error:NULL];
+    [dbQueue inDatabase:^(GRDatabase *db) {
+        [self createValuesTableInDatabase:db];
+        GRResultSet *rs = [self executeValuesQueryInDatabase:db];
+        XCTAssert([rs next]);
+        {
+            NSNumber *value = rs[0];
+            XCTAssert([value isKindOfClass:[NSNumber class]]);
+            XCTAssert(strcmp([value objCType], @encode(sqlite3_int64)) == 0);
+            XCTAssertEqual([value integerValue], 123);
+        }
+        {
+            NSNumber *value = rs[1];
+            XCTAssert([value isKindOfClass:[NSNumber class]]);
+            XCTAssert(strcmp([value objCType], @encode(double)) == 0);
+            XCTAssertEqual([value doubleValue], 1.5);
+        }
+        {
+            NSString *value = rs[2];
+            XCTAssert([value isKindOfClass:[NSString class]]);
+            XCTAssertEqualObjects(value, @"20 little cigars");
+        }
+        {
+            NSData *value = rs[3];
+            XCTAssert([value isKindOfClass:[NSData class]]);
+            XCTAssertEqualObjects(value, [@"654" dataUsingEncoding:NSUTF8StringEncoding]);
+        }
+        XCTAssertNil(rs[4]);
+    }];
+}
+
+- (void)testKeyedSubscript
+{
+    GRDatabaseQueue *dbQueue = [GRDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath] error:NULL];
+    [dbQueue inDatabase:^(GRDatabase *db) {
+        [self createValuesTableInDatabase:db];
+        GRResultSet *rs = [self executeValuesQueryInDatabase:db];
+        XCTAssert([rs next]);
+        {
+            NSNumber *value = rs[@"integer"];
+            XCTAssert([value isKindOfClass:[NSNumber class]]);
+            XCTAssert(strcmp([value objCType], @encode(sqlite3_int64)) == 0);
+            XCTAssertEqual([value integerValue], 123);
+        }
+        {
+            NSNumber *value = rs[@"double"];
+            XCTAssert([value isKindOfClass:[NSNumber class]]);
+            XCTAssert(strcmp([value objCType], @encode(double)) == 0);
+            XCTAssertEqual([value doubleValue], 1.5);
+        }
+        {
+            NSString *value = rs[@"text"];
+            XCTAssert([value isKindOfClass:[NSString class]]);
+            XCTAssertEqualObjects(value, @"20 little cigars");
+        }
+        {
+            NSData *value = rs[@"blob"];
+            XCTAssert([value isKindOfClass:[NSData class]]);
+            XCTAssertEqualObjects(value, [@"654" dataUsingEncoding:NSUTF8StringEncoding]);
+        }
+        XCTAssertNil(rs[@"null"]);
+    }];
+}
+
 - (void)testNext
 {
     GRDatabaseQueue *dbQueue = [GRDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath] error:NULL];
