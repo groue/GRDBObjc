@@ -200,4 +200,75 @@
     }];
 }
 
+- (void)testSQLiteHandle
+{
+    GRDatabaseQueue *dbQueue = [[GRDatabaseQueue alloc] initWithPath:[self makeTemporaryDatabasePath] error:NULL];
+    [dbQueue inDatabase:^(GRDatabase *db) {
+        sqlite3_exec(db.sqliteHandle, "CREATE TABLE t(a)", NULL, NULL, NULL);
+        NSError *error;
+        BOOL success = [db executeUpdate:@"INSERT INTO t(a) VALUES (1)" error:&error];
+        XCTAssert(success, @"%@", error);
+    }];
+}
+
+- (void)testInSavePointCommit
+{
+    GRDatabaseQueue *dbQueue = [[GRDatabaseQueue alloc] initWithPath:[self makeTemporaryDatabasePath] error:NULL];
+    [dbQueue inDatabase:^(GRDatabase *db) {
+        [db executeUpdate:@"CREATE TABLE t(a)" values:nil error:NULL];
+        [db executeUpdate:@"INSERT INTO t(a) VALUES (123)" values:nil error:NULL];
+        NSError *error = [db inSavePoint:^(BOOL *rollback) {
+            XCTAssertFalse(*rollback);
+            [db executeUpdate:@"DELETE FROM t" values:nil error:NULL];
+        }];
+        XCTAssertNil(error);
+        GRResultSet *resultSet = [db executeQuery:@"SELECT a FROM t" values:nil error:NULL];
+        XCTAssertFalse([resultSet next]);
+    }];
+}
+
+- (void)testInSavePointRollback
+{
+    GRDatabaseQueue *dbQueue = [[GRDatabaseQueue alloc] initWithPath:[self makeTemporaryDatabasePath] error:NULL];
+    [dbQueue inDatabase:^(GRDatabase *db) {
+        [db executeUpdate:@"CREATE TABLE t(a)" values:nil error:NULL];
+        [db executeUpdate:@"INSERT INTO t(a) VALUES (123)" values:nil error:NULL];
+        NSError *error = [db inSavePoint:^(BOOL *rollback) {
+            XCTAssertFalse(*rollback);
+            [db executeUpdate:@"DELETE FROM t" values:nil error:NULL];
+            *rollback = YES;
+        }];
+        XCTAssertNil(error);
+        GRResultSet *resultSet = [db executeQuery:@"SELECT a FROM t" values:nil error:NULL];
+        XCTAssertTrue([resultSet next]);
+    }];
+}
+
+- (void)testInSavePointNested
+{
+    GRDatabaseQueue *dbQueue = [[GRDatabaseQueue alloc] initWithPath:[self makeTemporaryDatabasePath] error:NULL];
+    [dbQueue inDatabase:^(GRDatabase *db) {
+        [db executeUpdate:@"CREATE TABLE t(a)" values:nil error:NULL];
+        [db executeUpdate:@"INSERT INTO t(a) VALUES (123)" values:nil error:NULL];
+        NSError *error = [db inSavePoint:^(BOOL *rollback) {
+            XCTAssertFalse(*rollback);
+            *rollback = YES;
+            
+            NSError *error = [db inSavePoint:^(BOOL *rollback) {
+                XCTAssertFalse(*rollback);
+                [db executeUpdate:@"DELETE FROM t" values:nil error:NULL];
+            }];
+            XCTAssertNil(error);
+            GRResultSet *resultSet = [db executeQuery:@"SELECT a FROM t" values:nil error:NULL];
+            XCTAssertFalse([resultSet next]);
+            
+            [db executeUpdate:@"INSERT INTO t(a) VALUES (123)" values:nil error:NULL];
+            *rollback = NO;
+        }];
+        XCTAssertNil(error);
+        GRResultSet *resultSet = [db executeQuery:@"SELECT a FROM t" values:nil error:NULL];
+        XCTAssertTrue([resultSet next]);
+    }];
+}
+
 @end

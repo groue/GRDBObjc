@@ -59,18 +59,15 @@
     GRDatabaseQueue *dbQueue = [[GRDatabaseQueue alloc] initWithPath:[self makeTemporaryDatabasePath] error:NULL];
     [dbQueue inDatabase:^(GRDatabase *db) {
         [db executeUpdate:@"CREATE TABLE t(a)" values:nil error:NULL];
+        [db executeUpdate:@"INSERT INTO t(a) VALUES (123)" values:nil error:NULL];
     }];
     [dbQueue inTransaction:^(GRDatabase *db, BOOL *rollback) {
         XCTAssertFalse(*rollback);
-        [db executeUpdate:@"INSERT INTO t(a) VALUES (123)" values:nil error:NULL];
+        [db executeUpdate:@"DELETE FROM t" values:nil error:NULL];
     }];
     [dbQueue inDatabase:^(GRDatabase *db) {
-        int fetchedInt = 0;
         GRResultSet *resultSet = [db executeQuery:@"SELECT a FROM t" values:nil error:NULL];
-        while ([resultSet next]) {
-            fetchedInt = [resultSet intForColumnIndex:0];
-        }
-        XCTAssert(fetchedInt == 123);
+        XCTAssertFalse([resultSet next]);
     }];
 }
 
@@ -78,15 +75,16 @@
     GRDatabaseQueue *dbQueue = [[GRDatabaseQueue alloc] initWithPath:[self makeTemporaryDatabasePath] error:NULL];
     [dbQueue inDatabase:^(GRDatabase *db) {
         [db executeUpdate:@"CREATE TABLE t(a)" values:nil error:NULL];
+        [db executeUpdate:@"INSERT INTO t(a) VALUES (123)" values:nil error:NULL];
     }];
     [dbQueue inTransaction:^(GRDatabase *db, BOOL *rollback) {
         XCTAssertFalse(*rollback);
-        [db executeUpdate:@"INSERT INTO t(a) VALUES (123)" values:nil error:NULL];
+        [db executeUpdate:@"DELETE FROM t" values:nil error:NULL];
         *rollback = YES;
     }];
     [dbQueue inDatabase:^(GRDatabase *db) {
-        GRResultSet *resultSet = [db executeQuery:@"SELECT a FROM T" values:nil error:NULL];
-        XCTAssertFalse([resultSet next]);
+        GRResultSet *resultSet = [db executeQuery:@"SELECT a FROM t" values:nil error:NULL];
+        XCTAssertTrue([resultSet next]);
     }];
 }
 
@@ -94,14 +92,14 @@
     GRDatabaseQueue *dbQueue = [[GRDatabaseQueue alloc] initWithPath:[self makeTemporaryDatabasePath] error:NULL];
     [dbQueue inDatabase:^(GRDatabase *db) {
         [db executeUpdate:@"CREATE TABLE t(a)" values:nil error:NULL];
+        [db executeUpdate:@"INSERT INTO t(a) VALUES (123)" values:nil error:NULL];
     }];
     [dbQueue inDeferredTransaction:^(GRDatabase *db, BOOL *rollback) {
         XCTAssertFalse(*rollback);
-        [db executeUpdate:@"INSERT INTO t(a) VALUES (123)" values:nil error:NULL];
-        *rollback = YES;
+        [db executeUpdate:@"DELETE FROM t" values:nil error:NULL];
     }];
     [dbQueue inDatabase:^(GRDatabase *db) {
-        GRResultSet *resultSet = [db executeQuery:@"SELECT a FROM T" values:nil error:NULL];
+        GRResultSet *resultSet = [db executeQuery:@"SELECT a FROM t" values:nil error:NULL];
         XCTAssertFalse([resultSet next]);
     }];
 }

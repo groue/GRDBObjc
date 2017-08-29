@@ -19,6 +19,10 @@ import GRDB
         return db.isInsideTransaction
     }
     
+    @objc public var sqliteHandle: OpaquePointer {
+        return db.sqliteConnection
+    }
+    
     @objc public func executeUpdate(_ sql: String) throws {
         try db.execute(sql)
     }
@@ -48,5 +52,20 @@ import GRDB
         let arguments = parameterDictionary.map { StatementArguments(lossless: $0) }
         let cursor = try Row.fetchCursor(db, sql, arguments: arguments)
         return GRResultSet(cursor: cursor)
+    }
+    
+    @objc public func inSavePoint(_ block: (UnsafeMutablePointer<ObjCBool>) -> ()) -> Error? {
+        do {
+            try db.inSavepoint {
+                var rollback: ObjCBool = false
+                return withUnsafeMutablePointer(to: &rollback) { rollbackp -> Database.TransactionCompletion in
+                    block(rollbackp)
+                    return rollbackp.pointee.boolValue ? .rollback : .commit
+                }
+            }
+            return nil
+        } catch {
+            return error
+        }
     }
 }
