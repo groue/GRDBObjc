@@ -10,6 +10,10 @@ import GRDB
     @objc public override init() {
         dbQueue = DatabaseQueue()
     }
+    
+    @objc public static func databaseQueue(path: String) throws -> GRDatabaseQueue {
+        return try GRDatabaseQueue(path: path)
+    }
 
     @objc public init(path: String) throws {
         dbQueue = try DatabaseQueue(path: path)
