@@ -25,6 +25,26 @@
     return rs;
 }
 
+- (void)testColumnIsNull
+{
+    GRDatabaseQueue *dbQueue = [GRDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath] error:NULL];
+    [dbQueue inDatabase:^(GRDatabase *db) {
+        [self createValuesTableInDatabase:db];
+        GRResultSet *rs = [self executeValuesQueryInDatabase:db];
+        XCTAssert([rs next]);
+        XCTAssertFalse([rs columnIndexIsNull:0]);
+        XCTAssertFalse([rs columnIsNull:@"integer"]);
+        XCTAssertFalse([rs columnIndexIsNull:1]);
+        XCTAssertFalse([rs columnIsNull:@"double"]);
+        XCTAssertFalse([rs columnIndexIsNull:2]);
+        XCTAssertFalse([rs columnIsNull:@"text"]);
+        XCTAssertFalse([rs columnIndexIsNull:3]);
+        XCTAssertFalse([rs columnIsNull:@"blob"]);
+        XCTAssertTrue([rs columnIndexIsNull:4]);
+        XCTAssertTrue([rs columnIsNull:@"null"]);
+    }];
+}
+
 - (void)testIntValue
 {
     GRDatabaseQueue *dbQueue = [GRDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath] error:NULL];

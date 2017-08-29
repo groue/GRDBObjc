@@ -42,6 +42,14 @@ import GRDB
         }
     }
     
+    @objc public func columnIndexIsNull(_ columnIndex: Int) -> Bool {
+        return (row[columnIndex] as DatabaseValue).isNull
+    }
+    
+    @objc public func columnIsNull(_ column: String) -> Bool {
+        return (row[column] as DatabaseValue).isNull
+    }
+    
     @objc(intForColumnIndex:) public func int(columnIndex: Int) -> CInt { return row[columnIndex] ?? 0 }
     @objc(intForColumn:) public func int(column: String) -> CInt { return row[column] ?? 0 }
     @objc(longForColumnIndex:) public func long(columnIndex: Int) -> CLong { return row[columnIndex] ?? 0 }
