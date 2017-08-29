@@ -6,21 +6,12 @@
 
 @implementation GRResultSetTests
 
-- (void)createValuesTableInDatabase:(GRDatabase *)db
-{
-    NSError *error;
-    BOOL success = [db executeUpdate:@"CREATE TABLE v(integer INTEGER, double DOUBLE, text TEXT, blob BLOB, \"null\")" error:&error];
-    XCTAssert(success, @"%@", error);
-    success = [db executeUpdate:@"INSERT INTO v(integer, double, text, blob, \"null\") VALUES (?, ?, ?, ?, ?)"
-               values:@[@(123), @(1.5), @"20 little cigars", [@"654" dataUsingEncoding:NSUTF8StringEncoding], [NSNull null]]
-                error:&error];
-    XCTAssert(success, @"%@", error);
-}
-
 - (GRResultSet *)executeValuesQueryInDatabase:(GRDatabase *)db
 {
     NSError *error;
-    GRResultSet *rs = [db executeQuery:@"SELECT integer, double, text, blob, \"null\" FROM v" error:&error];
+    GRResultSet *rs = [db executeQuery:@"SELECT ? AS integer, ? AS double, ? AS text, ? AS blob, NULL AS \"null\""
+                                values:@[@(123), @(1.5), @"20 little cigars", [@"654" dataUsingEncoding:NSUTF8StringEncoding]]
+                                 error:&error];
     XCTAssertNotNil(rs, @"%@", error);
     return rs;
 }
@@ -29,7 +20,6 @@
 {
     GRDatabaseQueue *dbQueue = [GRDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath] error:NULL];
     [dbQueue inDatabase:^(GRDatabase *db) {
-        [self createValuesTableInDatabase:db];
         GRResultSet *rs = [self executeValuesQueryInDatabase:db];
         XCTAssert([rs next]);
         XCTAssertFalse([rs columnIndexIsNull:0]);
@@ -49,7 +39,6 @@
 {
     GRDatabaseQueue *dbQueue = [GRDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath] error:NULL];
     [dbQueue inDatabase:^(GRDatabase *db) {
-        [self createValuesTableInDatabase:db];
         GRResultSet *rs = [self executeValuesQueryInDatabase:db];
         XCTAssert([rs next]);
         XCTAssertEqual([rs intForColumnIndex:0], 123);
@@ -69,7 +58,6 @@
 {
     GRDatabaseQueue *dbQueue = [GRDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath] error:NULL];
     [dbQueue inDatabase:^(GRDatabase *db) {
-        [self createValuesTableInDatabase:db];
         GRResultSet *rs = [self executeValuesQueryInDatabase:db];
         XCTAssert([rs next]);
         XCTAssertEqual([rs longForColumnIndex:0], 123);
@@ -89,7 +77,6 @@
 {
     GRDatabaseQueue *dbQueue = [GRDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath] error:NULL];
     [dbQueue inDatabase:^(GRDatabase *db) {
-        [self createValuesTableInDatabase:db];
         GRResultSet *rs = [self executeValuesQueryInDatabase:db];
         XCTAssert([rs next]);
         XCTAssertEqual([rs longLongIntForColumnIndex:0], 123);
@@ -109,7 +96,6 @@
 {
     GRDatabaseQueue *dbQueue = [GRDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath] error:NULL];
     [dbQueue inDatabase:^(GRDatabase *db) {
-        [self createValuesTableInDatabase:db];
         GRResultSet *rs = [self executeValuesQueryInDatabase:db];
         XCTAssert([rs next]);
         XCTAssertEqual([rs unsignedLongLongIntForColumnIndex:0], 123);
@@ -129,7 +115,6 @@
 {
     GRDatabaseQueue *dbQueue = [GRDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath] error:NULL];
     [dbQueue inDatabase:^(GRDatabase *db) {
-        [self createValuesTableInDatabase:db];
         GRResultSet *rs = [self executeValuesQueryInDatabase:db];
         XCTAssert([rs next]);
         XCTAssertEqual([rs boolForColumnIndex:0], YES);
@@ -149,7 +134,6 @@
 {
     GRDatabaseQueue *dbQueue = [GRDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath] error:NULL];
     [dbQueue inDatabase:^(GRDatabase *db) {
-        [self createValuesTableInDatabase:db];
         GRResultSet *rs = [self executeValuesQueryInDatabase:db];
         XCTAssert([rs next]);
         XCTAssertEqual([rs doubleForColumnIndex:0], 123.0);
@@ -169,7 +153,6 @@
 {
     GRDatabaseQueue *dbQueue = [GRDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath] error:NULL];
     [dbQueue inDatabase:^(GRDatabase *db) {
-        [self createValuesTableInDatabase:db];
         GRResultSet *rs = [self executeValuesQueryInDatabase:db];
         XCTAssert([rs next]);
         XCTAssertEqualObjects([rs stringForColumnIndex:0], @"123");
@@ -189,7 +172,6 @@
 {
     GRDatabaseQueue *dbQueue = [GRDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath] error:NULL];
     [dbQueue inDatabase:^(GRDatabase *db) {
-        [self createValuesTableInDatabase:db];
         GRResultSet *rs = [self executeValuesQueryInDatabase:db];
         XCTAssert([rs next]);
         XCTAssertEqualObjects([rs dataForColumnIndex:0], [@"123" dataUsingEncoding:NSUTF8StringEncoding]);
@@ -209,7 +191,6 @@
 {
     GRDatabaseQueue *dbQueue = [GRDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath] error:NULL];
     [dbQueue inDatabase:^(GRDatabase *db) {
-        [self createValuesTableInDatabase:db];
         GRResultSet *rs = [self executeValuesQueryInDatabase:db];
         XCTAssert([rs next]);
         XCTAssertEqualObjects([rs dataNoCopyForColumnIndex:0], [@"123" dataUsingEncoding:NSUTF8StringEncoding]);
@@ -229,7 +210,6 @@
 {
     GRDatabaseQueue *dbQueue = [GRDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath] error:NULL];
     [dbQueue inDatabase:^(GRDatabase *db) {
-        [self createValuesTableInDatabase:db];
         GRResultSet *rs = [self executeValuesQueryInDatabase:db];
         XCTAssert([rs next]);
         {
@@ -285,7 +265,6 @@
 {
     GRDatabaseQueue *dbQueue = [GRDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath] error:NULL];
     [dbQueue inDatabase:^(GRDatabase *db) {
-        [self createValuesTableInDatabase:db];
         GRResultSet *rs = [self executeValuesQueryInDatabase:db];
         XCTAssert([rs next]);
         {
@@ -318,7 +297,6 @@
 {
     GRDatabaseQueue *dbQueue = [GRDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath] error:NULL];
     [dbQueue inDatabase:^(GRDatabase *db) {
-        [self createValuesTableInDatabase:db];
         GRResultSet *rs = [self executeValuesQueryInDatabase:db];
         XCTAssert([rs next]);
         {
@@ -344,6 +322,52 @@
             XCTAssertEqualObjects(value, [@"654" dataUsingEncoding:NSUTF8StringEncoding]);
         }
         XCTAssertNil(rs[@"null"]);
+    }];
+}
+
+- (void)testResultDictionary
+{
+    GRDatabaseQueue *dbQueue = [GRDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath] error:NULL];
+    [dbQueue inDatabase:^(GRDatabase *db) {
+        GRResultSet *rs = [self executeValuesQueryInDatabase:db];
+        XCTAssert([rs next]);
+        NSDictionary *dict = rs.resultDictionary;
+        {
+            NSNumber *value = dict[@"integer"];
+            XCTAssert([value isKindOfClass:[NSNumber class]]);
+            XCTAssert(strcmp([value objCType], @encode(sqlite3_int64)) == 0);
+            XCTAssertEqual([value integerValue], 123);
+        }
+        {
+            NSNumber *value = dict[@"double"];
+            XCTAssert([value isKindOfClass:[NSNumber class]]);
+            XCTAssert(strcmp([value objCType], @encode(double)) == 0);
+            XCTAssertEqual([value doubleValue], 1.5);
+        }
+        {
+            NSString *value = dict[@"text"];
+            XCTAssert([value isKindOfClass:[NSString class]]);
+            XCTAssertEqualObjects(value, @"20 little cigars");
+        }
+        {
+            NSData *value = dict[@"blob"];
+            XCTAssert([value isKindOfClass:[NSData class]]);
+            XCTAssertEqualObjects(value, [@"654" dataUsingEncoding:NSUTF8StringEncoding]);
+        }
+        XCTAssertEqual(dict[@"null"], [NSNull null]);
+    }];
+}
+
+- (void)testResultDictionaryCompatibilityWithFMDB
+{
+    // This is a FMDB compatibility test
+    GRDatabaseQueue *dbQueue = [GRDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath] error:NULL];
+    [dbQueue inDatabase:^(GRDatabase *db) {
+        GRResultSet *rs = [db executeQuery:@"SELECT 1 AS foo, 2 AS foo, 3 AS FOO" error:NULL];
+        XCTAssert([rs next]);
+        NSDictionary *dict = rs.resultDictionary;
+        XCTAssertEqualObjects(dict[@"foo"], @(2));
+        XCTAssertEqualObjects(dict[@"FOO"], @(3));
     }];
 }
 

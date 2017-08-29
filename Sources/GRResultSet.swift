@@ -73,4 +73,10 @@ import GRDB
     
     @objc public subscript(_ columnIndex: Int) -> Any? { return row[columnIndex] }
     @objc public subscript(_ column: String) -> Any? { return row[column] }
+    
+    @objc public var resultDictionary: [String: AnyObject] {
+        return Dictionary(
+            row.map { ($0, $1.storage.value as AnyObject) },
+            uniquingKeysWith: { (_, right) in right }) // keep rightmost value, for compatibility with FMDB
+    }
 }
