@@ -43,6 +43,6 @@ import GRDB
     }
     
     @objc(intForColumnIndex:) public func int(columnIndex: Int) -> CInt {
-        return row[columnIndex]
+        return row[columnIndex] ?? 0
     }
 }
