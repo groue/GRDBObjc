@@ -8,7 +8,7 @@
 
 - (void)testExecuteUpdate
 {
-    GRDatabaseQueue *dbQueue = [[GRDatabaseQueue alloc] initWithPath:[self makeTemporaryDatabasePath] error:NULL];
+    GRDatabaseQueue *dbQueue = [GRDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath] error:NULL];
     [dbQueue inDatabase:^(GRDatabase *db) {
         NSError *error;
         BOOL success = [db executeUpdate:@"CREATE TABLE t(a)" error:&error];
@@ -18,7 +18,7 @@
 
 - (void)testExecuteUpdateWithValues
 {
-    GRDatabaseQueue *dbQueue = [[GRDatabaseQueue alloc] initWithPath:[self makeTemporaryDatabasePath] error:NULL];
+    GRDatabaseQueue *dbQueue = [GRDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath] error:NULL];
     [dbQueue inDatabase:^(GRDatabase *db) {
         [db executeUpdate:@"CREATE TABLE t(a, b)" error:NULL];
         
@@ -42,7 +42,7 @@
 
 - (void)testExecuteUpdateWithParameterDictionary
 {
-    GRDatabaseQueue *dbQueue = [[GRDatabaseQueue alloc] initWithPath:[self makeTemporaryDatabasePath] error:NULL];
+    GRDatabaseQueue *dbQueue = [GRDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath] error:NULL];
     [dbQueue inDatabase:^(GRDatabase *db) {
         [db executeUpdate:@"CREATE TABLE t(a, b)" error:NULL];
         
@@ -66,7 +66,7 @@
 
 - (void)testExecuteUpdateError
 {
-    GRDatabaseQueue *dbQueue = [[GRDatabaseQueue alloc] initWithPath:[self makeTemporaryDatabasePath] error:NULL];
+    GRDatabaseQueue *dbQueue = [GRDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath] error:NULL];
     [dbQueue inDatabase:^(GRDatabase *db) {
         NSError *error;
         BOOL success = [db executeUpdate:@"When on board H.M.S. ‘Beable’ as naturalist," error:&error];
@@ -80,7 +80,7 @@
 
 - (void)testExecuteQuery
 {
-    GRDatabaseQueue *dbQueue = [[GRDatabaseQueue alloc] initWithPath:[self makeTemporaryDatabasePath] error:NULL];
+    GRDatabaseQueue *dbQueue = [GRDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath] error:NULL];
     [dbQueue inDatabase:^(GRDatabase *db) {
         [db executeUpdate:@"CREATE TABLE t(a, b)" error:NULL];
         [db executeUpdate:@"INSERT INTO t(a, b) VALUES (123, 654)" error:NULL];
@@ -100,7 +100,7 @@
 
 - (void)testExecuteQueryWithValues
 {
-    GRDatabaseQueue *dbQueue = [[GRDatabaseQueue alloc] initWithPath:[self makeTemporaryDatabasePath] error:NULL];
+    GRDatabaseQueue *dbQueue = [GRDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath] error:NULL];
     [dbQueue inDatabase:^(GRDatabase *db) {
         [db executeUpdate:@"CREATE TABLE t(a, b)" error:NULL];
         [db executeUpdate:@"INSERT INTO t(a, b) VALUES (123, 654)" error:NULL];
@@ -122,7 +122,7 @@
 
 - (void)testExecuteQueryWithParameterDictionary
 {
-    GRDatabaseQueue *dbQueue = [[GRDatabaseQueue alloc] initWithPath:[self makeTemporaryDatabasePath] error:NULL];
+    GRDatabaseQueue *dbQueue = [GRDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath] error:NULL];
     [dbQueue inDatabase:^(GRDatabase *db) {
         [db executeUpdate:@"CREATE TABLE t(a, b)" error:NULL];
         [db executeUpdate:@"INSERT INTO t(a, b) VALUES (123, 654)" error:NULL];
@@ -144,7 +144,7 @@
 
 - (void)testExecuteQueryError
 {
-    GRDatabaseQueue *dbQueue = [[GRDatabaseQueue alloc] initWithPath:[self makeTemporaryDatabasePath] error:NULL];
+    GRDatabaseQueue *dbQueue = [GRDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath] error:NULL];
     [dbQueue inDatabase:^(GRDatabase *db) {
         NSError *error;
         GRResultSet *rs = [db executeQuery:@"Call me Ishmael." error:&error];
@@ -158,7 +158,7 @@
 
 - (void)testLastInsertRowId
 {
-    GRDatabaseQueue *dbQueue = [[GRDatabaseQueue alloc] initWithPath:[self makeTemporaryDatabasePath] error:NULL];
+    GRDatabaseQueue *dbQueue = [GRDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath] error:NULL];
     [dbQueue inDatabase:^(GRDatabase *db) {
         XCTAssertEqual(db.lastInsertRowId, 0);
         [db executeUpdate:@"CREATE TABLE t(id INTEGER PRIMARY KEY, a)" error:NULL];
@@ -175,7 +175,7 @@
 
 - (void)testChanges
 {
-    GRDatabaseQueue *dbQueue = [[GRDatabaseQueue alloc] initWithPath:[self makeTemporaryDatabasePath] error:NULL];
+    GRDatabaseQueue *dbQueue = [GRDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath] error:NULL];
     [dbQueue inDatabase:^(GRDatabase *db) {
         XCTAssertEqual(db.changes, 0);
         [db executeUpdate:@"CREATE TABLE t(id INTEGER PRIMARY KEY, a)" error:NULL];
@@ -190,7 +190,7 @@
 
 - (void)testIsInTransaction
 {
-    GRDatabaseQueue *dbQueue = [[GRDatabaseQueue alloc] initWithPath:[self makeTemporaryDatabasePath] error:NULL];
+    GRDatabaseQueue *dbQueue = [GRDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath] error:NULL];
     [dbQueue inDatabase:^(GRDatabase *db) {
         XCTAssertFalse(db.isInTransaction);
         [db executeUpdate:@"BEGIN TRANSACTION" error:NULL];
@@ -202,7 +202,7 @@
 
 - (void)testSQLiteHandle
 {
-    GRDatabaseQueue *dbQueue = [[GRDatabaseQueue alloc] initWithPath:[self makeTemporaryDatabasePath] error:NULL];
+    GRDatabaseQueue *dbQueue = [GRDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath] error:NULL];
     [dbQueue inDatabase:^(GRDatabase *db) {
         sqlite3_exec(db.sqliteHandle, "CREATE TABLE t(a)", NULL, NULL, NULL);
         NSError *error;
@@ -213,7 +213,7 @@
 
 - (void)testInSavePointCommit
 {
-    GRDatabaseQueue *dbQueue = [[GRDatabaseQueue alloc] initWithPath:[self makeTemporaryDatabasePath] error:NULL];
+    GRDatabaseQueue *dbQueue = [GRDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath] error:NULL];
     [dbQueue inDatabase:^(GRDatabase *db) {
         [db executeUpdate:@"CREATE TABLE t(a)" values:nil error:NULL];
         [db executeUpdate:@"INSERT INTO t(a) VALUES (123)" values:nil error:NULL];
@@ -229,7 +229,7 @@
 
 - (void)testInSavePointRollback
 {
-    GRDatabaseQueue *dbQueue = [[GRDatabaseQueue alloc] initWithPath:[self makeTemporaryDatabasePath] error:NULL];
+    GRDatabaseQueue *dbQueue = [GRDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath] error:NULL];
     [dbQueue inDatabase:^(GRDatabase *db) {
         [db executeUpdate:@"CREATE TABLE t(a)" values:nil error:NULL];
         [db executeUpdate:@"INSERT INTO t(a) VALUES (123)" values:nil error:NULL];
@@ -246,7 +246,7 @@
 
 - (void)testInSavePointNested
 {
-    GRDatabaseQueue *dbQueue = [[GRDatabaseQueue alloc] initWithPath:[self makeTemporaryDatabasePath] error:NULL];
+    GRDatabaseQueue *dbQueue = [GRDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath] error:NULL];
     [dbQueue inDatabase:^(GRDatabase *db) {
         [db executeUpdate:@"CREATE TABLE t(a)" values:nil error:NULL];
         [db executeUpdate:@"INSERT INTO t(a) VALUES (123)" values:nil error:NULL];

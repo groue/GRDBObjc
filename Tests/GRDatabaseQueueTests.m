@@ -54,7 +54,7 @@
 }
 
 - (void)testInDatabase {
-    GRDatabaseQueue *dbQueue = [[GRDatabaseQueue alloc] initWithPath:[self makeTemporaryDatabasePath] error:NULL];
+    GRDatabaseQueue *dbQueue = [GRDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath] error:NULL];
     __block BOOL success = NO;
     [dbQueue inDatabase:^(GRDatabase *db) {
         success = [self databaseHasBasicFunctionnality:db];
@@ -63,7 +63,7 @@
 }
 
 - (void)testInTransactionCommit {
-    GRDatabaseQueue *dbQueue = [[GRDatabaseQueue alloc] initWithPath:[self makeTemporaryDatabasePath] error:NULL];
+    GRDatabaseQueue *dbQueue = [GRDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath] error:NULL];
     [dbQueue inDatabase:^(GRDatabase *db) {
         [db executeUpdate:@"CREATE TABLE t(a)" values:nil error:NULL];
         [db executeUpdate:@"INSERT INTO t(a) VALUES (123)" values:nil error:NULL];
@@ -79,7 +79,7 @@
 }
 
 - (void)testInTransactionRollback {
-    GRDatabaseQueue *dbQueue = [[GRDatabaseQueue alloc] initWithPath:[self makeTemporaryDatabasePath] error:NULL];
+    GRDatabaseQueue *dbQueue = [GRDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath] error:NULL];
     [dbQueue inDatabase:^(GRDatabase *db) {
         [db executeUpdate:@"CREATE TABLE t(a)" values:nil error:NULL];
         [db executeUpdate:@"INSERT INTO t(a) VALUES (123)" values:nil error:NULL];
@@ -96,7 +96,7 @@
 }
 
 - (void)testInDeferredTransaction {
-    GRDatabaseQueue *dbQueue = [[GRDatabaseQueue alloc] initWithPath:[self makeTemporaryDatabasePath] error:NULL];
+    GRDatabaseQueue *dbQueue = [GRDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath] error:NULL];
     [dbQueue inDatabase:^(GRDatabase *db) {
         [db executeUpdate:@"CREATE TABLE t(a)" values:nil error:NULL];
         [db executeUpdate:@"INSERT INTO t(a) VALUES (123)" values:nil error:NULL];
