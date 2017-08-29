@@ -15,6 +15,10 @@ import GRDB
         return CInt(db.changesCount)
     }
     
+    @objc public var isInTransaction: Bool {
+        return db.isInsideTransaction
+    }
+    
     @objc public func executeUpdate(_ sql: String) throws {
         try db.execute(sql)
     }

@@ -188,4 +188,16 @@
     }];
 }
 
+- (void)testIsInTransaction
+{
+    GRDatabaseQueue *dbQueue = [[GRDatabaseQueue alloc] initWithPath:[self makeTemporaryDatabasePath] error:NULL];
+    [dbQueue inDatabase:^(GRDatabase *db) {
+        XCTAssertFalse(db.isInTransaction);
+        [db executeUpdate:@"BEGIN TRANSACTION" error:NULL];
+        XCTAssertTrue(db.isInTransaction);
+        [db executeUpdate:@"ROLLBACK" error:NULL];
+        XCTAssertFalse(db.isInTransaction);
+    }];
+}
+
 @end
