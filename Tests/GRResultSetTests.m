@@ -241,14 +241,46 @@
     }];
 }
 
-- (void)testNextAfterCompletion
+- (void)testNext
 {
-    
+    GRDatabaseQueue *dbQueue = [GRDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath] error:NULL];
+    [dbQueue inDatabase:^(GRDatabase *db) {
+        [db executeUpdate:@"CREATE TABLE t(a, b)" error:NULL];
+        [db executeUpdate:@"INSERT INTO t(a, b) VALUES (1, 2)" error:NULL];
+        [db executeUpdate:@"INSERT INTO t(a, b) VALUES (3, 4)" error:NULL];
+        
+        NSError *error;
+        GRResultSet *rs = [db executeQuery:@"SELECT a, b FROM t" error:&error];
+        XCTAssertNotNil(rs, @"%@", error);
+        
+        XCTAssert([rs next]);
+        XCTAssertEqual([rs intForColumnIndex:0], 1);
+        XCTAssertEqual([rs intForColumnIndex:1], 2);
+        
+        XCTAssert([rs next]);
+        XCTAssertEqual([rs intForColumnIndex:0], 3);
+        XCTAssertEqual([rs intForColumnIndex:1], 4);
+        
+        XCTAssertFalse([rs next]);
+        XCTAssertFalse([rs next]);
+    }];
 }
 
 - (void)testColumnNameIsCaseInsensitive
 {
-    
+    GRDatabaseQueue *dbQueue = [GRDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath] error:NULL];
+    [dbQueue inDatabase:^(GRDatabase *db) {
+        [db executeUpdate:@"CREATE TABLE t(InTeGeR)" error:NULL];
+        [db executeUpdate:@"INSERT INTO t(InTeGeR) VALUES (123)" error:NULL];
+        
+        NSError *error;
+        GRResultSet *rs = [db executeQuery:@"SELECT integer FROM t" error:&error];
+        XCTAssertNotNil(rs, @"%@", error);
+        XCTAssert([rs next]);
+        XCTAssertEqual([rs intForColumn:@"integer"], 123);
+        XCTAssertEqual([rs intForColumn:@"INTEGER"], 123);
+        XCTAssertEqual([rs intForColumn:@"INTeger"], 123);
+    }];
 }
 
 @end
