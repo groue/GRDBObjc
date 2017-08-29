@@ -11,6 +11,10 @@ import GRDB
         return db.lastInsertedRowID
     }
     
+    @objc public var changes: CInt {
+        return CInt(db.changesCount)
+    }
+    
     @objc public func executeUpdate(_ sql: String) throws {
         try db.execute(sql)
     }
