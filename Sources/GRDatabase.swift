@@ -7,6 +7,10 @@ import GRDB
         self.db = db
     }
     
+    @objc public var lastInsertRowId: Int64 {
+        return db.lastInsertedRowID
+    }
+    
     @objc public func executeUpdate(_ sql: String) throws {
         try db.execute(sql)
     }

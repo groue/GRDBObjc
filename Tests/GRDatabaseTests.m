@@ -156,4 +156,21 @@
     }];
 }
 
+- (void)testLastInsertRowId
+{
+    GRDatabaseQueue *dbQueue = [[GRDatabaseQueue alloc] initWithPath:[self makeTemporaryDatabasePath] error:NULL];
+    [dbQueue inDatabase:^(GRDatabase *db) {
+        XCTAssertEqual(db.lastInsertRowId, 0);
+        [db executeUpdate:@"CREATE TABLE t(id INTEGER PRIMARY KEY, a)" error:NULL];
+        [db executeUpdate:@"INSERT INTO t(a) VALUES (?)" values:@[@(1)] error:NULL];
+        XCTAssertEqual(db.lastInsertRowId, 1);
+        [db executeUpdate:@"INSERT INTO t(a) VALUES (?)" values:@[@(1)] error:NULL];
+        XCTAssertEqual(db.lastInsertRowId, 2);
+        [db executeUpdate:@"INSERT INTO t(id, a) VALUES (?, ?)" values:@[@(123), @(1)] error:NULL];
+        XCTAssertEqual(db.lastInsertRowId, 123);
+        [db executeUpdate:@"INSERT INTO t(id, a) VALUES (?, ?)" values:@[@(0), @(1)] error:NULL];
+        XCTAssertEqual(db.lastInsertRowId, 0);
+    }];
+}
+
 @end
