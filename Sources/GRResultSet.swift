@@ -58,6 +58,8 @@ import GRDB
     @objc(stringForColumn:) public func string(column: String) -> String? { return row[column] }
     @objc(dataForColumnIndex:) public func data(columnIndex: Int) -> Data? { return row[columnIndex] }
     @objc(dataForColumn:) public func data(column: String) -> Data? { return row[column] }
+    @objc(dataNoCopyForColumnIndex:) public func dataNoCopy(columnIndex: Int) -> Data? { return row.dataNoCopy(atIndex: columnIndex) }
+    @objc(dataNoCopyForColumn:) public func dataNoCopy(column: String) -> Data? { return row.dataNoCopy(named: column) }
     @objc(objectForColumnIndex:) public func object(columnIndex: Int) -> Any? { return row[columnIndex] }
     @objc(objectForColumn:) public func object(column: String) -> Any? { return row[column] }
     

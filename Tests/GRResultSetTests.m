@@ -185,6 +185,26 @@
     }];
 }
 
+- (void)testDataNoCopyValue
+{
+    GRDatabaseQueue *dbQueue = [GRDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath] error:NULL];
+    [dbQueue inDatabase:^(GRDatabase *db) {
+        [self createValuesTableInDatabase:db];
+        GRResultSet *rs = [self executeValuesQueryInDatabase:db];
+        XCTAssert([rs next]);
+        XCTAssertEqualObjects([rs dataNoCopyForColumnIndex:0], [@"123" dataUsingEncoding:NSUTF8StringEncoding]);
+        XCTAssertEqualObjects([rs dataNoCopyForColumn:@"integer"], [@"123" dataUsingEncoding:NSUTF8StringEncoding]);
+        XCTAssertEqualObjects([rs dataNoCopyForColumnIndex:1], [@"1.5" dataUsingEncoding:NSUTF8StringEncoding]);
+        XCTAssertEqualObjects([rs dataNoCopyForColumn:@"double"], [@"1.5" dataUsingEncoding:NSUTF8StringEncoding]);
+        XCTAssertEqualObjects([rs dataNoCopyForColumnIndex:2], [@"20 little cigars" dataUsingEncoding:NSUTF8StringEncoding]);
+        XCTAssertEqualObjects([rs dataNoCopyForColumn:@"text"], [@"20 little cigars" dataUsingEncoding:NSUTF8StringEncoding]);
+        XCTAssertEqualObjects([rs dataNoCopyForColumnIndex:3], [@"654" dataUsingEncoding:NSUTF8StringEncoding]);
+        XCTAssertEqualObjects([rs dataNoCopyForColumn:@"blob"], [@"654" dataUsingEncoding:NSUTF8StringEncoding]);
+        XCTAssertNil([rs dataNoCopyForColumnIndex:4]);
+        XCTAssertNil([rs dataNoCopyForColumn:@"null"]);
+    }];
+}
+
 - (void)testObjectValue
 {
     GRDatabaseQueue *dbQueue = [GRDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath] error:NULL];
