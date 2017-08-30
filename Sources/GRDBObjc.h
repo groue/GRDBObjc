@@ -5,7 +5,7 @@
 //  Created by Gwendal Roué on 29/08/2017.
 //
 
-#import <Cocoa/Cocoa.h>
+#import <Foundation/Foundation.h>
 
 //! Project version number for GRDBObjc.
 FOUNDATION_EXPORT double GRDBObjcVersionNumber;
