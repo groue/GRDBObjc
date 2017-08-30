@@ -363,7 +363,7 @@
     // This is a FMDB compatibility test
     GRDatabaseQueue *dbQueue = [GRDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath] error:NULL];
     [dbQueue inDatabase:^(GRDatabase *db) {
-        GRResultSet *rs = [db executeQuery:@"SELECT 1 AS foo, 2 AS foo, 3 AS FOO" error:NULL];
+        GRResultSet *rs = [db executeQuery:@"SELECT 1 AS foo, 2 AS foo, 3 AS FOO"];
         XCTAssert([rs next]);
         NSDictionary *dict = rs.resultDictionary;
         XCTAssertEqualObjects(dict[@"foo"], @(2));
@@ -375,13 +375,12 @@
 {
     GRDatabaseQueue *dbQueue = [GRDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath] error:NULL];
     [dbQueue inDatabase:^(GRDatabase *db) {
-        [db executeUpdate:@"CREATE TABLE t(a, b)" error:NULL];
-        [db executeUpdate:@"INSERT INTO t(a, b) VALUES (1, 2)" error:NULL];
-        [db executeUpdate:@"INSERT INTO t(a, b) VALUES (3, 4)" error:NULL];
+        [db executeUpdate:@"CREATE TABLE t(a, b)"];
+        [db executeUpdate:@"INSERT INTO t(a, b) VALUES (1, 2)"];
+        [db executeUpdate:@"INSERT INTO t(a, b) VALUES (3, 4)"];
         
-        NSError *error;
-        GRResultSet *rs = [db executeQuery:@"SELECT a, b FROM t" error:&error];
-        XCTAssertNotNil(rs, @"%@", error);
+        GRResultSet *rs = [db executeQuery:@"SELECT a, b FROM t"];
+        XCTAssertNotNil(rs);
         
         XCTAssert([rs next]);
         XCTAssertEqual([rs intForColumnIndex:0], 1);
@@ -400,13 +399,12 @@
 {
     GRDatabaseQueue *dbQueue = [GRDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath] error:NULL];
     [dbQueue inDatabase:^(GRDatabase *db) {
-        [db executeUpdate:@"CREATE TABLE t(a)" error:NULL];
-        [db executeUpdate:@"INSERT INTO t(a) VALUES (1)" error:NULL];
-        [db executeUpdate:@"INSERT INTO t(a) VALUES (3)" error:NULL];
+        [db executeUpdate:@"CREATE TABLE t(a)"];
+        [db executeUpdate:@"INSERT INTO t(a) VALUES (1)"];
+        [db executeUpdate:@"INSERT INTO t(a) VALUES (3)"];
         
-        NSError *error;
-        GRResultSet *rs = [db executeQuery:@"SELECT a FROM t" error:&error];
-        XCTAssertNotNil(rs, @"%@", error);
+        GRResultSet *rs = [db executeQuery:@"SELECT a FROM t"];
+        XCTAssertNotNil(rs);
         
         XCTAssert([rs next]);
         [rs close];
@@ -419,9 +417,8 @@
 {
     GRDatabaseQueue *dbQueue = [GRDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath] error:NULL];
     [dbQueue inDatabase:^(GRDatabase *db) {
-        NSError *error;
-        GRResultSet *rs = [db executeQuery:@"SELECT 1 AS foo, 2 AS bar" error:&error];
-        XCTAssertNotNil(rs, @"%@", error);
+        GRResultSet *rs = [db executeQuery:@"SELECT 1 AS foo, 2 AS bar"];
+        XCTAssertNotNil(rs);
         XCTAssertEqual([rs columnIndexForName:@"foo"], 0);
         XCTAssertEqual([rs columnIndexForName:@"FOO"], 0);
         XCTAssertEqual([rs columnIndexForName:@"Bar"], 1);
@@ -433,12 +430,11 @@
 {
     GRDatabaseQueue *dbQueue = [GRDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath] error:NULL];
     [dbQueue inDatabase:^(GRDatabase *db) {
-        [db executeUpdate:@"CREATE TABLE t(InTeGeR)" error:NULL];
-        [db executeUpdate:@"INSERT INTO t(InTeGeR) VALUES (123)" error:NULL];
+        [db executeUpdate:@"CREATE TABLE t(InTeGeR)"];
+        [db executeUpdate:@"INSERT INTO t(InTeGeR) VALUES (123)"];
         
-        NSError *error;
-        GRResultSet *rs = [db executeQuery:@"SELECT integer FROM t" error:&error];
-        XCTAssertNotNil(rs, @"%@", error);
+        GRResultSet *rs = [db executeQuery:@"SELECT integer FROM t"];
+        XCTAssertNotNil(rs);
         XCTAssert([rs next]);
         XCTAssertEqual([rs intForColumn:@"integer"], 123);
         XCTAssertEqual([rs intForColumn:@"INTEGER"], 123);
