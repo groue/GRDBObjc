@@ -217,6 +217,17 @@
     }];
 }
 
+- (void)testTableExists
+{
+    GRDatabaseQueue *dbQueue = [GRDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath] error:NULL];
+    [dbQueue inDatabase:^(GRDatabase *db) {
+        [db executeUpdate:@"CREATE TABLE defined(a)" error:NULL];
+        XCTAssertTrue([db tableExists:@"defined"]);
+        XCTAssertTrue([db tableExists:@"DEFINED"]);
+        XCTAssertFalse([db tableExists:@"undefined"]);
+    }];
+}
+
 - (void)testInSavePointCommit
 {
     GRDatabaseQueue *dbQueue = [GRDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath] error:NULL];

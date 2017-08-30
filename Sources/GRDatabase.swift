@@ -76,6 +76,10 @@ import SQLite3
         }
     }
     
+    @objc public func tableExists(_ tableName: String) -> Bool {
+        return (try? db.tableExists(tableName)) ?? false  // return false on error, for compatibility with FMDB
+    }
+    
     @objc public func __makeUpdateStatement(_ sql: String) throws -> GRUpdateStatement {
         return try GRUpdateStatement(statement: db.makeUpdateStatement(sql))
     }
