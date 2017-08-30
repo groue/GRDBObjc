@@ -12,7 +12,7 @@ It happens that we developers have to maintain Objective-C applications, and wis
 
 This happens when rewriting a whole application from scratch is not a reasonable option, and yet the expressivity and safety of Swift has an intense appeal. We preserve the legacy Objective-C code that represents years of development, experience, bug hunting and tests, and use Swift in new and isolated features that can easily be plugged on the Objective-C body.
 
-Such a mixed application has an Objective-C core, and a few Swift "leaves". Those Swift add-ons are sometimes hampered by their foreign core: maybe it doesn't look very Swifty, or maybe we dream of Swift alternatives that offer superior solutions.
+Such a mixed application has an Objective-C trunk, and a few Swift leaves. Those Swift add-ons are sometimes hampered by their foreign foundations: maybe they don't look very Swifty, or maybe we dream of Swift alternatives that offer superior solutions.
 
 
 ### FMDB in a Swift World
