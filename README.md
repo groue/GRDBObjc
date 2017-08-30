@@ -19,19 +19,25 @@ Such a mixed application has an Objective-C trunk, and a few Swift leaves. Those
 
 We at [Pierlis](http://pierlis.com) feel this quite badly with FMDB. FMDB does a perfect job, but GRDB has a lot of advantages over it. When GRDB speaks SQL just as well as its venerable precursor, and offers the same robust concurrency guarantees, the Swift toolkit adds features such as database observation and support for record types that are nowhere to be seen with FMDB.
 
-For example, compare two equivalent code snippets that loads an array of application models:
+For example, compare two equivalent code snippets that load an array of application models:
 
 ```swift
 // GRDB
-struct Player: RowConvertible, TableMapping { ... }
+struct Player: RowConvertible {
+    init(row: Row) { ... }
+}
+
 func fetchPlayers(dbQueue: FMDatabaseQueue) throws -> [Player] {
     return try dbQueue.inDatabase { db in
-        try Player.fetchAll(db)
+        try Player.fetchAll(db, "SELECT * FROM players")
     }
 }
 
 // FMDB
-struct Player { ... }
+struct Player {
+    init(dictionary: [AnyHashable: Any]) { ... }
+}
+
 func fetchPlayers(dbQueue: FMDatabaseQueue) throws -> [Player] {
     var fetchError: Error? = nil
     var players = [Player]()
