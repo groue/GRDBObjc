@@ -64,7 +64,7 @@ You may think: "I never use FMDB like that!". Indeed error handling makes FMDB s
 
 ### Going Further with GRDB
 
-[Database observation](https://github.com/groue/GRDB.swift#database-changes-observation) is another feature that will save you the hours developing it on top of your fork of FMDB. GRDB comes with high-level tools such as [FetchedRecordsController](https://github.com/groue/GRDB.swift#fetchedrecordscontroller) (a NSFetchedResultsController rip-off), and the companion library [RxGRDB](http://github.com/RxSwiftCommunity/RxGRDB) which lets you observe database changes in the reactive way. Observation happens at the SQLite level, which means that it won't be fooled by raw SQL updates, foreign key cascades, and SQL triggers. Don't miss a single commit:
+[Database observation](https://github.com/groue/GRDB.swift#database-changes-observation) is another feature that will save you the hours developing it on top of FMDB. GRDB comes with high-level tools such as [FetchedRecordsController](https://github.com/groue/GRDB.swift#fetchedrecordscontroller) (a NSFetchedResultsController rip-off), and the companion library [RxGRDB](http://github.com/RxSwiftCommunity/RxGRDB) which lets you observe database changes in the reactive way. Observation happens at the SQLite level, which means that it won't be fooled by raw SQL updates, foreign key cascades, and SQL triggers. Don't miss a single commit:
 
 ```swift
 let request = SQLRequest(
