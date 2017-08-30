@@ -3,7 +3,7 @@ GRDBObjc
 
 ### A library that provides FMDB-compatible Objective-C bindings to the SQLite library GRDB.swift.
 
-The goal is dead simple: help Objective-C applications replacing [FMDB](http://github.com/ccgus/fmdb) with [GRDB](http://github.com/groue/GRDB.swift) with minimal cost.
+The goal is dead simple: help Objective-C applications replacing [FMDB](http://github.com/ccgus/fmdb) with [GRDB](http://github.com/groue/GRDB.swift), at minimal cost.
 
 
 ### Indulge yourself with a little Swift
