@@ -16,6 +16,15 @@
     }];
 }
 
+- (void)testExecuteUpdateWithoutErrorHandling
+{
+    GRDatabaseQueue *dbQueue = [GRDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath] error:NULL];
+    [dbQueue inDatabase:^(GRDatabase *db) {
+        BOOL success = [db executeUpdate:@"CREATE TABLE t(a)"];
+        XCTAssert(success);
+    }];
+}
+
 - (void)testExecuteUpdateWithValues
 {
     GRDatabaseQueue *dbQueue = [GRDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath] error:NULL];

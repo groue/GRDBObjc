@@ -30,6 +30,15 @@ import SQLite3
         return db.sqliteConnection
     }
     
+    @objc public func executeUpdate(_ sql: String) -> Bool {
+        do {
+            try db.execute(sql)
+            return true
+        } catch {
+            return false
+        }
+    }
+    
     @objc public func executeUpdate(_ sql: String) throws {
         try db.execute(sql)
     }
