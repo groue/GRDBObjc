@@ -330,6 +330,7 @@
     GRDatabaseQueue *dbQueue = [GRDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath] error:NULL];
     [dbQueue inDatabase:^(GRDatabase *db) {
         GRResultSet *rs = [self executeValuesQueryInDatabase:db];
+        XCTAssertNil(rs.resultDictionary);
         XCTAssert([rs next]);
         NSDictionary *dict = rs.resultDictionary;
         {
@@ -355,6 +356,8 @@
             XCTAssertEqualObjects(value, [@"654" dataUsingEncoding:NSUTF8StringEncoding]);
         }
         XCTAssertEqual(dict[@"null"], [NSNull null]);
+        XCTAssertFalse([rs next]);
+        XCTAssertNil(rs.resultDictionary);
     }];
 }
 

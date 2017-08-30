@@ -94,9 +94,14 @@ import SQLite3
     @objc public subscript(_ columnIndex: Int) -> Any? { return row[columnIndex] }
     @objc public subscript(_ columnName: String) -> Any? { return row[columnName] }
     
-    @objc public var resultDictionary: [String: AnyObject] {
-        return Dictionary(
-            row.map { ($0, $1.storage.value as AnyObject) },
-            uniquingKeysWith: { (_, right) in right }) // keep rightmost value, for compatibility with FMDB
+    @objc public var resultDictionary: [String: AnyObject]? {
+        switch state {
+        case .row(_, let row):
+            return Dictionary(
+                row.map { ($0, $1.storage.value as AnyObject) },
+                uniquingKeysWith: { (_, right) in right }) // keep rightmost value, for compatibility with FMDB
+        default:
+            return nil
+        }
     }
 }
