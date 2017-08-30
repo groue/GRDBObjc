@@ -1,33 +1,32 @@
 import GRDB
 
 @objc public class GRResultSet : NSObject {
-    private let cursor: RowCursor
     private enum State {
-        case initialized
-        case row(Row)
+        case initialized(RowCursor)
+        case row(RowCursor, Row)
         case ended
         case error(Error)
     }
-    private var state = State.initialized
+    private var state: State
     private var row: Row {
         switch state {
         case .initialized: fatalError("-[GRResultSet next] has to be called before accessing fetched results")
-        case .row(let row): return row
-        case .ended: fatalError("GRResultSet has been fully consumed")
+        case .row(_, let row): return row
+        case .ended: fatalError("GRResultSet has been fully consumed, or closed")
         case .error(let error): fatalError("GRResultSet had an error: \(error)")
         }
     }
 
     init(cursor: RowCursor) {
-        self.cursor = cursor
+        self.state = .initialized(cursor)
     }
     
     @objc public func next() -> Bool {
         switch state {
-        case .initialized, .row:
+        case .initialized(let cursor), .row(let cursor, _):
             do {
                 if let row = try cursor.next() {
-                    state = .row(row)
+                    state = .row(cursor, row)
                     return true
                 } else {
                     state = .ended
@@ -40,6 +39,10 @@ import GRDB
         case .ended: return false
         case .error: return false
         }
+    }
+    
+    @objc public func close() {
+        state = .ended
     }
     
     @objc public func columnIndexIsNull(_ columnIndex: Int) -> Bool {

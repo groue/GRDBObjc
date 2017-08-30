@@ -396,6 +396,25 @@
     }];
 }
 
+- (void)testClose
+{
+    GRDatabaseQueue *dbQueue = [GRDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath] error:NULL];
+    [dbQueue inDatabase:^(GRDatabase *db) {
+        [db executeUpdate:@"CREATE TABLE t(a)" error:NULL];
+        [db executeUpdate:@"INSERT INTO t(a) VALUES (1)" error:NULL];
+        [db executeUpdate:@"INSERT INTO t(a) VALUES (3)" error:NULL];
+        
+        NSError *error;
+        GRResultSet *rs = [db executeQuery:@"SELECT a, b FROM t" error:&error];
+        XCTAssertNotNil(rs, @"%@", error);
+        
+        XCTAssert([rs next]);
+        [rs close];
+        XCTAssertFalse([rs next]);
+        XCTAssertFalse([rs next]);
+    }];
+}
+
 - (void)testColumnNameIsCaseInsensitive
 {
     GRDatabaseQueue *dbQueue = [GRDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath] error:NULL];
