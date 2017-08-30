@@ -11,6 +11,10 @@ import GRDB
         dbQueue = DatabaseQueue()
     }
     
+    @objc public static func databaseQueue(path: String) -> GRDatabaseQueue? {
+        return try? GRDatabaseQueue(path: path)
+    }
+    
     @objc public static func databaseQueue(path: String) throws -> GRDatabaseQueue {
         return try GRDatabaseQueue(path: path)
     }

@@ -39,6 +39,12 @@
     XCTAssert([self databaseQueueHasBasicFunctionnality:dbQueue]);
 }
 
+- (void)testPathFactoryMethodWithoutErrorHandling {
+    GRDatabaseQueue *dbQueue = [GRDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath]];
+    XCTAssertNotNil(dbQueue);
+    XCTAssert([self databaseQueueHasBasicFunctionnality:dbQueue]);
+}
+
 - (void)testPathInitializer {
     NSError *error;
     GRDatabaseQueue *dbQueue = [[GRDatabaseQueue alloc] initWithPath:[self makeTemporaryDatabasePath] error:&error];
