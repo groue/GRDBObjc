@@ -405,7 +405,7 @@
         [db executeUpdate:@"INSERT INTO t(a) VALUES (3)" error:NULL];
         
         NSError *error;
-        GRResultSet *rs = [db executeQuery:@"SELECT a, b FROM t" error:&error];
+        GRResultSet *rs = [db executeQuery:@"SELECT a FROM t" error:&error];
         XCTAssertNotNil(rs, @"%@", error);
         
         XCTAssert([rs next]);
