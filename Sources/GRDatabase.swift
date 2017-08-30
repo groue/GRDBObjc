@@ -43,13 +43,23 @@ import SQLite3
         try db.execute(sql)
     }
     
+    @objc(executeUpdate:withArgumentsInArray:) public func executeUpdate(_ sql: String, argumentsInArray values: [Any]?) -> Bool {
+        let arguments = values.map { StatementArguments(lossless: $0) } ?? StatementArguments()
+        do {
+            try db.execute(sql, arguments: arguments)
+            return true
+        } catch {
+            return false
+        }
+    }
+    
     @objc public func executeUpdate(_ sql: String, values: [Any]?) throws {
-        let arguments = values.map { StatementArguments(lossless: $0) }
+        let arguments = values.map { StatementArguments(lossless: $0) } ?? StatementArguments()
         try db.execute(sql, arguments: arguments)
     }
     
     @objc public func executeUpdate(_ sql: String, parameterDictionary: [String: Any]?) throws {
-        let arguments = parameterDictionary.map { StatementArguments(lossless: $0) }
+        let arguments = parameterDictionary.map { StatementArguments(lossless: $0) } ?? StatementArguments()
         try db.execute(sql, arguments: arguments)
     }
     
@@ -59,13 +69,13 @@ import SQLite3
     }
 
     @objc public func executeQuery(_ sql: String, values: [Any]?) throws -> GRResultSet {
-        let arguments = values.map { StatementArguments(lossless: $0) }
+        let arguments = values.map { StatementArguments(lossless: $0) } ?? StatementArguments()
         let cursor = try Row.fetchCursor(db, sql, arguments: arguments)
         return GRResultSet(cursor: cursor)
     }
     
     @objc public func executeQuery(_ sql: String, parameterDictionary: [String: Any]?) throws -> GRResultSet {
-        let arguments = parameterDictionary.map { StatementArguments(lossless: $0) }
+        let arguments = parameterDictionary.map { StatementArguments(lossless: $0) } ?? StatementArguments()
         let cursor = try Row.fetchCursor(db, sql, arguments: arguments)
         return GRResultSet(cursor: cursor)
     }

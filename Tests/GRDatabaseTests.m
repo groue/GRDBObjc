@@ -25,6 +25,29 @@
     }];
 }
 
+- (void)testExecuteUpdateWithArgumentsInArray
+{
+    GRDatabaseQueue *dbQueue = [GRDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath] error:NULL];
+    [dbQueue inDatabase:^(GRDatabase *db) {
+        [db executeUpdate:@"CREATE TABLE t(a, b)" error:NULL];
+        
+        BOOL success = [db executeUpdate:@"INSERT INTO t(a, b) VALUES (?, ?)"
+                    withArgumentsInArray:@[@(123), @(654)]];
+        XCTAssert(success);
+        
+        NSError *error;
+        GRResultSet *rs = [db executeQuery:@"SELECT a, b FROM t" error:&error];
+        XCTAssertNotNil(rs, @"%@", error);
+        BOOL fetched = NO;
+        while ([rs next]) {
+            fetched = YES;
+            XCTAssertEqual([rs intForColumnIndex:0], 123);
+            XCTAssertEqual([rs intForColumnIndex:1], 654);
+        }
+        XCTAssert(fetched);
+    }];
+}
+
 - (void)testExecuteUpdateWithValues
 {
     GRDatabaseQueue *dbQueue = [GRDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath] error:NULL];
