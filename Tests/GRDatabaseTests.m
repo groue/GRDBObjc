@@ -78,12 +78,11 @@
     [dbQueue inDatabase:^(GRDatabase *db) {
         [db executeUpdate:@"CREATE TABLE t(a, b)" error:NULL];
         
-        NSError *error;
         BOOL success = [db executeUpdate:@"INSERT INTO t(a, b) VALUES (:a, :b)"
-                     parameterDictionary:@{@"a": @(123), @"b": @(654)}
-                                   error:&error];
-        XCTAssert(success, @"%@", error);
+                 withParameterDictionary:@{@"a": @(123), @"b": @(654)}];
+        XCTAssert(success);
         
+        NSError *error;
         GRResultSet *rs = [db executeQuery:@"SELECT a, b FROM t" error:&error];
         XCTAssertNotNil(rs, @"%@", error);
         BOOL fetched = NO;

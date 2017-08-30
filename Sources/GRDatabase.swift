@@ -58,9 +58,14 @@ import SQLite3
         try db.execute(sql, arguments: arguments)
     }
     
-    @objc public func executeUpdate(_ sql: String, parameterDictionary: [String: Any]?) throws {
+    @objc(executeUpdate:withParameterDictionary:) public func executeUpdate(_ sql: String, parameterDictionary: [String: Any]?) -> Bool {
         let arguments = parameterDictionary.map { StatementArguments(lossless: $0) } ?? StatementArguments()
-        try db.execute(sql, arguments: arguments)
+        do {
+            try db.execute(sql, arguments: arguments)
+            return true
+        } catch {
+            return false
+        }
     }
     
     @objc public func executeQuery(_ sql: String) throws -> GRResultSet {
