@@ -415,6 +415,20 @@
     }];
 }
 
+- (void)testColumnIndexForName
+{
+    GRDatabaseQueue *dbQueue = [GRDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath] error:NULL];
+    [dbQueue inDatabase:^(GRDatabase *db) {
+        NSError *error;
+        GRResultSet *rs = [db executeQuery:@"SELECT 1 AS foo, 2 AS bar" error:&error];
+        XCTAssertNotNil(rs, @"%@", error);
+        XCTAssertEqual([rs columnIndexForName:@"foo"], 0);
+        XCTAssertEqual([rs columnIndexForName:@"FOO"], 0);
+        XCTAssertEqual([rs columnIndexForName:@"Bar"], 1);
+        XCTAssertEqual([rs columnIndexForName:@"missing"], -1); // FMDB compatibility
+    }];
+}
+
 - (void)testColumnNameIsCaseInsensitive
 {
     GRDatabaseQueue *dbQueue = [GRDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath] error:NULL];
