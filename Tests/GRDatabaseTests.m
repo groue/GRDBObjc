@@ -153,6 +153,12 @@
         XCTAssertEqualObjects(error.domain, @"GRDB.DatabaseError");
         XCTAssertEqual(error.code, SQLITE_ERROR);
         XCTAssertEqualObjects(error.localizedDescription, @"SQLite error 1 with statement `Call me Ishmael.`: near \"Call\": syntax error");
+        
+        NSError *lastError = db.lastError;
+        XCTAssertNotNil(lastError);
+        XCTAssertEqualObjects(lastError.domain, @"GRDB.DatabaseError");
+        XCTAssertEqual(lastError.code, SQLITE_ERROR);
+        XCTAssertEqualObjects(lastError.localizedDescription, @"SQLite error 1: near \"Call\": syntax error");
     }];
 }
 

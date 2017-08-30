@@ -1,4 +1,5 @@
 import GRDB
+import SQLite3
 
 @objc public class GRDatabase : NSObject {
     let db: Database
@@ -13,6 +14,12 @@ import GRDB
     
     @objc public var changes: CInt {
         return CInt(db.changesCount)
+    }
+    
+    @objc public var lastError: Error {
+        return DatabaseError(
+            resultCode: ResultCode(rawValue: sqlite3_errcode(db.sqliteConnection)),
+            message: String(cString: sqlite3_errmsg(db.sqliteConnection)))
     }
     
     @objc public var isInTransaction: Bool {
