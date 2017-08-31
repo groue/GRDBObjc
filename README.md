@@ -172,6 +172,8 @@ We'll list all FMDB methods below. Each of them will be either:
 - Not available and requiring GRDB modifications ([come so that we can have a conversation](https://github.com/groue/GRDBObjc/issues))
 - Not available without any hope for eventual support
 
+Jump to the class you're interested into:
+
 - [FMDatabase](#fmdatabase)
 - [FMResultSet](#fmresultset)
 
