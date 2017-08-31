@@ -15,4 +15,7 @@ FOUNDATION_EXPORT const unsigned char GRDBObjcVersionString[];
 
 // In this header, you should import all the public headers of your framework using statements like #import <GRDBObjc/PublicHeader.h>
 
-//#import <GRDBObjc/GRDBObjc-Swift.h>
+#define FMDatabase GRDatabase
+#define FMDatabaseQueue GRDatabaseQueue
+#define FMResultSet GRResultSet
+
