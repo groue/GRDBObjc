@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5680BBE11F57BA5900F67DD0 /* GRDatabaseQueueTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5680BBE01F57BA5900F67DD0 /* GRDatabaseQueueTests.swift */; };
 		568FC23E1F55370500E176A4 /* GRDB.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56060B901F5536DE0020949D /* GRDB.framework */; };
 		568FC2421F5537A600E176A4 /* GRDatabaseQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568FC2411F5537A600E176A4 /* GRDatabaseQueue.swift */; };
 		568FC2451F5538E000E176A4 /* GRDatabaseQueueTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 568FC2441F5538E000E176A4 /* GRDatabaseQueueTests.m */; };
@@ -176,6 +177,8 @@
 
 /* Begin PBXFileReference section */
 		56060B771F5536DE0020949D /* GRDB.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = GRDB.xcodeproj; path = Vendor/GRDB.swift/GRDB.xcodeproj; sourceTree = SOURCE_ROOT; };
+		5680BBDF1F57BA5900F67DD0 /* GRDBObjcTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "GRDBObjcTests-Bridging-Header.h"; sourceTree = "<group>"; };
+		5680BBE01F57BA5900F67DD0 /* GRDatabaseQueueTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GRDatabaseQueueTests.swift; sourceTree = "<group>"; };
 		568FC2401F55373300E176A4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		568FC2411F5537A600E176A4 /* GRDatabaseQueue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GRDatabaseQueue.swift; sourceTree = "<group>"; };
 		568FC2431F55389100E176A4 /* GRDBObjcTestCase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GRDBObjcTestCase.h; sourceTree = "<group>"; };
@@ -241,6 +244,15 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		5680BBF31F57BAA000F67DD0 /* Support */ = {
+			isa = PBXGroup;
+			children = (
+				5680BBDF1F57BA5900F67DD0 /* GRDBObjcTests-Bridging-Header.h */,
+				56F45A081F55366F00656C1E /* Info.plist */,
+			);
+			name = Support;
+			sourceTree = "<group>";
+		};
 		568FC23D1F55370500E176A4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -296,11 +308,12 @@
 			isa = PBXGroup;
 			children = (
 				568FC2441F5538E000E176A4 /* GRDatabaseQueueTests.m */,
+				5680BBE01F57BA5900F67DD0 /* GRDatabaseQueueTests.swift */,
 				568FC2531F55882E00E176A4 /* GRDatabaseTests.m */,
 				568FC2431F55389100E176A4 /* GRDBObjcTestCase.h */,
 				56F45A061F55366F00656C1E /* GRDBObjcTestCase.m */,
 				568FC2551F55B7C800E176A4 /* GRResultSetTests.m */,
-				56F45A081F55366F00656C1E /* Info.plist */,
+				5680BBF31F57BAA000F67DD0 /* Support */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -382,6 +395,7 @@
 					};
 					56F45A001F55366F00656C1E = {
 						CreatedOnToolsVersion = 9.0;
+						LastSwiftMigration = 0900;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -577,6 +591,7 @@
 				568FC2561F55B7C800E176A4 /* GRResultSetTests.m in Sources */,
 				568FC2541F55882E00E176A4 /* GRDatabaseTests.m in Sources */,
 				56F45A071F55366F00656C1E /* GRDBObjcTestCase.m in Sources */,
+				5680BBE11F57BA5900F67DD0 /* GRDatabaseQueueTests.swift in Sources */,
 				568FC2451F5538E000E176A4 /* GRDatabaseQueueTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -863,6 +878,9 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.github.groue.GRDBObjcTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
+				SWIFT_OBJC_BRIDGING_HEADER = "Tests/GRDBObjcTests-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -919,6 +937,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.github.groue.GRDBObjcTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
+				SWIFT_OBJC_BRIDGING_HEADER = "Tests/GRDBObjcTests-Bridging-Header.h";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};

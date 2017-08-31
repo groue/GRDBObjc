@@ -1,7 +1,11 @@
 import GRDB
 
 @objc public class GRDatabaseQueue : NSObject {
-    let dbQueue: DatabaseQueue
+    public let dbQueue: DatabaseQueue
+    
+    public init(_ dbQueue: DatabaseQueue) {
+        self.dbQueue = dbQueue
+    }
     
     @objc public var path: String {
         return dbQueue.path
