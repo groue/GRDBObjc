@@ -369,7 +369,7 @@
         GRResultSet *rs = [db executeQuery:@"SELECT 1 AS foo, 2 AS foo, 3 AS FOO"];
         XCTAssert([rs next]);
         NSDictionary *dict = rs.resultDictionary;
-        XCTAssertEqualObjects(dict[@"foo"], @(1)); // Compatibility warning: leftmost value. FMDB would have returned 2 instead.
+        XCTAssertEqualObjects(dict[@"foo"], @(2));
         XCTAssertEqualObjects(dict[@"FOO"], @(3));
     }];
 }
@@ -424,7 +424,7 @@
         XCTAssertNotNil(rs);
         XCTAssertEqual([rs columnIndexForName:@"foo"], 0);
         XCTAssertEqual([rs columnIndexForName:@"FOO"], 0);
-        XCTAssertEqual([rs columnIndexForName:@"Bar"], 1); // Compatibility warning: leftmost value. FMDB would have returned 2 instead.
+        XCTAssertEqual([rs columnIndexForName:@"Bar"], 2);
         XCTAssertEqual([rs columnIndexForName:@"missing"], -1);
     }];
 }

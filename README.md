@@ -336,52 +336,45 @@ Jump to the class you're interested into:
 - Available with full compatibility
     
     ```objc
+    @property (nonatomic, readonly, nullable) NSDictionary *resultDictionary;
+    
     - (void)close;
     - (BOOL)next;
+    
+    - (int)columnIndexForName:(NSString*)columnName;
+    
+    - (long)longForColumnIndex:(int)columnIdx;
+    - (long)longForColumn:(NSString*)columnName;
     - (long long int)longLongIntForColumnIndex:(int)columnIdx;
+    - (long long int)longLongIntForColumn:(NSString*)columnName;
     - (unsigned long long int)unsignedLongLongIntForColumnIndex:(int)columnIdx;
+    - (unsigned long long int)unsignedLongLongIntForColumn:(NSString*)columnName;
     - (BOOL)boolForColumnIndex:(int)columnIdx;
+    - (BOOL)boolForColumn:(NSString*)columnName;
     - (double)doubleForColumnIndex:(int)columnIdx;
+    - (double)doubleForColumn:(NSString*)columnName;
     - (NSString * _Nullable)stringForColumnIndex:(int)columnIdx;
+    - (NSString * _Nullable)stringForColumn:(NSString*)columnName;
     - (NSData * _Nullable)dataForColumnIndex:(int)columnIdx;
+    - (NSData * _Nullable)dataForColumn:(NSString*)columnName;
     - (id _Nullable)objectForColumnIndex:(int)columnIdx;
+    - (id _Nullable)objectForColumn:(NSString*)columnName;
     - (id _Nullable)objectAtIndexedSubscript:(int)columnIdx;
+    - (id _Nullable)objectForKeyedSubscript:(NSString *)columnName;
     - (NSData * _Nullable)dataNoCopyForColumnIndex:(int)columnIdx NS_RETURNS_NOT_RETAINED;
+    - (NSData * _Nullable)dataNoCopyForColumn:(NSString *)columnName NS_RETURNS_NOT_RETAINED;
     - (BOOL)columnIndexIsNull:(int)columnIdx;
+    - (BOOL)columnIsNull:(NSString*)columnName;
     ```
     
 - Available with compatiblity warning
     
     ```objc
-    // For existing columns, FMDB returns the index of the rightmost matching
-    // column, and GRDB the index of the leftmost one.
-    - (int)columnIndexForName:(NSString*)columnName;
-    
-    // When a row contains several columns with the same name, the FMDB
-    // dictionary contains the of value of the rightmost column. GRDB stores
-    // the value of the leftmost column.
-    @property (nonatomic, readonly, nullable) NSDictionary *resultDictionary;
-    
     // Those methods crash with a fatal error when database contains 64-bit
     // values that are not representable with `int`. FMDB would instead return
     // a truncated value.
     - (int)intForColumnIndex:(int)columnIdx;
-    - (long)longForColumnIndex:(int)columnIdx;
-    
-    // FMDB returns the values of of the rightmost matching column, and GRDB
-    // the value of the leftmost one.
     - (int)intForColumn:(NSString*)columnName;
-    - (long)longForColumn:(NSString*)columnName;
-    - (long long int)longLongIntForColumn:(NSString*)columnName;
-    - (unsigned long long int)unsignedLongLongIntForColumn:(NSString*)columnName;
-    - (BOOL)boolForColumn:(NSString*)columnName;
-    - (double)doubleForColumn:(NSString*)columnName;
-    - (NSString * _Nullable)stringForColumn:(NSString*)columnName;
-    - (NSData * _Nullable)dataForColumn:(NSString*)columnName;
-    - (id _Nullable)objectForColumn:(NSString*)columnName;
-    - (id _Nullable)objectForKeyedSubscript:(NSString *)columnName;
-    - (NSData * _Nullable)dataNoCopyForColumn:(NSString *)columnName NS_RETURNS_NOT_RETAINED;
-    - (BOOL)columnIsNull:(NSString*)columnName;
     ```
     
 - Not available yet (pull requests are welcome)

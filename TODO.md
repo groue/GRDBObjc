@@ -1,2 +1,1 @@
-- Fix this leftmost/rightmost column compatibility issue.
 - Support for FMDB NSDate formatting.

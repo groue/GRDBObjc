@@ -8,7 +8,9 @@ import SQLite3
         case ended
         case error(Error)
     }
+    
     private var state: State
+    
     private var cursor: RowCursor {
         switch state {
         case .initialized(let cursor): return cursor
@@ -17,6 +19,7 @@ import SQLite3
         case .error(let error): fatalError("GRResultSet had an error: \(error)")
         }
     }
+    
     private var row: Row {
         switch state {
         case .initialized: fatalError("-[GRResultSet next] has to be called before accessing fetched results")
@@ -25,6 +28,10 @@ import SQLite3
         case .error(let error): fatalError("GRResultSet had an error: \(error)")
         }
     }
+    
+    private lazy var columIndexForLowercaseColumnName: [String: Int] = Dictionary(
+        self.cursor.statement.columnNames.enumerated().map { ($1.lowercased(), $0) },
+        uniquingKeysWith: { $1 }) // keep rightmost index like FMDB
 
     init(cursor: RowCursor) {
         self.state = .initialized(cursor)
@@ -54,12 +61,8 @@ import SQLite3
         state = .ended
     }
     
-    @objc(columnIndexForName:) public func columnIndex(columnName: String) -> Int {
-        let statement = cursor.statement
-        if let index = statement.index(ofColumn: columnName) {
-            return index
-        }
-        return -1 // Compatibility with FMDB
+    @objc(columnIndexForName:) public func columnIndex(_ columnName: String) -> Int {
+        return columIndexForLowercaseColumnName[columnName.lowercased()] ?? -1
     }
     
     @objc public func columnIndexIsNull(_ columnIndex: Int) -> Bool {
@@ -67,39 +70,39 @@ import SQLite3
     }
     
     @objc public func columnIsNull(_ columnName: String) -> Bool {
-        return columnIndexIsNull(columnIndex(columnName: columnName))
+        return columnIndexIsNull(columnIndex(columnName))
     }
     
     @objc(intForColumnIndex:) public func int(columnIndex: Int) -> CInt { return row[columnIndex] ?? 0 }
-    @objc(intForColumn:) public func int(columnName: String) -> CInt { return row[columnName] ?? 0 }
+    @objc(intForColumn:) public func int(columnName: String) -> CInt { return row[columnIndex(columnName)] ?? 0 }
     @objc(longForColumnIndex:) public func long(columnIndex: Int) -> CLong { return row[columnIndex] ?? 0 }
-    @objc(longForColumn:) public func long(columnName: String) -> CLong { return row[columnName] ?? 0 }
+    @objc(longForColumn:) public func long(columnName: String) -> CLong { return row[columnIndex(columnName)] ?? 0 }
     @objc(longLongIntForColumnIndex:) public func long(columnIndex: Int) -> CLongLong { return row[columnIndex] ?? 0 }
-    @objc(longLongIntForColumn:) public func long(columnName: String) -> CLongLong { return row[columnName] ?? 0 }
+    @objc(longLongIntForColumn:) public func long(columnName: String) -> CLongLong { return row[columnIndex(columnName)] ?? 0 }
     @objc(unsignedLongLongIntForColumnIndex:) public func long(columnIndex: Int) -> CUnsignedLongLong { return row[columnIndex] ?? 0 }
-    @objc(unsignedLongLongIntForColumn:) public func long(columnName: String) -> CUnsignedLongLong { return row[columnName] ?? 0 }
+    @objc(unsignedLongLongIntForColumn:) public func long(columnName: String) -> CUnsignedLongLong { return row[columnIndex(columnName)] ?? 0 }
     @objc(boolForColumnIndex:) public func bool(columnIndex: Int) -> Bool { return row[columnIndex] ?? false }
-    @objc(boolForColumn:) public func bool(columnName: String) -> Bool { return row[columnName] ?? false }
+    @objc(boolForColumn:) public func bool(columnName: String) -> Bool { return row[columnIndex(columnName)] ?? false }
     @objc(doubleForColumnIndex:) public func double(columnIndex: Int) -> Double { return row[columnIndex] ?? 0.0 }
-    @objc(doubleForColumn:) public func double(columnName: String) -> Double { return row[columnName] ?? 0.0 }
+    @objc(doubleForColumn:) public func double(columnName: String) -> Double { return row[columnIndex(columnName)] ?? 0.0 }
     @objc(stringForColumnIndex:) public func string(columnIndex: Int) -> String? { return row[columnIndex] }
-    @objc(stringForColumn:) public func string(columnName: String) -> String? { return row[columnName] }
+    @objc(stringForColumn:) public func string(columnName: String) -> String? { return row[columnIndex(columnName)] }
     @objc(dataForColumnIndex:) public func data(columnIndex: Int) -> Data? { return row[columnIndex] }
-    @objc(dataForColumn:) public func data(columnName: String) -> Data? { return row[columnName] }
+    @objc(dataForColumn:) public func data(columnName: String) -> Data? { return row[columnIndex(columnName)] }
     @objc(dataNoCopyForColumnIndex:) public func dataNoCopy(columnIndex: Int) -> Data? { return row.dataNoCopy(atIndex: columnIndex) }
-    @objc(dataNoCopyForColumn:) public func dataNoCopy(columnName: String) -> Data? { return row.dataNoCopy(named: columnName) }
+    @objc(dataNoCopyForColumn:) public func dataNoCopy(columnName: String) -> Data? { return row.dataNoCopy(atIndex: columnIndex(columnName)) }
     @objc(objectForColumnIndex:) public func object(columnIndex: Int) -> Any? { return row[columnIndex] }
-    @objc(objectForColumn:) public func object(columnName: String) -> Any? { return row[columnName] }
+    @objc(objectForColumn:) public func object(columnName: String) -> Any? { return row[columnIndex(columnName)] }
     
     @objc public subscript(_ columnIndex: Int) -> Any? { return row[columnIndex] }
-    @objc public subscript(_ columnName: String) -> Any? { return row[columnName] }
+    @objc public subscript(_ columnName: String) -> Any? { return row[columnIndex(columnName)] }
     
     @objc public var resultDictionary: [String: AnyObject]? {
         switch state {
         case .row(_, let row):
             return Dictionary(
                 row.map { ($0, $1.storage.value as AnyObject) },
-                uniquingKeysWith: { (left, _) in left }) // keep leftmost value, despite FMDB returns rightmost value: we favor consistency over compatibility here.
+                uniquingKeysWith: { $1 }) // keep rightmost value like FMDB
         default:
             return nil
         }
