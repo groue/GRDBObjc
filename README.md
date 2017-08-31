@@ -92,9 +92,7 @@ Enter GRDBObjc. Very often, all you will have to do is remove FMDB, install GRDB
 
 This is enough for most of you Objective-C code that targets FMDB to compile on top of GRDB and GRDBObjc. Of course, the devil is in the detail, and we'll list below a detailed [compatibility chart](#compatibility-chart).
 
-The `FMDatabaseQueue`, `FMResultSet`, etc. identifiers are now aliases to GRDBObjc's `GRDatabaseQueue`, `GRResultSet` that are backed by GRDB.
-
-The database initialized from Objective-C is know usable from Swift, with the full GRDB toolkit. For example:
+The `FMDatabaseQueue`, `FMResultSet`, etc. identifiers are now aliases to GRDBObjc's `GRDatabaseQueue`, `GRResultSet` that are backed by GRDB. The databases initialized from Objective-C are usable from Swift, with the full GRDB toolkit. For example:
 
 ```objc
 @interface DataStore
