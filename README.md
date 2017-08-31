@@ -115,11 +115,6 @@ extension DataStore {
 ```
 
 
-### KVO, FCModel
-
-TODO: write something about Codable protocol.
-
-
 ### Compatibility Chart
 
 TODO
