@@ -80,11 +80,52 @@ request.rx.fetchAll(in: dbQueue)
 
 ### GRDBObjc is the glue between GRDB and your Objective-C code that targets FMDB
 
-TODO
+One can not simply install FMDB along with GRDB in the same application, and have Objective-C code target FMDB while new Swift code uses GRDB. This won't work well because SQLite won't let two distinct connections write in the database at the same time. Instead, it will fail with an SQLITE_BUSY error as soon as an Objective-C thread and a Swift thread happen to modify the database concurrently. Think of a download operation that completes as the user is editing some value.
+
+Enter GRDBObjc. Very often, all you will have to do is remove FMDB, install GRDB and GRDBObjc, and replace `#import` directives:
+
+```diff
+-#import <fmdb/FMDB.h>
++#import <GRDBObjc/GRDBObjc.h>
++#import <GRDBObjc/GRDBObjc-Swift.h>
+```
+
+This is enough for most of you Objective-C code that targets FMDB to compile on top of GRDB and GRDBObjc. Of course, the devil is in the detail, and we'll list below a detailed [compatibility chart](#compatibility-chart).
+
+The `FMDatabaseQueue`, `FMResultSet`, etc. identifiers are now aliases to GRDBObjc's `GRDatabaseQueue`, `GRResultSet` that are backed by GRDB.
+
+The database initialized from Objective-C is know usable from Swift, with the full GRDB toolkit. For example:
+
+```objc
+@interface DataStore
+@property (nonatomic, nonnull) FMDatabaseQueue* dbQueue NS_REFINED_FOR_SWIFT;
+@end
+
+@implementation DataStore
+- (void)setupDatabase {
+    self.dbQueue = [FMDatabaseQueue databaseQueueWithPath:...];
+}
+@end
+```
+
+```swift
+extension DataStore {
+    var dbQueue: DatabaseQueue {
+        return __dbQueue.dbQueue
+    }
+}
+```
+
 
 ### KVO, FCModel
 
-TODO: write something about GRDB support for Codable protocol
+TODO: write something about Codable protocol.
+
+
+### Compatibility Chart
+
+TODO
+
 
 ---
 
