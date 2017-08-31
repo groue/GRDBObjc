@@ -1,18 +1,18 @@
 GRDBObjc
 ========
 
-### A library that provides FMDB-compatible Objective-C bindings to the SQLite library GRDB.swift.
+### FMDB-compatible bindings to GRDB.swift.
 
-The goal is dead simple: help Objective-C applications replacing [FMDB](http://github.com/ccgus/fmdb) with [GRDB](http://github.com/groue/GRDB.swift), at minimal cost.
+GRDBObjc helps Objective-C applications that use SQLite replace [FMDB](http://github.com/ccgus/fmdb) with [GRDB](http://github.com/groue/GRDB.swift), at minimal cost.
 
 
 ### Indulge yourself with a little Swift
 
-It happens that we developers have to maintain Objective-C applications, and wish you could inject more and more Swift into them.
+It happens that we developers maintain and develop Objective-C applications, and wish you could inject more and more Swift into them.
 
-This happens when rewriting a whole application from scratch is not a reasonable option, and yet the expressivity and safety of Swift has an intense appeal. We preserve the legacy Objective-C code that represents years of development, experience, bug hunting and tests, and use Swift in new and isolated features that can easily be plugged on the Objective-C body.
+This happens when rewriting a whole application from scratch is not a reasonable option, and yet the expressivity and safety of Swift has an intense appeal. We preserve the legacy Objective-C code that represents years of development, experience, bug hunting and tests, and use Swift in new and isolated features that can easily be plugged on to the Objective-C body.
 
-Such a mixed application has an Objective-C trunk, and a few Swift leaves. Those Swift add-ons are sometimes hampered by their foreign foundations: maybe they don't look very Swifty, or maybe we dream of Swift alternatives that offer superior solutions.
+Such a mixed application has an Objective-C trunk, and a few Swift leaves. Those Swift add-ons are sometimes hampered by their foreign foundations, which may not look very Swifty. Maybe we dream of Swift alternatives that offer superior solutions.
 
 
 ### FMDB in a Swift World
