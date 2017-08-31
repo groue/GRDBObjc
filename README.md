@@ -19,7 +19,7 @@ GRDBObjc helps Objective-C applications that use SQLite replace [FMDB](http://gi
 
 ### Indulge yourself with a little Swift
 
-It happens that we developers maintain and develop Objective-C applications, and wish you could inject more and more Swift into them.
+It happens that we developers maintain and develop Objective-C applications, and wish we could inject more and more Swift into them.
 
 This happens when rewriting a whole application from scratch is not a reasonable option, and yet the expressivity and safety of Swift has an intense appeal. We preserve the legacy Objective-C code that represents years of development, experience, bug hunting and tests, and use Swift in new and isolated features that can easily be plugged on to the Objective-C body.
 
@@ -121,10 +121,12 @@ This is enough for most of your Objective-C code that targets FMDB to compile on
 The `FMDatabaseQueue`, `FMResultSet`, etc. identifiers are now aliases to GRDBObjc's `GRDatabaseQueue`, `GRResultSet` that are backed by GRDB. The databases initialized from Objective-C are usable from Swift, with the full GRDB toolkit. For example:
 
 ```objc
+// Objective-C
 #import <GRDBObjc/GRDBObjc.h>
 #import <GRDBObjc/GRDBObjc-Swift.h>
 
 @interface DataStore
+// Use FMDB in Objective-C
 @property (nonatomic, nonnull) FMDatabaseQueue* dbQueue NS_REFINED_FOR_SWIFT;
 @end
 
@@ -136,10 +138,12 @@ The `FMDatabaseQueue`, `FMResultSet`, etc. identifiers are now aliases to GRDBOb
 ```
 
 ```swift
+// Swift
 import GRDB
 import GRDBObjc
 
 extension DataStore {
+    // Use GRDB in Swift
     var dbQueue: DatabaseQueue {
         return __dbQueue.dbQueue
     }
