@@ -281,6 +281,13 @@ We'll list all FMDB methods below. Each of them will be either:
     - (void)resultErrorCode:(int)errorCode context:(void *)context;
     - (void)resultErrorNoMemoryInContext:(void *)context NS_SWIFT_NAME(resultErrorNoMemory(context:));
     - (void)resultErrorTooBigInContext:(void *)context NS_SWIFT_NAME(resultErrorTooBig(context:));
+    
+    // Date formatter
+    + (NSDateFormatter *)storeableDateFormat:(NSString *)format;
+    - (BOOL)hasDateFormatter;
+    - (void)setDateFormat:(NSDateFormatter *)format;
+    - (NSDate * _Nullable)dateFromString:(NSString *)s;
+    - (NSString *)stringFromDate:(NSDate *)date;
     ```
     
 - Not available and requiring GRDB modifications
@@ -297,13 +304,6 @@ We'll list all FMDB methods below. Each of them will be either:
     - (BOOL)openWithFlags:(int)flags;
     - (BOOL)openWithFlags:(int)flags vfs:(NSString * _Nullable)vfsName;
     - (BOOL)close;
-    
-    // Date formatter
-    + (NSDateFormatter *)storeableDateFormat:(NSString *)format;
-    - (BOOL)hasDateFormatter;
-    - (void)setDateFormat:(NSDateFormatter *)format;
-    - (NSDate * _Nullable)dateFromString:(NSString *)s;
-    - (NSString *)stringFromDate:(NSDate *)date;
     ```
     
 - Not available without any hope for eventual support
