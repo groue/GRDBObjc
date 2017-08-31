@@ -74,7 +74,7 @@ func fetchPlayers(dbQueue: FMDatabaseQueue) throws -> [Player] {
 }
 ```
 
-You may think: "I never use FMDB like that!". Indeed error handling with FMDB is a pain to read, and barely nobody does it. And yet this kind of robustness is what allows your application to run safely in the background on a [locked device](https://developer.apple.com/library/content/documentation/iPhone/Conceptual/iPhoneOSProgrammingGuide/StrategiesforImplementingYourApp/StrategiesforImplementingYourApp.html#//apple_ref/doc/uid/TP40007072-CH5-SW21), for example. GRDB is concise, won't miss any error, and yet runs the code above [much faster](https://github.com/groue/GRDB.swift/wiki/Performance) than FMDB.
+You may think: "I never use FMDB like that!". Indeed error handling with FMDB is a pain to read and write, and barely nobody does it. And yet this kind of robustness is what allows your application to run safely in the background on a [locked device](https://developer.apple.com/library/content/documentation/iPhone/Conceptual/iPhoneOSProgrammingGuide/StrategiesforImplementingYourApp/StrategiesforImplementingYourApp.html#//apple_ref/doc/uid/TP40007072-CH5-SW21), for example. GRDB is concise, won't miss any error, and yet runs the code above [much faster](https://github.com/groue/GRDB.swift/wiki/Performance) than FMDB.
 
 
 ### Going Further with GRDB
