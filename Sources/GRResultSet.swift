@@ -9,6 +9,7 @@ import SQLite3
         case error(Error)
     }
     
+    private var db: GRDatabase
     private var state: State
     
     private var cursor: RowCursor {
@@ -33,7 +34,8 @@ import SQLite3
         self.cursor.statement.columnNames.enumerated().map { ($1.lowercased(), $0) },
         uniquingKeysWith: { $1 }) // keep rightmost index like FMDB
 
-    init(cursor: RowCursor) {
+    init(database: GRDatabase, cursor: RowCursor) {
+        self.db = database
         self.state = .initialized(cursor)
     }
     
@@ -73,29 +75,38 @@ import SQLite3
         return columnIndexIsNull(columnIndex(columnName))
     }
     
-    @objc(intForColumnIndex:) public func int(columnIndex: Int) -> CInt { return row[columnIndex] ?? 0 }
-    @objc(intForColumn:) public func int(columnName: String) -> CInt { return row[columnIndex(columnName)] ?? 0 }
-    @objc(longForColumnIndex:) public func long(columnIndex: Int) -> CLong { return row[columnIndex] ?? 0 }
-    @objc(longForColumn:) public func long(columnName: String) -> CLong { return row[columnIndex(columnName)] ?? 0 }
-    @objc(longLongIntForColumnIndex:) public func long(columnIndex: Int) -> CLongLong { return row[columnIndex] ?? 0 }
-    @objc(longLongIntForColumn:) public func long(columnName: String) -> CLongLong { return row[columnIndex(columnName)] ?? 0 }
-    @objc(unsignedLongLongIntForColumnIndex:) public func long(columnIndex: Int) -> CUnsignedLongLong { return row[columnIndex] ?? 0 }
-    @objc(unsignedLongLongIntForColumn:) public func long(columnName: String) -> CUnsignedLongLong { return row[columnIndex(columnName)] ?? 0 }
-    @objc(boolForColumnIndex:) public func bool(columnIndex: Int) -> Bool { return row[columnIndex] ?? false }
-    @objc(boolForColumn:) public func bool(columnName: String) -> Bool { return row[columnIndex(columnName)] ?? false }
-    @objc(doubleForColumnIndex:) public func double(columnIndex: Int) -> Double { return row[columnIndex] ?? 0.0 }
-    @objc(doubleForColumn:) public func double(columnName: String) -> Double { return row[columnIndex(columnName)] ?? 0.0 }
-    @objc(stringForColumnIndex:) public func string(columnIndex: Int) -> String? { return row[columnIndex] }
-    @objc(stringForColumn:) public func string(columnName: String) -> String? { return row[columnIndex(columnName)] }
-    @objc(dataForColumnIndex:) public func data(columnIndex: Int) -> Data? { return row[columnIndex] }
-    @objc(dataForColumn:) public func data(columnName: String) -> Data? { return row[columnIndex(columnName)] }
-    @objc(dataNoCopyForColumnIndex:) public func dataNoCopy(columnIndex: Int) -> Data? { return row.dataNoCopy(atIndex: columnIndex) }
-    @objc(dataNoCopyForColumn:) public func dataNoCopy(columnName: String) -> Data? { return row.dataNoCopy(atIndex: columnIndex(columnName)) }
-    @objc(objectForColumnIndex:) public func object(columnIndex: Int) -> Any? { return row[columnIndex] }
-    @objc(objectForColumn:) public func object(columnName: String) -> Any? { return row[columnIndex(columnName)] }
-    
     @objc public subscript(_ columnIndex: Int) -> Any? { return row[columnIndex] }
-    @objc public subscript(_ columnName: String) -> Any? { return row[columnIndex(columnName)] }
+    @objc(objectForColumnIndex:) public func object(columnIndex: Int) -> Any? { return row[columnIndex] }
+    @objc(intForColumnIndex:) public func int(columnIndex: Int) -> CInt { return row[columnIndex] ?? 0 }
+    @objc(longForColumnIndex:) public func long(columnIndex: Int) -> CLong { return row[columnIndex] ?? 0 }
+    @objc(longLongIntForColumnIndex:) public func longlong(columnIndex: Int) -> CLongLong { return row[columnIndex] ?? 0 }
+    @objc(unsignedLongLongIntForColumnIndex:) public func unsignedLongLong(columnIndex: Int) -> CUnsignedLongLong { return row[columnIndex] ?? 0 }
+    @objc(boolForColumnIndex:) public func bool(columnIndex: Int) -> Bool { return row[columnIndex] ?? false }
+    @objc(doubleForColumnIndex:) public func double(columnIndex: Int) -> Double { return row[columnIndex] ?? 0.0 }
+    @objc(stringForColumnIndex:) public func string(columnIndex: Int) -> String? { return row[columnIndex] }
+    @objc(dataForColumnIndex:) public func data(columnIndex: Int) -> Data? { return row[columnIndex] }
+    @objc(dataNoCopyForColumnIndex:) public func dataNoCopy(columnIndex: Int) -> Data? { return row.dataNoCopy(atIndex: columnIndex) }
+    @objc(dateForColumnIndex:) public func date(columnIndex: Int) -> Date? {
+        if let dateFormatter = db.dateFormatter {
+            guard let string = string(columnIndex: columnIndex) else { return nil }
+            return dateFormatter.date(from: string)
+        } else {
+            return Date(timeIntervalSince1970: double(columnIndex: columnIndex))
+        }
+    }
+
+    @objc public subscript(_ columnName: String) -> Any? { return self[columnIndex(columnName)] }
+    @objc(objectForColumn:) public func object(columnName: String) -> Any? { return object(columnIndex: columnIndex(columnName)) }
+    @objc(intForColumn:) public func int(columnName: String) -> CInt { return int(columnIndex: columnIndex(columnName)) }
+    @objc(longForColumn:) public func long(columnName: String) -> CLong { return long(columnIndex: columnIndex(columnName)) }
+    @objc(longLongIntForColumn:) public func longlong(columnName: String) -> CLongLong { return longlong(columnIndex: columnIndex(columnName)) }
+    @objc(unsignedLongLongIntForColumn:) public func unsignedLongLong(columnName: String) -> CUnsignedLongLong { return unsignedLongLong(columnIndex: columnIndex(columnName)) }
+    @objc(boolForColumn:) public func bool(columnName: String) -> Bool { return bool(columnIndex: columnIndex(columnName)) }
+    @objc(doubleForColumn:) public func double(columnName: String) -> Double { return double(columnIndex: columnIndex(columnName)) }
+    @objc(stringForColumn:) public func string(columnName: String) -> String? { return string(columnIndex: columnIndex(columnName)) }
+    @objc(dataForColumn:) public func data(columnName: String) -> Data? { return data(columnIndex: columnIndex(columnName)) }
+    @objc(dataNoCopyForColumn:) public func dataNoCopy(columnName: String) -> Data? { return dataNoCopy(columnIndex: columnIndex(columnName)) }
+    @objc(dateForColumn:) public func date(columnName: String) -> Date? { return date(columnIndex: columnIndex(columnName)) }
     
     @objc public var resultDictionary: [String: AnyObject]? {
         switch state {

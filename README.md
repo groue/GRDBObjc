@@ -202,6 +202,13 @@ Jump to the class you're interested into:
     
     // Save points
     - (NSError * _Nullable)inSavePoint:(__attribute__((noescape)) void (^)(BOOL *rollback))block;
+    
+    // Date formatter
+    + (NSDateFormatter *)storeableDateFormat:(NSString *)format;
+    - (BOOL)hasDateFormatter;
+    - (void)setDateFormat:(NSDateFormatter *)format;
+    - (NSDate * _Nullable)dateFromString:(NSString *)s;
+    - (NSString *)stringFromDate:(NSDate *)date;
     ```
     
 - Available with compatiblity warning
@@ -291,13 +298,6 @@ Jump to the class you're interested into:
     - (void)resultErrorCode:(int)errorCode context:(void *)context;
     - (void)resultErrorNoMemoryInContext:(void *)context NS_SWIFT_NAME(resultErrorNoMemory(context:));
     - (void)resultErrorTooBigInContext:(void *)context NS_SWIFT_NAME(resultErrorTooBig(context:));
-    
-    // Date formatter
-    + (NSDateFormatter *)storeableDateFormat:(NSString *)format;
-    - (BOOL)hasDateFormatter;
-    - (void)setDateFormat:(NSDateFormatter *)format;
-    - (NSDate * _Nullable)dateFromString:(NSString *)s;
-    - (NSString *)stringFromDate:(NSDate *)date;
     ```
     
 - Not available and requiring GRDB modifications
@@ -357,6 +357,8 @@ Jump to the class you're interested into:
     - (NSString * _Nullable)stringForColumn:(NSString*)columnName;
     - (NSData * _Nullable)dataForColumnIndex:(int)columnIdx;
     - (NSData * _Nullable)dataForColumn:(NSString*)columnName;
+    - (NSDate * _Nullable)dateForColumn:(NSString*)columnName;
+    - (NSDate * _Nullable)dateForColumnIndex:(int)columnIdx;
     - (id _Nullable)objectForColumnIndex:(int)columnIdx;
     - (id _Nullable)objectForColumn:(NSString*)columnName;
     - (id _Nullable)objectAtIndexedSubscript:(int)columnIdx;
@@ -388,8 +390,6 @@ Jump to the class you're interested into:
     - (BOOL)hasAnotherRow;
     @property (nonatomic, readonly) int columnCount;
     - (NSString * _Nullable)columnNameForIndex:(int)columnIdx;
-    - (NSDate * _Nullable)dateForColumn:(NSString*)columnName;
-    - (NSDate * _Nullable)dateForColumnIndex:(int)columnIdx;
     - (const unsigned char * _Nullable)UTF8StringForColumn:(NSString*)columnName;
     - (const unsigned char * _Nullable)UTF8StringForColumnIndex:(int)columnIdx;
     - (void)kvcMagic:(id)object;
