@@ -75,13 +75,24 @@ You may think: "I never use FMDB like that!". Indeed error handling with FMDB is
 
 ### Going Further with GRDB
 
-[Database observation](https://github.com/groue/GRDB.swift#database-changes-observation) is another feature that will save you the hours developing it on top of FMDB. GRDB comes with high-level tools such as [FetchedRecordsController](https://github.com/groue/GRDB.swift#fetchedrecordscontroller), and the companion library [RxGRDB](http://github.com/RxSwiftCommunity/RxGRDB) which lets you observe database changes in the reactive way. Observation happens at the SQLite level, which means that it won't be fooled by raw SQL updates, foreign key cascades, and SQL triggers. Don't miss a single commit:
+[Database observation](https://github.com/groue/GRDB.swift#database-changes-observation) is a ready-made GRDB feature that will save you the hours developing it on top of FMDB.
+
+For example, GRDB comes with high-level tools such as [FetchedRecordsController](https://github.com/groue/GRDB.swift#fetchedrecordscontroller), and the companion library [RxGRDB](http://github.com/RxSwiftCommunity/RxGRDB) which lets you observe database changes in the reactive way. Since observation happens at the SQLite level, it won't be fooled by raw SQL updates, foreign key cascades, or even SQL triggers. Don't miss a single commit:
 
 ```swift
 let request = SQLRequest(
     "SELECT * FROM players ORDER BY score DESC LIMIT 10")
     .asRequest(of: Player.self)
 
+// Observe request changes with FetchedRecordsController:
+let controller = FetchedRecordsController(dbQueue, request: request)
+controller.trackChanges {
+    let players = $0.fetchedRecords // [Player]
+    print("Players have changed")
+}
+try controller.performFetch()
+
+// Observe request changes in the reactive way:
 request.rx.fetchAll(in: dbQueue)
     .subscribe(onNext: { players: [Player] in
         print("Players have changed")
