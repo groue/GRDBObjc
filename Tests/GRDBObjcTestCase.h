@@ -2,5 +2,5 @@
 @import GRDBObjc;
 
 @interface GRDBObjcTestCase : XCTestCase
-- (NSString * _Nullable)makeTemporaryDatabasePath;
+- (NSString * _Nonnull)makeTemporaryDatabasePath;
 @end

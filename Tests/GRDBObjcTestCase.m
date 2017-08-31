@@ -10,7 +10,7 @@ static NSString *const sandboxPath = @"/tmp/GRDBObjcTestCase";
     NSString *directoryPath = [sandboxPath stringByAppendingPathComponent:[[NSProcessInfo processInfo] globallyUniqueString]];
     NSError *error;
     if (![fm createDirectoryAtPath:directoryPath withIntermediateDirectories:YES attributes:nil error:&error]) {
-        XCTFail("%@", error);
+        [NSException raise:NSInternalInconsistencyException format:@"Could not create database directory: %@", error];
         return nil;
     }
     return [directoryPath stringByAppendingPathComponent:@"db.sqlite"];

@@ -2,10 +2,10 @@ import XCTest
 import GRDB
 import GRDBObjc
 
-class GRDatabaseQueueTests: XCTestCase {
+class GRDatabaseQueueTests: GRDBObjcTestCase {
 
-    func testDatabaseQueueIntializer() {
-        let dbQueue = DatabaseQueue()
+    func testDatabaseQueueIntializer() throws {
+        let dbQueue = try DatabaseQueue(path: makeTemporaryDatabasePath())
         let grQueue: GRDatabaseQueue = GRDatabaseQueue(dbQueue)
         grQueue.inDatabase { db in
             db.executeUpdate("CREATE TABLE t(a)")
@@ -20,7 +20,7 @@ class GRDatabaseQueueTests: XCTestCase {
     }
 
     func testGRDatabaseQueueInitializer() throws {
-        let grQueue = GRDatabaseQueue()
+        let grQueue = try GRDatabaseQueue(path: makeTemporaryDatabasePath())
         let dbQueue: DatabaseQueue = grQueue.dbQueue
         try dbQueue.inDatabase { db in
             try db.execute("CREATE TABLE t(a)")
