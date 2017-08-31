@@ -138,8 +138,171 @@ TODO
 
 ### FMDB Compatibility Chart
 
-TODO
+GRDB and FMDB usually behave exactly in the same manner. When there are slight differences, GRDBObjc generally favors FMDB compatibility over native GRDB behavior.
 
+Yet some FMDB features have not yet been ported to GRDBObjc. This includes support for custom SQL functions, for example.
+
+Finally, some FMDB features are simply unavailable. For example, GRDBObjc won't let you create a naked FMDatabase. To access the database, you must use a FMDatabaseQueue.
+
+We'll list all FMDB methods below. Each of them will be either:
+
+- Available with full compatibility
+- Available with compatiblity warning
+- Not available yet (pull requests are welcome)
+- Not available and replaced with another method
+- Not available and requiring GRDB modifications
+- Not available without any hope for eventual support
+
+#### FMDatabase
+
+- Available with full compatibility
+    
+    ```objc
+    // Properties
+    @property (nonatomic, readonly) void *sqliteHandle;
+    
+    // Perform updates
+    @property (nonatomic, readonly) int64_t lastInsertRowId;
+    @property (nonatomic, readonly) int changes;
+    - (BOOL)executeUpdate:(NSString*)sql withArgumentsInArray:(NSArray *)arguments;
+    - (BOOL)executeUpdate:(NSString*)sql values:(NSArray * _Nullable)values error:(NSError * _Nullable __autoreleasing *)error;
+    - (BOOL)executeUpdate:(NSString*)sql withParameterDictionary:(NSDictionary *)arguments;
+    
+    // Retrieving results
+    - (FMResultSet * _Nullable)executeQuery:(NSString *)sql withArgumentsInArray:(NSArray *)arguments;
+    - (FMResultSet * _Nullable)executeQuery:(NSString *)sql values:(NSArray * _Nullable)values error:(NSError * _Nullable __autoreleasing *)error;
+    - (FMResultSet * _Nullable)executeQuery:(NSString *)sql withParameterDictionary:(NSDictionary * _Nullable)arguments;
+    
+    /// Retrieving error codes
+    - (NSError *)lastError;
+    
+    // Save points
+    - (NSError * _Nullable)inSavePoint:(__attribute__((noescape)) void (^)(BOOL *rollback))block;
+    ```
+    
+- Available with compatiblity warning
+    
+    ```objc
+    // The isInTransaction property reflect actual SQLite state instead
+    // of relying on the balance of beginTransaction/commit/rollback
+    // methods. Some transaction errors will thus have FMDB return
+    // true when GRDBObjc returns false.
+    @property (nonatomic, readonly) BOOL isInTransaction;
+    ```
+    
+- Not available yet (pull requests are welcome)
+    
+    ```objc
+    + (NSString*)sqliteLibVersion;
+    + (BOOL)isSQLiteThreadSafe;
+    
+    // Properties
+    @property (atomic, assign) BOOL traceExecution;
+    @property (atomic, assign) BOOL logsErrors;
+    @property (nonatomic, readonly) BOOL goodConnection;
+    @property (nonatomic, readonly, nullable) NSString *databasePath;
+    @property (nonatomic, readonly, nullable) NSURL *databaseURL;
+    @property (nonatomic) NSTimeInterval maxBusyRetryTimeInterval;
+    
+    // Perform updates
+    - (BOOL)executeUpdate:(NSString*)sql withErrorAndBindings:(NSError * _Nullable *)outErr, ...;
+    - (BOOL)executeUpdate:(NSString*)sql, ...;
+    - (BOOL)executeUpdateWithFormat:(NSString *)format, ... NS_FORMAT_FUNCTION(1,2);
+    - (BOOL)executeUpdate:(NSString*)sql withVAList: (va_list)args;
+    - (BOOL)executeStatements:(NSString *)sql;
+    - (BOOL)executeStatements:(NSString *)sql withResultBlock:(__attribute__((noescape)) FMDBExecuteStatementsCallbackBlock _Nullable)block;
+    
+    // Retrieving results
+    - (FMResultSet * _Nullable)executeQuery:(NSString*)sql, ...;
+    - (FMResultSet * _Nullable)executeQueryWithFormat:(NSString*)format, ... NS_FORMAT_FUNCTION(1,2);
+    - (FMResultSet * _Nullable)executeQuery:(NSString *)sql withVAList:(va_list)args;
+    
+    // Transactions
+    - (BOOL)beginTransaction;
+    - (BOOL)beginDeferredTransaction;
+    - (BOOL)commit;
+    - (BOOL)rollback;
+    
+    // Cached statements and result sets
+    @property (nonatomic) BOOL shouldCacheStatements;
+    @property (atomic, retain, nullable) NSMutableDictionary *cachedStatements;
+    - (void)clearCachedStatements;    
+    - (BOOL)interrupt;
+    
+    // Encryption methods
+    - (BOOL)setKey:(NSString*)key;
+    - (BOOL)rekey:(NSString*)key;
+    - (BOOL)setKeyWithData:(NSData *)keyData;
+    - (BOOL)rekeyWithData:(NSData *)keyData;
+    
+    // Retrieving error codes
+    @property (atomic, assign) BOOL crashOnErrors;
+    - (NSString*)lastErrorMessage;
+    - (int)lastErrorCode;
+    - (int)lastExtendedErrorCode;
+    - (BOOL)hadError;
+    
+    // Save points
+    - (BOOL)startSavePointWithName:(NSString*)name error:(NSError * _Nullable *)outErr;
+    - (BOOL)releaseSavePointWithName:(NSString*)name error:(NSError * _Nullable *)outErr;
+    - (BOOL)rollbackToSavePointWithName:(NSString*)name error:(NSError * _Nullable *)outErr;
+    
+    // Make SQL function
+    - (void)makeFunctionNamed:(NSString *)name arguments:(int)arguments block:(void (^)(void *context, int argc, void * _Nonnull * _Nonnull argv))block;
+    - (void)makeFunctionNamed:(NSString *)name maximumArguments:(int)count withBlock:(void (^)(void *context, int argc, void * _Nonnull * _Nonnull argv))block __deprecated_msg("Use makeFunctionNamed:arguments:block:");
+    - (SqliteValueType)valueType:(void *)argv;
+    - (int)valueInt:(void *)value;
+    - (long long)valueLong:(void *)value;
+    - (double)valueDouble:(void *)value;
+    - (NSData * _Nullable)valueData:(void *)value;
+    - (NSString * _Nullable)valueString:(void *)value;
+    - (void)resultNullInContext:(void *)context NS_SWIFT_NAME(resultNull(context:));
+    - (void)resultInt:(int) value context:(void *)context;
+    - (void)resultLong:(long long)value context:(void *)context;
+    - (void)resultDouble:(double)value context:(void *)context;
+    - (void)resultData:(NSData *)data context:(void *)context;
+    - (void)resultString:(NSString *)value context:(void *)context;
+    - (void)resultError:(NSString *)error context:(void *)context;
+    - (void)resultErrorCode:(int)errorCode context:(void *)context;
+    - (void)resultErrorNoMemoryInContext:(void *)context NS_SWIFT_NAME(resultErrorNoMemory(context:));
+    - (void)resultErrorTooBigInContext:(void *)context NS_SWIFT_NAME(resultErrorTooBig(context:));
+    ```
+    
+- Not available and requiring GRDB modifications
+    
+    ```objc
+    /// Initialization
+    + (instancetype)databaseWithPath:(NSString * _Nullable)inPath;
+    + (instancetype)databaseWithURL:(NSURL * _Nullable)url;
+    - (instancetype)initWithPath:(NSString * _Nullable)path;
+    - (instancetype)initWithURL:(NSURL * _Nullable)url;
+    
+    // Opening and closing database
+    - (BOOL)open;
+    - (BOOL)openWithFlags:(int)flags;
+    - (BOOL)openWithFlags:(int)flags vfs:(NSString * _Nullable)vfsName;
+    - (BOOL)close;
+    
+    // Date formatter
+    + (NSDateFormatter *)storeableDateFormat:(NSString *)format;
+    - (BOOL)hasDateFormatter;
+    - (void)setDateFormat:(NSDateFormatter *)format;
+    - (NSDate * _Nullable)dateFromString:(NSString *)s;
+    - (NSString *)stringFromDate:(NSDate *)date;
+    ```
+    
+- Not available without any hope for eventual support
+    
+    ```objc
+    @property (atomic, assign) BOOL checkedOut;
+    @property (nonatomic, readonly) BOOL hasOpenResultSets;
+    + (NSString*)FMDBUserVersion;
+    + (NSString*)FMDBUserVersion;
+    + (SInt32)FMDBVersion;
+    - (BOOL)update:(NSString*)sql withErrorAndBindings:(NSError * _Nullable*)outErr, ...  __deprecated_msg("Use executeUpdate:withErrorAndBindings: instead");
+    - (BOOL)inTransaction __deprecated_msg("Use isInTransaction property instead");
+    - (void)closeOpenResultSets;
+    ```
 
 ---
 
