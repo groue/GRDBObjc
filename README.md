@@ -28,12 +28,13 @@ Such a mixed application has an Objective-C trunk, and a few Swift leaves. Those
 
 ### FMDB in a Swift World
 
-We at [Pierlis](http://pierlis.com) feel this quite badly with FMDB. FMDB does a perfect job, but GRDB has a lot of advantages over it. When GRDB speaks SQL just as well as its venerable precursor, and offers the same robust concurrency guarantees, the Swift toolkit adds features such as database observation and support for record types that are nowhere to be seen with FMDB.
+We at [Pierlis](http://pierlis.com) feel this itch quite acutely with FMDB. FMDB does a tremendous job, but GRDB does even better.
 
-For example, compare two equivalent code snippets that load an array of application models:
+In 2015, GRDB was an internal project heavily inspired by FMDB. Two years and four versions of Swift later, this library has reached API stability and a focused toolkit that targets application development. Fundamentals are the same: GRDB speaks SQL just as well as its venerable precursor. It offers the same robust concurrency guarantees. Yet it adds that inimitable Swift taste, and features such as database observation and record types that are nowhere to be seen with FMDB.
+
+For example, let's compare two equivalent code snippets that load an array of application models. With GRDB, it gives:
 
 ```swift
-// GRDB
 struct Player: RowConvertible {
     init(row: Row) { ... }
 }
@@ -43,28 +44,31 @@ func fetchPlayers(dbQueue: DatabaseQueue) throws -> [Player] {
         try Player.fetchAll(db, "SELECT * FROM players")
     }
 }
+```
 
-// FMDB
+FMDB composes another kind of poetry:
+
+```swift
 struct Player {
     init(dictionary: [AnyHashable: Any]) { ... }
 }
 
 func fetchPlayers(dbQueue: FMDatabaseQueue) throws -> [Player] {
-    var fetchError: Error? = nil
+    var queryError: Error? = nil
     var players: [Player] = []
     dbQueue.inDatabase { db in
         do {
-            let rs = try db.executeQuery("SELECT * FROM players", values: nil)
-            while rs.next() {
-                let player = Player(dictionary: rs.resultDictionary!)
+            let resultSet = try db.executeQuery("SELECT * FROM players", values: nil)
+            while resultSet.next() {
+                let player = Player(dictionary: resultSet.resultDictionary!)
                 players.append(player)
             }
         } catch {
-            fetchError = error
+            queryError = error
         }
     }
-    if let fetchError = fetchError {
-        throw fetchError
+    if let queryError = queryError {
+        throw queryError
     }
     return players
 }
