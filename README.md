@@ -393,6 +393,7 @@ Jump to the class you're interested into:
     - (const unsigned char * _Nullable)UTF8StringForColumn:(NSString*)columnName;
     - (const unsigned char * _Nullable)UTF8StringForColumnIndex:(int)columnIdx;
     - (void)kvcMagic:(id)object;
+    - (BOOL)nextWithError:(NSError * _Nullable *)outErr;
     ```
     
 - Not available and replaced with another method
@@ -400,7 +401,6 @@ Jump to the class you're interested into:
 - Not available without any hope for eventual support
     
     ```objc
-    - (BOOL)nextWithError:(NSError * _Nullable *)outErr;
     - (const unsigned char * _Nullable)UTF8StringForColumnName:(NSString*)columnName __deprecated_msg("Use UTF8StringForColumn instead");
     - (id _Nullable)objectForColumnName:(NSString*)columnName __deprecated_msg("Use objectForColumn instead");
     - (NSDictionary * _Nullable)resultDict __deprecated_msg("Use resultDictionary instead");
