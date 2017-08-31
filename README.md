@@ -51,7 +51,7 @@ struct Player {
 
 func fetchPlayers(dbQueue: FMDatabaseQueue) throws -> [Player] {
     var fetchError: Error? = nil
-    var players = [Player]()
+    var players: [Player] = []
     dbQueue.inDatabase { db in
         do {
             let rs = try db.executeQuery("SELECT * FROM players", values: nil)
