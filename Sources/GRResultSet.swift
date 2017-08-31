@@ -99,7 +99,7 @@ import SQLite3
         case .row(_, let row):
             return Dictionary(
                 row.map { ($0, $1.storage.value as AnyObject) },
-                uniquingKeysWith: { (_, right) in right }) // keep rightmost value, for compatibility with FMDB
+                uniquingKeysWith: { (left, _) in left }) // keep leftmost value, despite FMDB returns rightmost value: we favor consistency over compatibility here.
         default:
             return nil
         }

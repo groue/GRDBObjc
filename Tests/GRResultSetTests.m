@@ -369,7 +369,7 @@
         GRResultSet *rs = [db executeQuery:@"SELECT 1 AS foo, 2 AS foo, 3 AS FOO"];
         XCTAssert([rs next]);
         NSDictionary *dict = rs.resultDictionary;
-        XCTAssertEqualObjects(dict[@"foo"], @(2));
+        XCTAssertEqualObjects(dict[@"foo"], @(1)); // leftmost value. FMDB would have returned 2 instead.
         XCTAssertEqualObjects(dict[@"FOO"], @(3));
     }];
 }

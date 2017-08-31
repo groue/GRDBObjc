@@ -169,8 +169,11 @@ We'll list all FMDB methods below. Each of them will be either:
 - Available with compatiblity warning
 - Not available yet (pull requests are welcome)
 - Not available and replaced with another method
-- Not available and requiring GRDB modifications
+- Not available and requiring GRDB modifications ([come so that we can have a conversation](https://github.com/groue/GRDBObjc/issues))
 - Not available without any hope for eventual support
+
+- [FMDatabase](#fmdatabase)
+- [FMResultSet](#fmresultset)
 
 #### FMDatabase
 
@@ -223,7 +226,7 @@ We'll list all FMDB methods below. Each of them will be either:
     @property (nonatomic, readonly, nullable) NSURL *databaseURL;
     @property (nonatomic) NSTimeInterval maxBusyRetryTimeInterval;
     
-    // Perform updates
+    // Perform updates (¹)
     - (BOOL)executeUpdate:(NSString*)sql withErrorAndBindings:(NSError * _Nullable *)outErr, ...;
     - (BOOL)executeUpdate:(NSString*)sql, ...;
     - (BOOL)executeUpdateWithFormat:(NSString *)format, ... NS_FORMAT_FUNCTION(1,2);
@@ -231,7 +234,7 @@ We'll list all FMDB methods below. Each of them will be either:
     - (BOOL)executeStatements:(NSString *)sql;
     - (BOOL)executeStatements:(NSString *)sql withResultBlock:(__attribute__((noescape)) FMDBExecuteStatementsCallbackBlock _Nullable)block;
     
-    // Retrieving results
+    // Retrieving results (¹)
     - (FMResultSet * _Nullable)executeQuery:(NSString*)sql, ...;
     - (FMResultSet * _Nullable)executeQueryWithFormat:(NSString*)format, ... NS_FORMAT_FUNCTION(1,2);
     - (FMResultSet * _Nullable)executeQuery:(NSString *)sql withVAList:(va_list)args;
@@ -246,6 +249,7 @@ We'll list all FMDB methods below. Each of them will be either:
     @property (nonatomic) BOOL shouldCacheStatements;
     @property (atomic, retain, nullable) NSMutableDictionary *cachedStatements;
     - (void)clearCachedStatements;    
+    - (void)closeOpenResultSets;
     - (BOOL)interrupt;
     
     // Encryption methods
@@ -320,7 +324,91 @@ We'll list all FMDB methods below. Each of them will be either:
     + (SInt32)FMDBVersion;
     - (BOOL)update:(NSString*)sql withErrorAndBindings:(NSError * _Nullable*)outErr, ...  __deprecated_msg("Use executeUpdate:withErrorAndBindings: instead");
     - (BOOL)inTransaction __deprecated_msg("Use isInTransaction property instead");
-    - (void)closeOpenResultSets;
+    ```
+
+(¹) I don't know how to expose the variadic methods
+    
+
+#### FMResultSet
+
+- Available with full compatibility
+    
+    ```objc
+    - (void)close;
+    - (BOOL)next;
+    - (long long int)longLongIntForColumnIndex:(int)columnIdx;
+    - (unsigned long long int)unsignedLongLongIntForColumnIndex:(int)columnIdx;
+    - (BOOL)boolForColumnIndex:(int)columnIdx;
+    - (double)doubleForColumnIndex:(int)columnIdx;
+    - (NSString * _Nullable)stringForColumnIndex:(int)columnIdx;
+    - (NSData * _Nullable)dataForColumnIndex:(int)columnIdx;
+    - (id _Nullable)objectForColumnIndex:(int)columnIdx;
+    - (id _Nullable)objectAtIndexedSubscript:(int)columnIdx;
+    - (NSData * _Nullable)dataNoCopyForColumnIndex:(int)columnIdx NS_RETURNS_NOT_RETAINED;
+    - (BOOL)columnIndexIsNull:(int)columnIdx;
+    ```
+    
+- Available with compatiblity warning
+    
+    ```objc
+    // For existing columns, FMDB returns the index of the rightmost matching
+    // column, and GRDB the index of the leftmost one.
+    - (int)columnIndexForName:(NSString*)columnName;
+    
+    // When a row contains several columns with the same name, the FMDB
+    // dictionary contains the of value of the rightmost column. GRDB stores
+    // the value of the leftmost column.
+    @property (nonatomic, readonly, nullable) NSDictionary *resultDictionary;
+    
+    // Those methods crash with a fatal error when database contains 64-bit
+    // values that are not representable with `int`. FMDB would instead return
+    // a truncated value.
+    - (int)intForColumnIndex:(int)columnIdx;
+    - (long)longForColumnIndex:(int)columnIdx;
+    
+    // FMDB returns the values of of the rightmost matching column, and GRDB
+    // the value of the leftmost one.
+    - (int)intForColumn:(NSString*)columnName;
+    - (long)longForColumn:(NSString*)columnName;
+    - (long long int)longLongIntForColumn:(NSString*)columnName;
+    - (unsigned long long int)unsignedLongLongIntForColumn:(NSString*)columnName;
+    - (BOOL)boolForColumn:(NSString*)columnName;
+    - (double)doubleForColumn:(NSString*)columnName;
+    - (NSString * _Nullable)stringForColumn:(NSString*)columnName;
+    - (NSData * _Nullable)dataForColumn:(NSString*)columnName;
+    - (id _Nullable)objectForColumn:(NSString*)columnName;
+    - (id _Nullable)objectForKeyedSubscript:(NSString *)columnName;
+    - (NSData * _Nullable)dataNoCopyForColumn:(NSString *)columnName NS_RETURNS_NOT_RETAINED;
+    - (BOOL)columnIsNull:(NSString*)columnName;
+    ```
+    
+- Not available yet (pull requests are welcome)
+    
+    ```objc
+    @property (nonatomic, retain, nullable) FMDatabase *parentDB;
+    @property (atomic, retain, nullable) NSString *query;
+    @property (readonly) NSMutableDictionary *columnNameToIndexMap;
+    @property (atomic, retain, nullable) FMStatement *statement;
+    + (instancetype)resultSetWithStatement:(FMStatement *)statement usingParentDatabase:(FMDatabase*)aDB;
+    - (BOOL)hasAnotherRow;
+    @property (nonatomic, readonly) int columnCount;
+    - (NSString * _Nullable)columnNameForIndex:(int)columnIdx;
+    - (NSDate * _Nullable)dateForColumn:(NSString*)columnName;
+    - (NSDate * _Nullable)dateForColumnIndex:(int)columnIdx;
+    - (const unsigned char * _Nullable)UTF8StringForColumn:(NSString*)columnName;
+    - (const unsigned char * _Nullable)UTF8StringForColumnIndex:(int)columnIdx;
+    - (void)kvcMagic:(id)object;
+    ```
+    
+- Not available and replaced with another method
+- Not available and requiring GRDB modifications
+- Not available without any hope for eventual support
+    
+    ```objc
+    - (BOOL)nextWithError:(NSError * _Nullable *)outErr;
+    - (const unsigned char * _Nullable)UTF8StringForColumnName:(NSString*)columnName __deprecated_msg("Use UTF8StringForColumn instead");
+    - (id _Nullable)objectForColumnName:(NSString*)columnName __deprecated_msg("Use objectForColumn instead");
+    - (NSDictionary * _Nullable)resultDict __deprecated_msg("Use resultDictionary instead");
     ```
 
 ---
