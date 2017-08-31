@@ -184,18 +184,8 @@ Jump to the class you're interested into:
     ```objc
     // Properties
     @property (nonatomic, readonly) void *sqliteHandle;
-    
-    // Perform updates
     @property (nonatomic, readonly) int64_t lastInsertRowId;
     @property (nonatomic, readonly) int changes;
-    - (BOOL)executeUpdate:(NSString*)sql withArgumentsInArray:(NSArray *)arguments;
-    - (BOOL)executeUpdate:(NSString*)sql values:(NSArray * _Nullable)values error:(NSError * _Nullable __autoreleasing *)error;
-    - (BOOL)executeUpdate:(NSString*)sql withParameterDictionary:(NSDictionary *)arguments;
-    
-    // Retrieving results
-    - (FMResultSet * _Nullable)executeQuery:(NSString *)sql withArgumentsInArray:(NSArray *)arguments;
-    - (FMResultSet * _Nullable)executeQuery:(NSString *)sql values:(NSArray * _Nullable)values error:(NSError * _Nullable __autoreleasing *)error;
-    - (FMResultSet * _Nullable)executeQuery:(NSString *)sql withParameterDictionary:(NSDictionary * _Nullable)arguments;
     
     /// Retrieving error codes
     - (NSError *)lastError;
@@ -214,11 +204,27 @@ Jump to the class you're interested into:
 - Available with compatiblity warning
     
     ```objc
-    // The isInTransaction property reflects actual SQLite state instead
-    // of relying on the balance of beginTransaction/commit/rollback
-    // methods. Some transaction errors will thus have FMDB return
-    // true when GRDBObjc returns false.
+    // This property reflects actual SQLite state instead of relying on
+    // the balance of beginTransaction/commit/rollback methods. Some
+    // transaction errors will thus have FMDB return true when GRDBObjc
+    // returns false.
     @property (nonatomic, readonly) BOOL isInTransaction;
+    
+    // Those methods return NO or nil when arguments contain values that
+    // are not NSData, NSDate, NSNull, NSNumber, or NSString. FMDB
+    // presents other values to SQLite as strings, using the
+    // `description` method.
+    //
+    // When an NSDecimalNumber contains a value that can be exactly
+    // represented as int64_t (for example: 9223372036854775807),
+    // GRDBObjc presents it to SQLite as an int64_t. FMDB presents all
+    // decimal numbers as doubles (for example: 9.2233720368547758e+18).
+    - (BOOL)executeUpdate:(NSString*)sql withArgumentsInArray:(NSArray *)arguments;
+    - (BOOL)executeUpdate:(NSString*)sql values:(NSArray * _Nullable)values error:(NSError * _Nullable __autoreleasing *)error;
+    - (BOOL)executeUpdate:(NSString*)sql withParameterDictionary:(NSDictionary *)arguments;
+    - (FMResultSet * _Nullable)executeQuery:(NSString *)sql withArgumentsInArray:(NSArray *)arguments;
+    - (FMResultSet * _Nullable)executeQuery:(NSString *)sql values:(NSArray * _Nullable)values error:(NSError * _Nullable __autoreleasing *)error;
+    - (FMResultSet * _Nullable)executeQuery:(NSString *)sql withParameterDictionary:(NSDictionary * _Nullable)arguments;
     ```
     
 - Not available yet (pull requests are welcome)
