@@ -5,7 +5,7 @@ Pod::Spec.new do |s|
   s.license      = { :type => 'MIT' }
   s.homepage     = 'https://github.com/groue/GRDBObjc'
   s.authors      = { 'Gwendal Roué' => 'gr@pierlis.com' }
-  s.summary      = 'Objective-C bindings for GRDB.'
+  s.summary      = 'FMDB-compatible bindings to GRDB.swift.'
   s.source       = { :git => 'https://github.com/groue/GRDBObjc.git', :tag => "v#{s.version}" }
   s.module_name = 'GRDBObjc'
   
