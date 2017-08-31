@@ -1,9 +1,20 @@
-GRDBObjc
+GRDBObjc [![Swift](https://img.shields.io/badge/swift-4-orange.svg?style=flat)](https://developer.apple.com/swift/) [![License](https://img.shields.io/github/license/RxSwiftCommunity/RxGRDB.svg?maxAge=2592000)](/LICENSE)
 ========
 
 ### FMDB-compatible bindings to GRDB.swift.
 
 GRDBObjc helps Objective-C applications that use SQLite replace [FMDB](http://github.com/ccgus/fmdb) with [GRDB](http://github.com/groue/GRDB.swift), at minimal cost.
+
+**Requirements**: iOS 8.0+ / OSX 10.10+ / watchOS 2.0+ • Xcode 9+ • Swift 4
+
+---
+
+<p align="center">
+    <a href="#installation">Installation</a> &bull;
+    <a href="#fmdb-compatibility-chart">FMDB Compatibility Chart</a>
+</p>
+
+---
 
 
 ### Indulge yourself with a little Swift
@@ -90,11 +101,14 @@ Enter GRDBObjc. Very often, all you will have to do is remove FMDB, install GRDB
 +#import <GRDBObjc/GRDBObjc-Swift.h>
 ```
 
-This is enough for most of you Objective-C code that targets FMDB to compile on top of GRDB and GRDBObjc. Of course, the devil is in the detail, and we'll list below a detailed [compatibility chart](#compatibility-chart).
+This is enough for most of you Objective-C code that targets FMDB to compile on top of GRDB and GRDBObjc. Of course, the devil is in the detail, and we'll list below a detailed [compatibility chart](#fmdb-compatibility-chart).
 
 The `FMDatabaseQueue`, `FMResultSet`, etc. identifiers are now aliases to GRDBObjc's `GRDatabaseQueue`, `GRResultSet` that are backed by GRDB. The databases initialized from Objective-C are usable from Swift, with the full GRDB toolkit. For example:
 
 ```objc
+#import <GRDBObjc/GRDBObjc.h>
+#import <GRDBObjc/GRDBObjc-Swift.h>
+
 @interface DataStore
 @property (nonatomic, nonnull) FMDatabaseQueue* dbQueue NS_REFINED_FOR_SWIFT;
 @end
@@ -107,6 +121,9 @@ The `FMDatabaseQueue`, `FMResultSet`, etc. identifiers are now aliases to GRDBOb
 ```
 
 ```swift
+import GRDB
+import GRDBObjc
+
 extension DataStore {
     var dbQueue: DatabaseQueue {
         return __dbQueue.dbQueue
@@ -115,7 +132,11 @@ extension DataStore {
 ```
 
 
-### Compatibility Chart
+### Installation
+
+TODO
+
+### FMDB Compatibility Chart
 
 TODO
 
