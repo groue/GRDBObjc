@@ -27,7 +27,7 @@ struct Player: RowConvertible {
     init(row: Row) { ... }
 }
 
-func fetchPlayers(dbQueue: FMDatabaseQueue) throws -> [Player] {
+func fetchPlayers(dbQueue: DatabaseQueue) throws -> [Player] {
     return try dbQueue.inDatabase { db in
         try Player.fetchAll(db, "SELECT * FROM players")
     }
