@@ -34,7 +34,8 @@ import Foundation
     }
     
     // MARK: - Updates
-
+    
+    // TODO: remove once we have the variadic version `- (BOOL)executeUpdate:(NSString*)sql, ...`
     @discardableResult @objc
     public func executeUpdate(_ sql: String) -> Bool {
         do {
@@ -83,6 +84,7 @@ import Foundation
     
     // MARK: - Queries
     
+    // TODO: remove once we have the variadic version `- (FMResultSet * _Nullable)executeQuery:(NSString*)sql, ...`
     @objc
     public func executeQuery(_ sql: String) -> GRResultSet? {
         do {

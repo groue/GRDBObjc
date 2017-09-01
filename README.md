@@ -192,6 +192,12 @@ Jump to the class you're interested into:
     @property (atomic, assign) BOOL crashOnErrors;
     - (NSError *)lastError;
     
+    // Perform updates
+    - (BOOL)executeUpdate:(NSString*)sql;
+    
+    // Retrieving results
+    - (FMResultSet * _Nullable)executeQuery:(NSString*)sql;
+    
     // Transactions
     - (BOOL)beginTransaction;
     - (BOOL)beginDeferredTransaction;
