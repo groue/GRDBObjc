@@ -179,6 +179,25 @@ import Foundation
         }
     }
     
+    @objc
+    public func startSavePoint(name: String) throws {
+        try db.execute("SAVEPOINT '\(espaceSavePointName(name))'")
+    }
+    
+    @objc
+    public func releaseSavePoint(name: String) throws {
+        try db.execute("RELEASE SAVEPOINT '\(espaceSavePointName(name))'")
+    }
+    
+    @objc
+    public func rollbackSavePoint(name: String) throws {
+        try db.execute("ROLLBACK TRANSACTION TO SAVEPOINT '\(espaceSavePointName(name))'")
+    }
+    
+    private func espaceSavePointName(_ name: String) -> String {
+        return name.replacingOccurrences(of: "'", with: "''")
+    }
+    
     // MARK: - Dates
     
     @objc

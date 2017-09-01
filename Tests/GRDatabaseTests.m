@@ -265,7 +265,7 @@
     }];
 }
 
-- (void)testIsInTransaction
+- (void)testTransaction
 {
     GRDatabaseQueue *dbQueue = [GRDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath] error:NULL];
     [dbQueue inDatabase:^(GRDatabase *db) {
@@ -273,14 +273,6 @@
         [db executeUpdate:@"BEGIN TRANSACTION"];
         XCTAssertTrue(db.isInTransaction);
         [db executeUpdate:@"ROLLBACK"];
-        XCTAssertFalse(db.isInTransaction);
-    }];
-}
-
-- (void)testBeginTransaction
-{
-    GRDatabaseQueue *dbQueue = [GRDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath] error:NULL];
-    [dbQueue inDatabase:^(GRDatabase *db) {
         XCTAssertFalse(db.isInTransaction);
         XCTAssertFalse([db rollback]);
         XCTAssertFalse([db commit]);
@@ -393,6 +385,29 @@
         XCTAssertNil(error);
         GRResultSet *resultSet = [db executeQuery:@"SELECT a FROM t"];
         XCTAssertTrue([resultSet next]);
+    }];
+}
+
+- (void)testSavePoint
+{
+    GRDatabaseQueue *dbQueue = [GRDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath] error:NULL];
+    [dbQueue inDatabase:^(GRDatabase *db) {
+        XCTAssertFalse(db.isInTransaction);
+        
+        NSError *error;
+        BOOL success = [db startSavePointWithName:@"foo" error:&error];
+        XCTAssert(success, @"%@", error);
+        XCTAssertTrue(db.isInTransaction);
+        success = [db rollbackSavePointWithName:@"bar" error:&error];
+        XCTAssertFalse(success);
+        success = [db rollbackSavePointWithName:@"foo" error:&error];
+        XCTAssert(success, @"%@", error);
+        XCTAssertTrue(db.isInTransaction);
+        success = [db releaseSavePointWithName:@"bar" error:&error];
+        XCTAssertFalse(success);
+        success = [db releaseSavePointWithName:@"foo" error:&error];
+        XCTAssert(success, @"%@", error);
+        XCTAssertFalse(db.isInTransaction);
     }];
 }
 

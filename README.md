@@ -166,10 +166,10 @@ Finally, some FMDB features are simply unavailable. For example, GRDBObjc won't 
 We'll list all FMDB methods below. Each of them will be either:
 
 - Available with full compatibility
-- Available with compatiblity warning
-- Not available yet (pull requests are welcome)
+- Available with compatiblity warning ([pull requests](https://github.com/groue/GRDBObjc/pulls) are welcome)
+- Not available yet  ([pull requests](https://github.com/groue/GRDBObjc/pulls) are welcome)
 - Not available and replaced with another method
-- Not available and requiring GRDB modifications ([come so that we can have a conversation](https://github.com/groue/GRDBObjc/issues))
+- Not available and requiring GRDB modifications ([discussion](https://github.com/groue/GRDBObjc/issues) is welcome)
 - Not available without any hope for eventual support
 
 Jump to the class you're interested into:
@@ -197,6 +197,9 @@ Jump to the class you're interested into:
     - (BOOL)rollback;
     
     // Save points
+    - (BOOL)startSavePointWithName:(NSString*)name error:(NSError * _Nullable *)outErr;
+    - (BOOL)releaseSavePointWithName:(NSString*)name error:(NSError * _Nullable *)outErr;
+    - (BOOL)rollbackToSavePointWithName:(NSString*)name error:(NSError * _Nullable *)outErr;
     - (NSError * _Nullable)inSavePoint:(__attribute__((noescape)) void (^)(BOOL *rollback))block;
     
     // Date formatter
@@ -211,9 +214,13 @@ Jump to the class you're interested into:
     
     ```objc
     // This property reflects actual SQLite state instead of relying on
-    // the balance of beginTransaction/commit/rollback methods. Some
-    // transaction errors will thus have FMDB return true when GRDBObjc
-    // returns false.
+    // the balance of beginTransaction/commit/rollback methods:
+    //
+    // - Some transaction errors have FMDB return true when GRDBObjc
+    //   returns false.
+    //
+    // - Opening a transaction with a savepoint method has FMDB return
+    //   false when GRDBObjc returns true.
     @property (nonatomic, readonly) BOOL isInTransaction;
     
     // - GRDBObjc has those methods return NO or nil when statement
@@ -278,11 +285,6 @@ Jump to the class you're interested into:
     - (int)lastErrorCode;
     - (int)lastExtendedErrorCode;
     - (BOOL)hadError;
-    
-    // Save points
-    - (BOOL)startSavePointWithName:(NSString*)name error:(NSError * _Nullable *)outErr;
-    - (BOOL)releaseSavePointWithName:(NSString*)name error:(NSError * _Nullable *)outErr;
-    - (BOOL)rollbackToSavePointWithName:(NSString*)name error:(NSError * _Nullable *)outErr;
     
     // Make SQL function
     - (void)makeFunctionNamed:(NSString *)name arguments:(int)arguments block:(void (^)(void *context, int argc, void * _Nonnull * _Nonnull argv))block;
