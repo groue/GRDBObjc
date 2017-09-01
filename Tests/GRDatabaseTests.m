@@ -57,7 +57,6 @@
                  withParameterDictionary:@{@"a": @(123), @"b": @(654)}];
         XCTAssert(success);
         
-        NSError *error;
         GRResultSet *rs = [db executeQuery:@"SELECT a, b FROM t"];
         XCTAssertNotNil(rs);
         BOOL fetched = NO;
