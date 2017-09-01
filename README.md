@@ -225,7 +225,7 @@ Jump to the class you're interested into:
     //   false when GRDBObjc returns true.
     @property (nonatomic, readonly) BOOL isInTransaction;
     
-    // When an NSDecimalNumber contains a value that can be exactly
+    // When an NSDecimalNumber parameter contains a value that can be exactly
     // represented as int64_t, GRDBObjc presents it to SQLite as an integer.
     // FMDB presents all decimal numbers as doubles.
     - (BOOL)executeUpdate:(NSString*)sql withArgumentsInArray:(NSArray *)arguments;
