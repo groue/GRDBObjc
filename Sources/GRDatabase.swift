@@ -259,23 +259,26 @@ import Foundation
     
     func databaseValue(for value: Any) throws -> DatabaseValue {
         switch value {
-        case let date as Date:
-            if let dateFormatter = dateFormatter {
-                return dateFormatter.string(from: date).databaseValue
+        case is NSNull:
+            return .null
+        case let data as Data:
+            if data.isEmpty {
+                // Compatibility warning: GRDB turns empty data into NULL, because SQLite can't store zero-length NSData
+                return "".databaseValue
             } else {
-                return date.timeIntervalSince1970.databaseValue
+                return data.databaseValue
             }
-        case let date as NSDate:
+        case let date as Date:
+            // Compatibility warning: GRDB turns dates into strings
             if let dateFormatter = dateFormatter {
                 return dateFormatter.string(from: date as Date).databaseValue
             } else {
                 return date.timeIntervalSince1970.databaseValue
             }
+        case let number as NSNumber:
+            return number.databaseValue
         default:
-            guard let dbValue = DatabaseValue(value: value) else {
-                throw DatabaseError(resultCode: .SQLITE_MISUSE, message: "\(String(reflecting: value)) is not a valid database value")
-            }
-            return dbValue
+            return (value as AnyObject).description.databaseValue
         }
     }
 }

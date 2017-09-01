@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5659134E1F596527006D14E5 /* NSDataTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5659133C1F596527006D14E5 /* NSDataTests.m */; };
 		566FC3E31F586B6B00919F77 /* NSDateTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 566FC3E21F586B6B00919F77 /* NSDateTests.m */; };
 		5680BBE11F57BA5900F67DD0 /* GRDatabaseQueueTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5680BBE01F57BA5900F67DD0 /* GRDatabaseQueueTests.swift */; };
 		568FC23E1F55370500E176A4 /* GRDB.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56060B901F5536DE0020949D /* GRDB.framework */; };
@@ -177,6 +178,7 @@
 
 /* Begin PBXFileReference section */
 		56060B771F5536DE0020949D /* GRDB.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = GRDB.xcodeproj; path = Vendor/GRDB.swift/GRDB.xcodeproj; sourceTree = SOURCE_ROOT; };
+		5659133C1F596527006D14E5 /* NSDataTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NSDataTests.m; sourceTree = "<group>"; };
 		566FC3E21F586B6B00919F77 /* NSDateTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NSDateTests.m; sourceTree = "<group>"; };
 		5680BBDF1F57BA5900F67DD0 /* GRDBObjcTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "GRDBObjcTests-Bridging-Header.h"; sourceTree = "<group>"; };
 		5680BBE01F57BA5900F67DD0 /* GRDatabaseQueueTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GRDatabaseQueueTests.swift; sourceTree = "<group>"; };
@@ -312,6 +314,7 @@
 				568FC2431F55389100E176A4 /* GRDBObjcTestCase.h */,
 				56F45A061F55366F00656C1E /* GRDBObjcTestCase.m */,
 				568FC2551F55B7C800E176A4 /* GRResultSetTests.m */,
+				5659133C1F596527006D14E5 /* NSDataTests.m */,
 				566FC3E21F586B6B00919F77 /* NSDateTests.m */,
 				5680BBF31F57BAA000F67DD0 /* Support */,
 			);
@@ -589,6 +592,7 @@
 			files = (
 				568FC2561F55B7C800E176A4 /* GRResultSetTests.m in Sources */,
 				568FC2541F55882E00E176A4 /* GRDatabaseTests.m in Sources */,
+				5659134E1F596527006D14E5 /* NSDataTests.m in Sources */,
 				566FC3E31F586B6B00919F77 /* NSDateTests.m in Sources */,
 				56F45A071F55366F00656C1E /* GRDBObjcTestCase.m in Sources */,
 				5680BBE11F57BA5900F67DD0 /* GRDatabaseQueueTests.swift in Sources */,

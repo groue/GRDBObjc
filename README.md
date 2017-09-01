@@ -223,14 +223,9 @@ Jump to the class you're interested into:
     //   false when GRDBObjc returns true.
     @property (nonatomic, readonly) BOOL isInTransaction;
     
-    // - GRDBObjc has those methods return NO or nil when statement
-    //   arguments contain values that are not NSData, NSDate, NSNull,
-    //   NSNumber, or NSString. FMDB presents other values to SQLite as
-    //   strings, using the `description` method.
-    //
-    // - When an NSDecimalNumber contains a value that can be exactly
-    //   represented as int64_t, GRDBObjc presents it to SQLite as an
-    //   integer. FMDB presents all decimal numbers as doubles.
+    // When an NSDecimalNumber contains a value that can be exactly
+    // represented as int64_t, GRDBObjc presents it to SQLite as an integer.
+    // FMDB presents all decimal numbers as doubles.
     - (BOOL)executeUpdate:(NSString*)sql withArgumentsInArray:(NSArray *)arguments;
     - (BOOL)executeUpdate:(NSString*)sql values:(NSArray * _Nullable)values error:(NSError * _Nullable __autoreleasing *)error;
     - (BOOL)executeUpdate:(NSString*)sql withParameterDictionary:(NSDictionary *)arguments;
