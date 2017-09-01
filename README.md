@@ -190,6 +190,12 @@ Jump to the class you're interested into:
     /// Retrieving error codes
     - (NSError *)lastError;
     
+    // Transactions
+    - (BOOL)beginTransaction;
+    - (BOOL)beginDeferredTransaction;
+    - (BOOL)commit;
+    - (BOOL)rollback;
+    
     // Save points
     - (NSError * _Nullable)inSavePoint:(__attribute__((noescape)) void (^)(BOOL *rollback))block;
     
@@ -210,15 +216,14 @@ Jump to the class you're interested into:
     // returns false.
     @property (nonatomic, readonly) BOOL isInTransaction;
     
-    // Those methods return NO or nil when arguments contain values that
-    // are not NSData, NSDate, NSNull, NSNumber, or NSString. FMDB
-    // presents other values to SQLite as strings, using the
-    // `description` method.
+    // - GRDBObjc has those methods return NO or nil when statement
+    //   arguments contain values that are not NSData, NSDate, NSNull,
+    //   NSNumber, or NSString. FMDB presents other values to SQLite as
+    //   strings, using the `description` method.
     //
-    // When an NSDecimalNumber contains a value that can be exactly
-    // represented as int64_t (for example: 9223372036854775807),
-    // GRDBObjc presents it to SQLite as an int64_t. FMDB presents all
-    // decimal numbers as doubles (for example: 9.2233720368547758e+18).
+    // - When an NSDecimalNumber contains a value that can be exactly
+    //   represented as int64_t, GRDBObjc presents it to SQLite as an
+    //   integer. FMDB presents all decimal numbers as doubles.
     - (BOOL)executeUpdate:(NSString*)sql withArgumentsInArray:(NSArray *)arguments;
     - (BOOL)executeUpdate:(NSString*)sql values:(NSArray * _Nullable)values error:(NSError * _Nullable __autoreleasing *)error;
     - (BOOL)executeUpdate:(NSString*)sql withParameterDictionary:(NSDictionary *)arguments;
@@ -253,12 +258,6 @@ Jump to the class you're interested into:
     - (FMResultSet * _Nullable)executeQuery:(NSString*)sql, ...;
     - (FMResultSet * _Nullable)executeQueryWithFormat:(NSString*)format, ... NS_FORMAT_FUNCTION(1,2);
     - (FMResultSet * _Nullable)executeQuery:(NSString *)sql withVAList:(va_list)args;
-    
-    // Transactions
-    - (BOOL)beginTransaction;
-    - (BOOL)beginDeferredTransaction;
-    - (BOOL)commit;
-    - (BOOL)rollback;
     
     // Cached statements and result sets
     @property (nonatomic) BOOL shouldCacheStatements;

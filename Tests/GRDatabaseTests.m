@@ -277,6 +277,44 @@
     }];
 }
 
+- (void)testBeginTransaction
+{
+    GRDatabaseQueue *dbQueue = [GRDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath] error:NULL];
+    [dbQueue inDatabase:^(GRDatabase *db) {
+        XCTAssertFalse(db.isInTransaction);
+        XCTAssertFalse([db rollback]);
+        XCTAssertFalse([db commit]);
+
+        XCTAssertTrue([db beginTransaction]);
+        XCTAssertTrue(db.isInTransaction);
+        XCTAssertTrue([db rollback]);
+        XCTAssertFalse(db.isInTransaction);
+        XCTAssertFalse([db rollback]);
+        XCTAssertFalse([db commit]);
+
+        XCTAssertTrue([db beginTransaction]);
+        XCTAssertTrue(db.isInTransaction);
+        XCTAssertTrue([db commit]);
+        XCTAssertFalse(db.isInTransaction);
+        XCTAssertFalse([db rollback]);
+        XCTAssertFalse([db commit]);
+
+        XCTAssertTrue([db beginDeferredTransaction]);
+        XCTAssertTrue(db.isInTransaction);
+        XCTAssertTrue([db rollback]);
+        XCTAssertFalse(db.isInTransaction);
+        XCTAssertFalse([db rollback]);
+        XCTAssertFalse([db commit]);
+        
+        XCTAssertTrue([db beginDeferredTransaction]);
+        XCTAssertTrue(db.isInTransaction);
+        XCTAssertTrue([db commit]);
+        XCTAssertFalse(db.isInTransaction);
+        XCTAssertFalse([db rollback]);
+        XCTAssertFalse([db commit]);
+    }];
+}
+
 - (void)testSQLiteHandle
 {
     GRDatabaseQueue *dbQueue = [GRDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath] error:NULL];

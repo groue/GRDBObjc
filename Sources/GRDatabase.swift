@@ -119,6 +119,48 @@ import Foundation
         return GRResultSet(database: self, cursor: cursor)
     }
     
+    // MARK: - Transactions
+    
+    @objc
+    public func beginTransaction() -> Bool {
+        do {
+            try db.execute("BEGIN EXCLUSIVE TRANSACTION")
+            return true
+        } catch {
+            return false
+        }
+    }
+    
+    @objc
+    public func beginDeferredTransaction() -> Bool {
+        do {
+            try db.execute("BEGIN DEFERRED TRANSACTION")
+            return true
+        } catch {
+            return false
+        }
+    }
+    
+    @objc
+    public func commit() -> Bool {
+        do {
+            try db.execute("COMMIT")
+            return true
+        } catch {
+            return false
+        }
+    }
+    
+    @objc
+    public func rollback() -> Bool {
+        do {
+            try db.execute("ROLLBACK")
+            return true
+        } catch {
+            return false
+        }
+    }
+
     // MARK: - Savepoints
     
     @objc

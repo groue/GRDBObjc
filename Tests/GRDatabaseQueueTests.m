@@ -71,14 +71,17 @@
 - (void)testInTransactionCommit {
     GRDatabaseQueue *dbQueue = [GRDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath] error:NULL];
     [dbQueue inDatabase:^(GRDatabase *db) {
+        XCTAssertFalse([db isInTransaction]);
         [db executeUpdate:@"CREATE TABLE t(a)"];
         [db executeUpdate:@"INSERT INTO t(a) VALUES (123)"];
     }];
     [dbQueue inTransaction:^(GRDatabase *db, BOOL *rollback) {
+        XCTAssertTrue([db isInTransaction]);
         XCTAssertFalse(*rollback);
         [db executeUpdate:@"DELETE FROM t"];
     }];
     [dbQueue inDatabase:^(GRDatabase *db) {
+        XCTAssertFalse([db isInTransaction]);
         GRResultSet *resultSet = [db executeQuery:@"SELECT a FROM t"];
         XCTAssertNotNil(resultSet);
         XCTAssertFalse([resultSet next]);
@@ -110,10 +113,12 @@
         [db executeUpdate:@"INSERT INTO t(a) VALUES (123)"];
     }];
     [dbQueue inDeferredTransaction:^(GRDatabase *db, BOOL *rollback) {
+        XCTAssertTrue([db isInTransaction]);
         XCTAssertFalse(*rollback);
         [db executeUpdate:@"DELETE FROM t"];
     }];
     [dbQueue inDatabase:^(GRDatabase *db) {
+        XCTAssertFalse([db isInTransaction]);
         GRResultSet *resultSet = [db executeQuery:@"SELECT a FROM t"];
         XCTAssertNotNil(resultSet);
         XCTAssertFalse([resultSet next]);
