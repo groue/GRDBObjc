@@ -11,8 +11,8 @@ import GRDB
         return dbQueue.path
     }
     
-    @objc public override init() {
-        dbQueue = DatabaseQueue()
+    @objc public override convenience init() {
+        self.init(DatabaseQueue())
     }
     
     @objc public static func databaseQueue(path: String) -> GRDatabaseQueue? {
