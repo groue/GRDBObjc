@@ -21,16 +21,16 @@ GRDBObjc helps Objective-C applications that use SQLite replace [FMDB](http://gi
 
 It happens that we developers maintain and develop Objective-C applications, and wish we could inject more and more Swift into them.
 
-This happens when rewriting a whole application from scratch is not a reasonable option, and yet the expressivity and safety of Swift has an intense appeal. We preserve the legacy Objective-C code that represents years of development, experience, bug hunting and tests, and use Swift in new and isolated features that can easily be plugged on to the Objective-C body.
+Rewriting a whole application from scratch is often not a reasonable option, despite the intense appeal of Swift. We preserve the legacy Objective-C code that represents years of development, and isolate Swift in the few features that can easily be plugged on to the Objective-C body.
 
-Such a mixed application has an Objective-C trunk, and a few Swift leaves. Those Swift add-ons are sometimes hampered by their foreign foundations, which may not look very Swifty. Maybe we dream of Swift alternatives that offer superior solutions.
+In such a mixed application that has an Objective-C trunk, the few Swift leaves are sometimes hampered by their foreign foundations. Maybe the imported Objective-C does not look very Swifty. Maybe we dream of Swift alternatives that offer superior solutions.
 
 
 ### FMDB in a Swift World
 
 We at [Pierlis](http://pierlis.com) feel this itch quite acutely with FMDB. FMDB does a tremendous job, but GRDB does even better.
 
-In 2015, GRDB was an internal project heavily inspired by FMDB. Two years and four versions of Swift later, this library has reached API stability and a focused toolkit that targets application development. Fundamentals are the same: GRDB speaks SQL just as well as its venerable precursor. It offers the same robust concurrency guarantees. Yet it adds that inimitable Swift taste, and features such as database observation and record types that are nowhere to be seen with FMDB.
+In 2015, GRDB was an internal project heavily inspired by FMDB. Two years and four versions of Swift later, this library has reached API stability, and offers a strong toolkit focused on application development. Fundamentals are the same: GRDB speaks SQL just as well as its venerable precursor. It offers the same robust concurrency guarantees. Yet GRBD adds that inimitable Swift taste, and features such as database observation and record types that are nowhere to be seen with FMDB.
 
 For example, let's compare two equivalent code snippets that load an array of application models. With GRDB, it gives:
 
@@ -157,7 +157,7 @@ TODO
 
 ### FMDB Compatibility Chart
 
-GRDB and FMDB usually behave exactly in the same manner. When there are slight differences, GRDBObjc generally favors FMDB compatibility over native GRDB behavior.
+GRDB and FMDB usually behave exactly in the same manner. When there are slight differences, GRDBObjc favors FMDB compatibility over native GRDB behavior.
 
 Yet some FMDB features have not yet been ported to GRDBObjc. This includes support for custom SQL functions, for example.
 
