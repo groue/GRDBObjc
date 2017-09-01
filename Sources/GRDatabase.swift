@@ -5,10 +5,12 @@ import Foundation
 @objc public class GRDatabase : NSObject {
     let db: Database
     var dateFormatter: DateFormatter?
-    
+
     init(_ db: Database) {
         self.db = db
         self.dateFormatter = nil
+        self.logsErrors = false
+        self.crashOnErrors = false
     }
     
     @objc
@@ -19,13 +21,6 @@ import Foundation
     @objc
     public var changes: CInt {
         return CInt(db.changesCount)
-    }
-    
-    @objc
-    public var lastError: Error {
-        return DatabaseError(
-            resultCode: ResultCode(rawValue: sqlite3_errcode(db.sqliteConnection)),
-            message: String(cString: sqlite3_errmsg(db.sqliteConnection)))
     }
     
     @objc
@@ -46,6 +41,7 @@ import Foundation
             try db.execute(sql)
             return true
         } catch {
+            handleError(error)
             return false
         }
     }
@@ -53,10 +49,11 @@ import Foundation
     @discardableResult @objc(executeUpdate:withArgumentsInArray:)
     public func executeUpdate(_ sql: String, argumentsInArray values: [Any]?) -> Bool {
         do {
-            let arguments = try values.map { try statementArguments(from: $0) }
+            let arguments = values.map { statementArguments(from: $0) }
             try db.execute(sql, arguments: arguments)
             return true
         } catch {
+            handleError(error)
             return false
         }
     }
@@ -64,18 +61,24 @@ import Foundation
     @discardableResult @objc(executeUpdate:withParameterDictionary:)
     public func executeUpdate(_ sql: String, parameterDictionary: [String: Any]?) -> Bool {
         do {
-            let arguments = try parameterDictionary.map { try statementArguments(from: $0) }
+            let arguments = parameterDictionary.map { statementArguments(from: $0) }
             try db.execute(sql, arguments: arguments)
             return true
         } catch {
+            handleError(error)
             return false
         }
     }
     
     @objc
     public func executeUpdate(_ sql: String, values: [Any]?) throws {
-        let arguments = try values.map { try statementArguments(from: $0) }
-        try db.execute(sql, arguments: arguments)
+        do {
+            let arguments = values.map { statementArguments(from: $0) }
+            try db.execute(sql, arguments: arguments)
+        } catch {
+            handleError(error)
+            throw error
+        }
     }
     
     // MARK: - Queries
@@ -86,6 +89,7 @@ import Foundation
             let cursor = try Row.fetchCursor(db, sql)
             return GRResultSet(database: self, cursor: cursor)
         } catch {
+            handleError(error)
             return nil
         }
     }
@@ -93,10 +97,11 @@ import Foundation
     @objc(executeQuery:withArgumentsInArray:)
     public func executeQuery(_ sql: String, argumentsInArray values: [Any]?) -> GRResultSet? {
         do {
-            let arguments = try values.map { try statementArguments(from: $0) }
+            let arguments = values.map { statementArguments(from: $0) }
             let cursor = try Row.fetchCursor(db, sql, arguments: arguments)
             return GRResultSet(database: self, cursor: cursor)
         } catch {
+            handleError(error)
             return nil
         }
     }
@@ -104,19 +109,25 @@ import Foundation
     @objc(executeQuery:withParameterDictionary:)
     public func executeQuery(_ sql: String, parameterDictionary: [String: Any]?) -> GRResultSet? {
         do {
-            let arguments = try parameterDictionary.map { try statementArguments(from: $0) }
+            let arguments = parameterDictionary.map { statementArguments(from: $0) }
             let cursor = try Row.fetchCursor(db, sql, arguments: arguments)
             return GRResultSet(database: self, cursor: cursor)
         } catch {
+            handleError(error)
             return nil
         }
     }
     
     @objc
     public func executeQuery(_ sql: String, values: [Any]?) throws -> GRResultSet {
-        let arguments = try values.map { try statementArguments(from: $0) }
-        let cursor = try Row.fetchCursor(db, sql, arguments: arguments)
-        return GRResultSet(database: self, cursor: cursor)
+        do {
+            let arguments = values.map { statementArguments(from: $0) }
+            let cursor = try Row.fetchCursor(db, sql, arguments: arguments)
+            return GRResultSet(database: self, cursor: cursor)
+        } catch {
+            handleError(error)
+            throw error
+        }
     }
     
     // MARK: - Transactions
@@ -127,6 +138,7 @@ import Foundation
             try db.execute("BEGIN EXCLUSIVE TRANSACTION")
             return true
         } catch {
+            handleError(error)
             return false
         }
     }
@@ -137,6 +149,7 @@ import Foundation
             try db.execute("BEGIN DEFERRED TRANSACTION")
             return true
         } catch {
+            handleError(error)
             return false
         }
     }
@@ -147,6 +160,7 @@ import Foundation
             try db.execute("COMMIT")
             return true
         } catch {
+            handleError(error)
             return false
         }
     }
@@ -157,6 +171,7 @@ import Foundation
             try db.execute("ROLLBACK")
             return true
         } catch {
+            handleError(error)
             return false
         }
     }
@@ -175,23 +190,39 @@ import Foundation
             }
             return nil
         } catch {
+            handleError(error)
             return error
         }
     }
     
     @objc
     public func startSavePoint(name: String) throws {
-        try db.execute("SAVEPOINT '\(espaceSavePointName(name))'")
+        do {
+            try db.execute("SAVEPOINT '\(espaceSavePointName(name))'")
+        } catch {
+            handleError(error)
+            throw error
+        }
     }
     
     @objc
     public func releaseSavePoint(name: String) throws {
-        try db.execute("RELEASE SAVEPOINT '\(espaceSavePointName(name))'")
+        do {
+            try db.execute("RELEASE SAVEPOINT '\(espaceSavePointName(name))'")
+        } catch {
+            handleError(error)
+            throw error
+        }
     }
     
     @objc
     public func rollbackSavePoint(name: String) throws {
-        try db.execute("ROLLBACK TRANSACTION TO SAVEPOINT '\(espaceSavePointName(name))'")
+        do {
+            try db.execute("ROLLBACK TRANSACTION TO SAVEPOINT '\(espaceSavePointName(name))'")
+        } catch {
+            handleError(error)
+            throw error
+        }
     }
     
     private func espaceSavePointName(_ name: String) -> String {
@@ -242,22 +273,27 @@ import Foundation
     
     @objc
     public func __makeUpdateStatement(_ sql: String) throws -> GRUpdateStatement {
-        return try GRUpdateStatement(database: self, statement: db.makeUpdateStatement(sql))
+        do {
+            return try GRUpdateStatement(database: self, statement: db.makeUpdateStatement(sql))
+        } catch {
+            handleError(error)
+            throw error
+        }
     }
     
     // MARK: - Arguments
     
-    func statementArguments(from values: [Any]) throws -> StatementArguments {
-        let values = try values.map { try databaseValue(for: $0) }
+    func statementArguments(from values: [Any]) -> StatementArguments {
+        let values = values.map { databaseValue(for: $0) }
         return StatementArguments(values)
     }
     
-    func statementArguments(from dictionary: [String: Any]) throws -> StatementArguments {
-        let dictionary = try dictionary.mapValues { try databaseValue(for: $0) }
+    func statementArguments(from dictionary: [String: Any]) -> StatementArguments {
+        let dictionary = dictionary.mapValues { databaseValue(for: $0) }
         return StatementArguments(dictionary)
     }
     
-    func databaseValue(for value: Any) throws -> DatabaseValue {
+    func databaseValue(for value: Any) -> DatabaseValue {
         switch value {
         case is NSNull:
             return .null
@@ -280,5 +316,20 @@ import Foundation
         default:
             return (value as AnyObject).description.databaseValue
         }
+    }
+    
+    // MARK: - Errors
+    
+    @objc public var crashOnErrors: Bool
+    @objc public var logsErrors: Bool
+    @objc public var lastError: Error {
+        return DatabaseError(
+            resultCode: ResultCode(rawValue: sqlite3_errcode(db.sqliteConnection)),
+            message: String(cString: sqlite3_errmsg(db.sqliteConnection)))
+    }
+    
+    func handleError(_ error: Error) {
+        if logsErrors { NSLog("DB Error: %@", "\(error)") }
+        if crashOnErrors { fatalError("\(error)") }
     }
 }

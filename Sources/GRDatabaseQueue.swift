@@ -54,13 +54,21 @@ import GRDB
     }
     
     func inTransaction(transactionKind: Database.TransactionKind, _ block: (GRDatabase, UnsafeMutablePointer<ObjCBool>) -> ()) {
-        // TODO: error handling
-        try? dbQueue.inTransaction(transactionKind) { db in
-            var rollback: ObjCBool = false
-            return withUnsafeMutablePointer(to: &rollback) { rollbackp -> Database.TransactionCompletion in
-                block(database(db), rollbackp)
-                return rollbackp.pointee.boolValue ? .rollback : .commit
+        var crashOnErrors = false
+        var logsErrors = false
+        do {
+            try dbQueue.inTransaction(transactionKind) { db in
+                var rollback: ObjCBool = false
+                return withUnsafeMutablePointer(to: &rollback) { rollbackp -> Database.TransactionCompletion in
+                    block(database(db), rollbackp)
+                    return rollbackp.pointee.boolValue ? .rollback : .commit
+                }
+                crashOnErrors = database(db).crashOnErrors
+                logsErrors = database(db).crashOnErrors
             }
+        } catch {
+            if logsErrors { NSLog("DB Error: %@", "\(error)") }
+            if crashOnErrors { fatalError("\(error)") }
         }
     }
 }

@@ -15,6 +15,11 @@ import GRDB
     
     // TODO: is it FMDB API? Shouldn't values be optional, then?
     @objc public func execute(values: [Any]) throws {
-        try statement.execute(arguments: db.statementArguments(from: values))
+        do {
+            try statement.execute(arguments: db.statementArguments(from: values))
+        } catch {
+            db.handleError(error)
+            throw error
+        }
     }
 }

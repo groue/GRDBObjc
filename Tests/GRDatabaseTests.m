@@ -121,6 +121,8 @@
 {
     GRDatabaseQueue *dbQueue = [GRDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath] error:NULL];
     [dbQueue inDatabase:^(GRDatabase *db) {
+        db.logsErrors = YES;
+        
         NSError *error;
         BOOL success = [db executeUpdate:@"When on board H.M.S. ‘Beable’ as naturalist," values: nil error:&error];
         XCTAssertFalse(success);
@@ -216,6 +218,8 @@
 {
     GRDatabaseQueue *dbQueue = [GRDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath] error:NULL];
     [dbQueue inDatabase:^(GRDatabase *db) {
+        db.logsErrors = YES;
+        
         NSError *error;
         GRResultSet *rs = [db executeQuery:@"Call me Ishmael." values:nil error:&error];
         XCTAssertNil(rs);

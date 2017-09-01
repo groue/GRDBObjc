@@ -188,6 +188,8 @@ Jump to the class you're interested into:
     @property (nonatomic, readonly) int changes;
     
     /// Retrieving error codes
+    @property (atomic, assign) BOOL logsErrors;
+    @property (atomic, assign) BOOL crashOnErrors;
     - (NSError *)lastError;
     
     // Transactions
@@ -242,7 +244,6 @@ Jump to the class you're interested into:
     
     // Properties
     @property (atomic, assign) BOOL traceExecution;
-    @property (atomic, assign) BOOL logsErrors;
     @property (nonatomic, readonly) BOOL goodConnection;
     @property (nonatomic, readonly, nullable) NSString *databasePath;
     @property (nonatomic, readonly, nullable) NSURL *databaseURL;
@@ -275,7 +276,6 @@ Jump to the class you're interested into:
     - (BOOL)rekeyWithData:(NSData *)keyData;
     
     // Retrieving error codes
-    @property (atomic, assign) BOOL crashOnErrors;
     - (NSString*)lastErrorMessage;
     - (int)lastErrorCode;
     - (int)lastExtendedErrorCode;

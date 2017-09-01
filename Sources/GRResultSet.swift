@@ -51,6 +51,7 @@ import SQLite3
                     return false
                 }
             } catch {
+                db.handleError(error)
                 state = .error(error)
                 return false
             }
