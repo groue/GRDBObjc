@@ -2,6 +2,18 @@ import GRDB
 
 @objc public class GRDatabaseQueue : NSObject {
     public let dbQueue: DatabaseQueue
+    private var _db: GRDatabase?
+    
+    private func database(_ db: Database) -> GRDatabase {
+        if let _db = _db {
+            precondition(_db.db === db)
+            return _db
+        } else {
+            let _db = GRDatabase(db)
+            self._db = _db
+            return _db
+        }
+    }
     
     public init(_ dbQueue: DatabaseQueue) {
         self.dbQueue = dbQueue
@@ -29,7 +41,7 @@ import GRDB
     
     @objc public func inDatabase(_ block: (GRDatabase) -> ()) {
         dbQueue.inDatabase { db in
-            block(GRDatabase(db))
+            block(database(db))
         }
     }
     
@@ -46,7 +58,7 @@ import GRDB
         try? dbQueue.inTransaction(transactionKind) { db in
             var rollback: ObjCBool = false
             return withUnsafeMutablePointer(to: &rollback) { rollbackp -> Database.TransactionCompletion in
-                block(GRDatabase(db), rollbackp)
+                block(database(db), rollbackp)
                 return rollbackp.pointee.boolValue ? .rollback : .commit
             }
         }
