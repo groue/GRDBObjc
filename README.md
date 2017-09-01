@@ -324,7 +324,6 @@ Jump to the class you're interested into:
     @property (atomic, assign) BOOL checkedOut;
     @property (nonatomic, readonly) BOOL hasOpenResultSets;
     + (NSString*)FMDBUserVersion;
-    + (NSString*)FMDBUserVersion;
     + (SInt32)FMDBVersion;
     - (BOOL)update:(NSString*)sql withErrorAndBindings:(NSError * _Nullable*)outErr, ...  __deprecated_msg("Use executeUpdate:withErrorAndBindings: instead");
     - (BOOL)inTransaction __deprecated_msg("Use isInTransaction property instead");
