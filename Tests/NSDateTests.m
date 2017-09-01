@@ -8,8 +8,9 @@
 
 - (void)testSaveDefaultDate
 {
-    GRDatabaseQueue *dbQueue = [GRDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath] error:NULL];
-    [dbQueue inDatabase:^(GRDatabase *db) {
+    FMDatabaseQueue *dbQueue = [FMDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath]];
+    XCTAssertNotNil(dbQueue);
+    [dbQueue inDatabase:^(FMDatabase *db) {
         XCTAssertFalse([db hasDateFormatter]);
         
         [db executeUpdate:@"CREATE TABLE dates(date DATETIME)"];
@@ -19,7 +20,7 @@
         BOOL success = [db executeUpdate:@"INSERT INTO dates(date) VALUES (?)" values: @[date] error:&error];
         XCTAssert(success, @"%@", error);
         
-        GRResultSet *rs = [db executeQuery:@"SELECT date FROM dates"];
+        FMResultSet *rs = [db executeQuery:@"SELECT date FROM dates"];
         XCTAssertNotNil(rs);
         XCTAssert([rs next]);
         
@@ -43,9 +44,10 @@
 - (void)testSaveDateWithFormat
 {
     NSDate *date = [NSDate dateWithTimeIntervalSince1970:0];
-    GRDatabaseQueue *dbQueue = [GRDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath] error:NULL];
-    [dbQueue inDatabase:^(GRDatabase *db) {
-        [db setDateFormat:[GRDatabase storeableDateFormat:@"YYYY-MM-DD"]];
+    FMDatabaseQueue *dbQueue = [FMDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath]];
+    XCTAssertNotNil(dbQueue);
+    [dbQueue inDatabase:^(FMDatabase *db) {
+        [db setDateFormat:[FMDatabase storeableDateFormat:@"YYYY-MM-DD"]];
         XCTAssertTrue([db hasDateFormatter]);
 
         [db executeUpdate:@"CREATE TABLE dates(date DATETIME)"];
@@ -53,7 +55,7 @@
         BOOL success = [db executeUpdate:@"INSERT INTO dates(date) VALUES (?)" values: @[date] error:&error];
         XCTAssert(success, @"%@", error);
         
-        GRResultSet *rs = [db executeQuery:@"SELECT date FROM dates"];
+        FMResultSet *rs = [db executeQuery:@"SELECT date FROM dates"];
         XCTAssertNotNil(rs);
         XCTAssert([rs next]);
         
@@ -74,10 +76,10 @@
     }];
     
     // Check dateformat is still there
-    [dbQueue inDatabase:^(GRDatabase *db) {
+    [dbQueue inDatabase:^(FMDatabase *db) {
         XCTAssertTrue([db hasDateFormatter]);
         
-        GRResultSet *rs = [db executeQuery:@"SELECT date FROM dates"];
+        FMResultSet *rs = [db executeQuery:@"SELECT date FROM dates"];
         XCTAssertNotNil(rs);
         XCTAssert([rs next]);
         

@@ -1,14 +1,14 @@
 import GRDB
 
-@objc public class GRUpdateStatement : NSObject {
-    private let db: GRDatabase
+@objc public class FMUpdateStatement : NSObject {
+    private let db: FMDatabase
     private let statement: UpdateStatement
     
     @objc public var sqliteHandle: OpaquePointer {
         return statement.sqliteStatement
     }
     
-    init(database: GRDatabase, statement: UpdateStatement) {
+    init(database: FMDatabase, statement: UpdateStatement) {
         self.db = database
         self.statement = statement
     }

@@ -8,11 +8,12 @@
 
 - (void)testNonEmptyData
 {
-    GRDatabaseQueue *dbQueue = [GRDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath] error:NULL];
-    [dbQueue inDatabase:^(GRDatabase *db) {
+    FMDatabaseQueue *dbQueue = [FMDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath]];
+    XCTAssertNotNil(dbQueue);
+    [dbQueue inDatabase:^(FMDatabase *db) {
         NSData *data = [@"foo" dataUsingEncoding:NSUTF8StringEncoding];
         NSError *error;
-        GRResultSet *resultSet = [db executeQuery:@"SELECT ?" values:@[data] error:&error];
+        FMResultSet *resultSet = [db executeQuery:@"SELECT ?" values:@[data] error:&error];
         XCTAssertNotNil(resultSet, @"%@", error);
         XCTAssert([resultSet next]);
         NSData *fetchedData = [resultSet dataForColumnIndex:0];
@@ -22,11 +23,12 @@
 
 - (void)testEmptyData
 {
-    GRDatabaseQueue *dbQueue = [GRDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath] error:NULL];
-    [dbQueue inDatabase:^(GRDatabase *db) {
+    FMDatabaseQueue *dbQueue = [FMDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath]];
+    XCTAssertNotNil(dbQueue);
+    [dbQueue inDatabase:^(FMDatabase *db) {
         NSData *data = [NSData data];
         NSError *error;
-        GRResultSet *resultSet = [db executeQuery:@"SELECT ?" values:@[data] error:&error];
+        FMResultSet *resultSet = [db executeQuery:@"SELECT ?" values:@[data] error:&error];
         XCTAssertNotNil(resultSet, @"%@", error);
         XCTAssert([resultSet next]);
         NSData *fetchedData = [resultSet dataForColumnIndex:0];

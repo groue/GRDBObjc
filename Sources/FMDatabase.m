@@ -1,7 +1,7 @@
 //#import <sqlite3.h>
-//#import "GRDatabase.h"
+//#import "FMDatabase.h"
 //
-//@implementation GRDatabase(Objc)
+//@implementation FMDatabase(Objc)
 //
 //- (BOOL)executeUpdate:(NSString *)sql withErrorAndBindings:(NSError **)outErr, ...
 //{

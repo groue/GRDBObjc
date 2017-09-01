@@ -1,7 +1,7 @@
 import GRDB
 import SQLite3
 
-@objc public class GRResultSet : NSObject {
+@objc public class FMResultSet : NSObject {
     private enum State {
         case initialized(RowCursor)
         case row(RowCursor, Row)
@@ -9,24 +9,24 @@ import SQLite3
         case error(Error)
     }
     
-    private var db: GRDatabase
+    private var db: FMDatabase
     private var state: State
     
     private var cursor: RowCursor {
         switch state {
         case .initialized(let cursor): return cursor
         case .row(let cursor, _): return cursor
-        case .ended: fatalError("GRResultSet has been fully consumed, or closed")
-        case .error(let error): fatalError("GRResultSet had an error: \(error)")
+        case .ended: fatalError("FMResultSet has been fully consumed, or closed")
+        case .error(let error): fatalError("FMResultSet had an error: \(error)")
         }
     }
     
     private var row: Row {
         switch state {
-        case .initialized: fatalError("-[GRResultSet next] has to be called before accessing fetched results")
+        case .initialized: fatalError("-[FMResultSet next] has to be called before accessing fetched results")
         case .row(_, let row): return row
-        case .ended: fatalError("GRResultSet has been fully consumed, or closed")
-        case .error(let error): fatalError("GRResultSet had an error: \(error)")
+        case .ended: fatalError("FMResultSet has been fully consumed, or closed")
+        case .error(let error): fatalError("FMResultSet had an error: \(error)")
         }
     }
     
@@ -34,7 +34,7 @@ import SQLite3
         self.cursor.statement.columnNames.enumerated().map { ($1.lowercased(), $0) },
         uniquingKeysWith: { $1 }) // keep rightmost index like FMDB
 
-    init(database: GRDatabase, cursor: RowCursor) {
+    init(database: FMDatabase, cursor: RowCursor) {
         self.db = database
         self.state = .initialized(cursor)
     }

@@ -2,12 +2,12 @@ import XCTest
 import GRDB
 import GRDBObjc
 
-class GRDatabaseQueueTests: GRDBObjcTestCase {
+class FMDatabaseQueueTests: GRDBObjcTestCase {
 
     func testDatabaseQueueIntializer() throws {
         let dbQueue = try DatabaseQueue(path: makeTemporaryDatabasePath())
-        let grQueue: GRDatabaseQueue = GRDatabaseQueue(dbQueue)
-        grQueue.inDatabase { db in
+        let fmdbQueue: FMDatabaseQueue = FMDatabaseQueue(dbQueue)
+        fmdbQueue.inDatabase { db in
             db.executeUpdate("CREATE TABLE t(a)")
             db.executeUpdate("INSERT INTO t(a) VALUES (123)")
             guard let resultSet = db.executeQuery("SELECT a FROM T") else {
@@ -19,9 +19,9 @@ class GRDatabaseQueueTests: GRDBObjcTestCase {
         }
     }
 
-    func testGRDatabaseQueueInitializer() throws {
-        let grQueue = try GRDatabaseQueue(path: makeTemporaryDatabasePath())
-        let dbQueue: DatabaseQueue = grQueue.dbQueue
+    func testFMDatabaseQueueInitializer() throws {
+        let fmdbQueue = try FMDatabaseQueue(path: makeTemporaryDatabasePath())
+        let dbQueue: DatabaseQueue = fmdbQueue.dbQueue
         try dbQueue.inDatabase { db in
             try db.execute("CREATE TABLE t(a)")
             try db.execute("INSERT INTO t(a) VALUES (123)")

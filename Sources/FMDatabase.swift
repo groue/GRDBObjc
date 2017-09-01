@@ -2,7 +2,7 @@ import GRDB
 import SQLite3
 import Foundation
 
-@objc public class GRDatabase : NSObject {
+@objc public class FMDatabase : NSObject {
     let db: Database
     var dateFormatter: DateFormatter?
 
@@ -86,10 +86,10 @@ import Foundation
     
     // TODO: remove once we have the variadic version `- (FMResultSet * _Nullable)executeQuery:(NSString*)sql, ...`
     @objc
-    public func executeQuery(_ sql: String) -> GRResultSet? {
+    public func executeQuery(_ sql: String) -> FMResultSet? {
         do {
             let cursor = try Row.fetchCursor(db, sql)
-            return GRResultSet(database: self, cursor: cursor)
+            return FMResultSet(database: self, cursor: cursor)
         } catch {
             handleError(error)
             return nil
@@ -97,11 +97,11 @@ import Foundation
     }
 
     @objc(executeQuery:withArgumentsInArray:)
-    public func executeQuery(_ sql: String, argumentsInArray values: [Any]?) -> GRResultSet? {
+    public func executeQuery(_ sql: String, argumentsInArray values: [Any]?) -> FMResultSet? {
         do {
             let arguments = values.map { statementArguments(from: $0) }
             let cursor = try Row.fetchCursor(db, sql, arguments: arguments)
-            return GRResultSet(database: self, cursor: cursor)
+            return FMResultSet(database: self, cursor: cursor)
         } catch {
             handleError(error)
             return nil
@@ -109,11 +109,11 @@ import Foundation
     }
     
     @objc(executeQuery:withParameterDictionary:)
-    public func executeQuery(_ sql: String, parameterDictionary: [String: Any]?) -> GRResultSet? {
+    public func executeQuery(_ sql: String, parameterDictionary: [String: Any]?) -> FMResultSet? {
         do {
             let arguments = parameterDictionary.map { statementArguments(from: $0) }
             let cursor = try Row.fetchCursor(db, sql, arguments: arguments)
-            return GRResultSet(database: self, cursor: cursor)
+            return FMResultSet(database: self, cursor: cursor)
         } catch {
             handleError(error)
             return nil
@@ -121,11 +121,11 @@ import Foundation
     }
     
     @objc
-    public func executeQuery(_ sql: String, values: [Any]?) throws -> GRResultSet {
+    public func executeQuery(_ sql: String, values: [Any]?) throws -> FMResultSet {
         do {
             let arguments = values.map { statementArguments(from: $0) }
             let cursor = try Row.fetchCursor(db, sql, arguments: arguments)
-            return GRResultSet(database: self, cursor: cursor)
+            return FMResultSet(database: self, cursor: cursor)
         } catch {
             handleError(error)
             throw error
@@ -274,9 +274,9 @@ import Foundation
     }
     
     @objc
-    public func __makeUpdateStatement(_ sql: String) throws -> GRUpdateStatement {
+    public func __makeUpdateStatement(_ sql: String) throws -> FMUpdateStatement {
         do {
-            return try GRUpdateStatement(database: self, statement: db.makeUpdateStatement(sql))
+            return try FMUpdateStatement(database: self, statement: db.makeUpdateStatement(sql))
         } catch {
             handleError(error)
             throw error

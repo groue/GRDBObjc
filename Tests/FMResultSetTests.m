@@ -1,15 +1,15 @@
 #import "GRDBObjcTestCase.h"
 #import <sqlite3.h>
 
-@interface GRResultSetTests : GRDBObjcTestCase
+@interface FMResultSetTests : GRDBObjcTestCase
 @end
 
-@implementation GRResultSetTests
+@implementation FMResultSetTests
 
-- (GRResultSet *)executeValuesQueryInDatabase:(GRDatabase *)db
+- (FMResultSet *)executeValuesQueryInDatabase:(FMDatabase *)db
 {
     NSError *error;
-    GRResultSet *rs = [db executeQuery:@"SELECT ? AS integer, ? AS double, ? AS text, ? AS blob, NULL AS \"null\""
+    FMResultSet *rs = [db executeQuery:@"SELECT ? AS integer, ? AS double, ? AS text, ? AS blob, NULL AS \"null\""
                                 values:@[@(123), @(1.5), @"20 little cigars", [@"654" dataUsingEncoding:NSUTF8StringEncoding]]
                                  error:&error];
     XCTAssertNotNil(rs, @"%@", error);
@@ -18,9 +18,10 @@
 
 - (void)testColumnIsNull
 {
-    GRDatabaseQueue *dbQueue = [GRDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath] error:NULL];
-    [dbQueue inDatabase:^(GRDatabase *db) {
-        GRResultSet *rs = [self executeValuesQueryInDatabase:db];
+    FMDatabaseQueue *dbQueue = [FMDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath]];
+    XCTAssertNotNil(dbQueue);
+    [dbQueue inDatabase:^(FMDatabase *db) {
+        FMResultSet *rs = [self executeValuesQueryInDatabase:db];
         XCTAssert([rs next]);
         XCTAssertFalse([rs columnIndexIsNull:0]);
         XCTAssertFalse([rs columnIsNull:@"integer"]);
@@ -37,9 +38,10 @@
 
 - (void)testIntValue
 {
-    GRDatabaseQueue *dbQueue = [GRDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath] error:NULL];
-    [dbQueue inDatabase:^(GRDatabase *db) {
-        GRResultSet *rs = [self executeValuesQueryInDatabase:db];
+    FMDatabaseQueue *dbQueue = [FMDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath]];
+    XCTAssertNotNil(dbQueue);
+    [dbQueue inDatabase:^(FMDatabase *db) {
+        FMResultSet *rs = [self executeValuesQueryInDatabase:db];
         XCTAssert([rs next]);
         XCTAssertEqual([rs intForColumnIndex:0], 123);
         XCTAssertEqual([rs intForColumn:@"integer"], 123);
@@ -56,9 +58,10 @@
 
 - (void)testLongValue
 {
-    GRDatabaseQueue *dbQueue = [GRDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath] error:NULL];
-    [dbQueue inDatabase:^(GRDatabase *db) {
-        GRResultSet *rs = [self executeValuesQueryInDatabase:db];
+    FMDatabaseQueue *dbQueue = [FMDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath]];
+    XCTAssertNotNil(dbQueue);
+    [dbQueue inDatabase:^(FMDatabase *db) {
+        FMResultSet *rs = [self executeValuesQueryInDatabase:db];
         XCTAssert([rs next]);
         XCTAssertEqual([rs longForColumnIndex:0], 123);
         XCTAssertEqual([rs longForColumn:@"integer"], 123);
@@ -75,9 +78,10 @@
 
 - (void)testLongLongIntValue
 {
-    GRDatabaseQueue *dbQueue = [GRDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath] error:NULL];
-    [dbQueue inDatabase:^(GRDatabase *db) {
-        GRResultSet *rs = [self executeValuesQueryInDatabase:db];
+    FMDatabaseQueue *dbQueue = [FMDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath]];
+    XCTAssertNotNil(dbQueue);
+    [dbQueue inDatabase:^(FMDatabase *db) {
+        FMResultSet *rs = [self executeValuesQueryInDatabase:db];
         XCTAssert([rs next]);
         XCTAssertEqual([rs longLongIntForColumnIndex:0], 123);
         XCTAssertEqual([rs longLongIntForColumn:@"integer"], 123);
@@ -94,9 +98,10 @@
 
 - (void)testUnsignedLongLongIntValue
 {
-    GRDatabaseQueue *dbQueue = [GRDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath] error:NULL];
-    [dbQueue inDatabase:^(GRDatabase *db) {
-        GRResultSet *rs = [self executeValuesQueryInDatabase:db];
+    FMDatabaseQueue *dbQueue = [FMDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath]];
+    XCTAssertNotNil(dbQueue);
+    [dbQueue inDatabase:^(FMDatabase *db) {
+        FMResultSet *rs = [self executeValuesQueryInDatabase:db];
         XCTAssert([rs next]);
         XCTAssertEqual([rs unsignedLongLongIntForColumnIndex:0], 123);
         XCTAssertEqual([rs unsignedLongLongIntForColumn:@"integer"], 123);
@@ -113,9 +118,10 @@
 
 - (void)testBoolValue
 {
-    GRDatabaseQueue *dbQueue = [GRDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath] error:NULL];
-    [dbQueue inDatabase:^(GRDatabase *db) {
-        GRResultSet *rs = [self executeValuesQueryInDatabase:db];
+    FMDatabaseQueue *dbQueue = [FMDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath]];
+    XCTAssertNotNil(dbQueue);
+    [dbQueue inDatabase:^(FMDatabase *db) {
+        FMResultSet *rs = [self executeValuesQueryInDatabase:db];
         XCTAssert([rs next]);
         XCTAssertEqual([rs boolForColumnIndex:0], YES);
         XCTAssertEqual([rs boolForColumn:@"integer"], YES);
@@ -132,9 +138,10 @@
 
 - (void)testDoubleValue
 {
-    GRDatabaseQueue *dbQueue = [GRDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath] error:NULL];
-    [dbQueue inDatabase:^(GRDatabase *db) {
-        GRResultSet *rs = [self executeValuesQueryInDatabase:db];
+    FMDatabaseQueue *dbQueue = [FMDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath]];
+    XCTAssertNotNil(dbQueue);
+    [dbQueue inDatabase:^(FMDatabase *db) {
+        FMResultSet *rs = [self executeValuesQueryInDatabase:db];
         XCTAssert([rs next]);
         XCTAssertEqual([rs doubleForColumnIndex:0], 123.0);
         XCTAssertEqual([rs doubleForColumn:@"integer"], 123.0);
@@ -151,9 +158,10 @@
 
 - (void)testStringValue
 {
-    GRDatabaseQueue *dbQueue = [GRDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath] error:NULL];
-    [dbQueue inDatabase:^(GRDatabase *db) {
-        GRResultSet *rs = [self executeValuesQueryInDatabase:db];
+    FMDatabaseQueue *dbQueue = [FMDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath]];
+    XCTAssertNotNil(dbQueue);
+    [dbQueue inDatabase:^(FMDatabase *db) {
+        FMResultSet *rs = [self executeValuesQueryInDatabase:db];
         XCTAssert([rs next]);
         XCTAssertEqualObjects([rs stringForColumnIndex:0], @"123");
         XCTAssertEqualObjects([rs stringForColumn:@"integer"], @"123");
@@ -170,9 +178,10 @@
 
 - (void)testDataValue
 {
-    GRDatabaseQueue *dbQueue = [GRDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath] error:NULL];
-    [dbQueue inDatabase:^(GRDatabase *db) {
-        GRResultSet *rs = [self executeValuesQueryInDatabase:db];
+    FMDatabaseQueue *dbQueue = [FMDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath]];
+    XCTAssertNotNil(dbQueue);
+    [dbQueue inDatabase:^(FMDatabase *db) {
+        FMResultSet *rs = [self executeValuesQueryInDatabase:db];
         XCTAssert([rs next]);
         XCTAssertEqualObjects([rs dataForColumnIndex:0], [@"123" dataUsingEncoding:NSUTF8StringEncoding]);
         XCTAssertEqualObjects([rs dataForColumn:@"integer"], [@"123" dataUsingEncoding:NSUTF8StringEncoding]);
@@ -189,9 +198,10 @@
 
 - (void)testDataNoCopyValue
 {
-    GRDatabaseQueue *dbQueue = [GRDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath] error:NULL];
-    [dbQueue inDatabase:^(GRDatabase *db) {
-        GRResultSet *rs = [self executeValuesQueryInDatabase:db];
+    FMDatabaseQueue *dbQueue = [FMDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath]];
+    XCTAssertNotNil(dbQueue);
+    [dbQueue inDatabase:^(FMDatabase *db) {
+        FMResultSet *rs = [self executeValuesQueryInDatabase:db];
         XCTAssert([rs next]);
         XCTAssertEqualObjects([rs dataNoCopyForColumnIndex:0], [@"123" dataUsingEncoding:NSUTF8StringEncoding]);
         XCTAssertEqualObjects([rs dataNoCopyForColumn:@"integer"], [@"123" dataUsingEncoding:NSUTF8StringEncoding]);
@@ -208,9 +218,10 @@
 
 - (void)testObjectValue
 {
-    GRDatabaseQueue *dbQueue = [GRDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath] error:NULL];
-    [dbQueue inDatabase:^(GRDatabase *db) {
-        GRResultSet *rs = [self executeValuesQueryInDatabase:db];
+    FMDatabaseQueue *dbQueue = [FMDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath]];
+    XCTAssertNotNil(dbQueue);
+    [dbQueue inDatabase:^(FMDatabase *db) {
+        FMResultSet *rs = [self executeValuesQueryInDatabase:db];
         XCTAssert([rs next]);
         {
             NSNumber *value = [rs objectForColumnIndex:0];
@@ -263,9 +274,10 @@
 
 - (void)testIndexedSubscript
 {
-    GRDatabaseQueue *dbQueue = [GRDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath] error:NULL];
-    [dbQueue inDatabase:^(GRDatabase *db) {
-        GRResultSet *rs = [self executeValuesQueryInDatabase:db];
+    FMDatabaseQueue *dbQueue = [FMDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath]];
+    XCTAssertNotNil(dbQueue);
+    [dbQueue inDatabase:^(FMDatabase *db) {
+        FMResultSet *rs = [self executeValuesQueryInDatabase:db];
         XCTAssert([rs next]);
         {
             NSNumber *value = rs[0];
@@ -295,9 +307,10 @@
 
 - (void)testKeyedSubscript
 {
-    GRDatabaseQueue *dbQueue = [GRDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath] error:NULL];
-    [dbQueue inDatabase:^(GRDatabase *db) {
-        GRResultSet *rs = [self executeValuesQueryInDatabase:db];
+    FMDatabaseQueue *dbQueue = [FMDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath]];
+    XCTAssertNotNil(dbQueue);
+    [dbQueue inDatabase:^(FMDatabase *db) {
+        FMResultSet *rs = [self executeValuesQueryInDatabase:db];
         XCTAssert([rs next]);
         {
             NSNumber *value = rs[@"integer"];
@@ -327,9 +340,10 @@
 
 - (void)testResultDictionary
 {
-    GRDatabaseQueue *dbQueue = [GRDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath] error:NULL];
-    [dbQueue inDatabase:^(GRDatabase *db) {
-        GRResultSet *rs = [self executeValuesQueryInDatabase:db];
+    FMDatabaseQueue *dbQueue = [FMDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath]];
+    XCTAssertNotNil(dbQueue);
+    [dbQueue inDatabase:^(FMDatabase *db) {
+        FMResultSet *rs = [self executeValuesQueryInDatabase:db];
         XCTAssertNil(rs.resultDictionary);
         XCTAssert([rs next]);
         NSDictionary *dict = rs.resultDictionary;
@@ -363,10 +377,10 @@
 
 - (void)testResultDictionaryCompatibilityWithFMDB
 {
-    // This is a FMDB compatibility test
-    GRDatabaseQueue *dbQueue = [GRDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath] error:NULL];
-    [dbQueue inDatabase:^(GRDatabase *db) {
-        GRResultSet *rs = [db executeQuery:@"SELECT 1 AS foo, 2 AS foo, 3 AS FOO"];
+    FMDatabaseQueue *dbQueue = [FMDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath]];
+    XCTAssertNotNil(dbQueue);
+    [dbQueue inDatabase:^(FMDatabase *db) {
+        FMResultSet *rs = [db executeQuery:@"SELECT 1 AS foo, 2 AS foo, 3 AS FOO"];
         XCTAssert([rs next]);
         NSDictionary *dict = rs.resultDictionary;
         XCTAssertEqualObjects(dict[@"foo"], @(2));
@@ -376,13 +390,14 @@
 
 - (void)testNext
 {
-    GRDatabaseQueue *dbQueue = [GRDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath] error:NULL];
-    [dbQueue inDatabase:^(GRDatabase *db) {
+    FMDatabaseQueue *dbQueue = [FMDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath]];
+    XCTAssertNotNil(dbQueue);
+    [dbQueue inDatabase:^(FMDatabase *db) {
         [db executeUpdate:@"CREATE TABLE t(a, b)"];
         [db executeUpdate:@"INSERT INTO t(a, b) VALUES (1, 2)"];
         [db executeUpdate:@"INSERT INTO t(a, b) VALUES (3, 4)"];
         
-        GRResultSet *rs = [db executeQuery:@"SELECT a, b FROM t"];
+        FMResultSet *rs = [db executeQuery:@"SELECT a, b FROM t"];
         XCTAssertNotNil(rs);
         
         XCTAssert([rs next]);
@@ -400,13 +415,14 @@
 
 - (void)testClose
 {
-    GRDatabaseQueue *dbQueue = [GRDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath] error:NULL];
-    [dbQueue inDatabase:^(GRDatabase *db) {
+    FMDatabaseQueue *dbQueue = [FMDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath]];
+    XCTAssertNotNil(dbQueue);
+    [dbQueue inDatabase:^(FMDatabase *db) {
         [db executeUpdate:@"CREATE TABLE t(a)"];
         [db executeUpdate:@"INSERT INTO t(a) VALUES (1)"];
         [db executeUpdate:@"INSERT INTO t(a) VALUES (3)"];
         
-        GRResultSet *rs = [db executeQuery:@"SELECT a FROM t"];
+        FMResultSet *rs = [db executeQuery:@"SELECT a FROM t"];
         XCTAssertNotNil(rs);
         
         XCTAssert([rs next]);
@@ -418,9 +434,10 @@
 
 - (void)testColumnIndexForName
 {
-    GRDatabaseQueue *dbQueue = [GRDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath] error:NULL];
-    [dbQueue inDatabase:^(GRDatabase *db) {
-        GRResultSet *rs = [db executeQuery:@"SELECT 1 AS foo, 2 AS bar, 3 AS bar"];
+    FMDatabaseQueue *dbQueue = [FMDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath]];
+    XCTAssertNotNil(dbQueue);
+    [dbQueue inDatabase:^(FMDatabase *db) {
+        FMResultSet *rs = [db executeQuery:@"SELECT 1 AS foo, 2 AS bar, 3 AS bar"];
         XCTAssertNotNil(rs);
         XCTAssertEqual([rs columnIndexForName:@"foo"], 0);
         XCTAssertEqual([rs columnIndexForName:@"FOO"], 0);
@@ -431,12 +448,13 @@
 
 - (void)testColumnNameIsCaseInsensitive
 {
-    GRDatabaseQueue *dbQueue = [GRDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath] error:NULL];
-    [dbQueue inDatabase:^(GRDatabase *db) {
+    FMDatabaseQueue *dbQueue = [FMDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath]];
+    XCTAssertNotNil(dbQueue);
+    [dbQueue inDatabase:^(FMDatabase *db) {
         [db executeUpdate:@"CREATE TABLE t(InTeGeR)"];
         [db executeUpdate:@"INSERT INTO t(InTeGeR) VALUES (123)"];
         
-        GRResultSet *rs = [db executeQuery:@"SELECT integer FROM t"];
+        FMResultSet *rs = [db executeQuery:@"SELECT integer FROM t"];
         XCTAssertNotNil(rs);
         XCTAssert([rs next]);
         XCTAssertEqual([rs intForColumn:@"integer"], 123);

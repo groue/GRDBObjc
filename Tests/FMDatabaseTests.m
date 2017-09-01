@@ -1,15 +1,16 @@
 #import "GRDBObjcTestCase.h"
 #import <sqlite3.h>
 
-@interface GRDatabaseTests : GRDBObjcTestCase
+@interface FMDatabaseTests : GRDBObjcTestCase
 @end
 
-@implementation GRDatabaseTests
+@implementation FMDatabaseTests
 
 - (void)testExecuteUpdate
 {
-    GRDatabaseQueue *dbQueue = [GRDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath] error:NULL];
-    [dbQueue inDatabase:^(GRDatabase *db) {
+    FMDatabaseQueue *dbQueue = [FMDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath]];
+    XCTAssertNotNil(dbQueue);
+    [dbQueue inDatabase:^(FMDatabase *db) {
         BOOL success = [db executeUpdate:@"CREATE TABLE t(a)"];
         XCTAssert(success);
         XCTAssert([db tableExists:@"t"]);
@@ -18,8 +19,9 @@
 
 - (void)testExecuteUpdateWithoutErrorHandling
 {
-    GRDatabaseQueue *dbQueue = [GRDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath] error:NULL];
-    [dbQueue inDatabase:^(GRDatabase *db) {
+    FMDatabaseQueue *dbQueue = [FMDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath]];
+    XCTAssertNotNil(dbQueue);
+    [dbQueue inDatabase:^(FMDatabase *db) {
         BOOL success = [db executeUpdate:@"CREATE TABLE t(a)"];
         XCTAssert(success);
     }];
@@ -27,15 +29,16 @@
 
 - (void)testExecuteUpdateWithArgumentsInArray
 {
-    GRDatabaseQueue *dbQueue = [GRDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath] error:NULL];
-    [dbQueue inDatabase:^(GRDatabase *db) {
+    FMDatabaseQueue *dbQueue = [FMDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath]];
+    XCTAssertNotNil(dbQueue);
+    [dbQueue inDatabase:^(FMDatabase *db) {
         [db executeUpdate:@"CREATE TABLE t(a, b)"];
         
         BOOL success = [db executeUpdate:@"INSERT INTO t(a, b) VALUES (?, ?)"
                     withArgumentsInArray:@[@(123), @(654)]];
         XCTAssert(success);
         
-        GRResultSet *rs = [db executeQuery:@"SELECT a, b FROM t"];
+        FMResultSet *rs = [db executeQuery:@"SELECT a, b FROM t"];
         XCTAssertNotNil(rs);
         BOOL fetched = NO;
         while ([rs next]) {
@@ -49,15 +52,16 @@
 
 - (void)testExecuteUpdateWithParameterDictionary
 {
-    GRDatabaseQueue *dbQueue = [GRDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath] error:NULL];
-    [dbQueue inDatabase:^(GRDatabase *db) {
+    FMDatabaseQueue *dbQueue = [FMDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath]];
+    XCTAssertNotNil(dbQueue);
+    [dbQueue inDatabase:^(FMDatabase *db) {
         [db executeUpdate:@"CREATE TABLE t(a, b)"];
         
         BOOL success = [db executeUpdate:@"INSERT INTO t(a, b) VALUES (:a, :b)"
                  withParameterDictionary:@{@"a": @(123), @"b": @(654)}];
         XCTAssert(success);
         
-        GRResultSet *rs = [db executeQuery:@"SELECT a, b FROM t"];
+        FMResultSet *rs = [db executeQuery:@"SELECT a, b FROM t"];
         XCTAssertNotNil(rs);
         BOOL fetched = NO;
         while ([rs next]) {
@@ -71,8 +75,9 @@
 
 - (void)testExecuteUpdateWithValues
 {
-    GRDatabaseQueue *dbQueue = [GRDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath] error:NULL];
-    [dbQueue inDatabase:^(GRDatabase *db) {
+    FMDatabaseQueue *dbQueue = [FMDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath]];
+    XCTAssertNotNil(dbQueue);
+    [dbQueue inDatabase:^(FMDatabase *db) {
         [db executeUpdate:@"CREATE TABLE t(a, b)"];
         
         NSError *error;
@@ -81,7 +86,7 @@
                                    error:&error];
         XCTAssert(success, @"%@", error);
         
-        GRResultSet *rs = [db executeQuery:@"SELECT a, b FROM t"];
+        FMResultSet *rs = [db executeQuery:@"SELECT a, b FROM t"];
         XCTAssertNotNil(rs);
         BOOL fetched = NO;
         while ([rs next]) {
@@ -95,8 +100,9 @@
 
 - (void)testExecuteUpdateWithNilValues
 {
-    GRDatabaseQueue *dbQueue = [GRDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath] error:NULL];
-    [dbQueue inDatabase:^(GRDatabase *db) {
+    FMDatabaseQueue *dbQueue = [FMDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath]];
+    XCTAssertNotNil(dbQueue);
+    [dbQueue inDatabase:^(FMDatabase *db) {
         [db executeUpdate:@"CREATE TABLE t(a, b)"];
         
         NSError *error;
@@ -105,7 +111,7 @@
                                    error:&error];
         XCTAssert(success, @"%@", error);
         
-        GRResultSet *rs = [db executeQuery:@"SELECT a, b FROM t"];
+        FMResultSet *rs = [db executeQuery:@"SELECT a, b FROM t"];
         XCTAssertNotNil(rs);
         BOOL fetched = NO;
         while ([rs next]) {
@@ -119,8 +125,9 @@
 
 - (void)testExecuteUpdateWithValuesError
 {
-    GRDatabaseQueue *dbQueue = [GRDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath] error:NULL];
-    [dbQueue inDatabase:^(GRDatabase *db) {
+    FMDatabaseQueue *dbQueue = [FMDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath]];
+    XCTAssertNotNil(dbQueue);
+    [dbQueue inDatabase:^(FMDatabase *db) {
         db.logsErrors = YES;
         
         NSError *error;
@@ -135,12 +142,13 @@
 
 - (void)testExecuteQuery
 {
-    GRDatabaseQueue *dbQueue = [GRDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath] error:NULL];
-    [dbQueue inDatabase:^(GRDatabase *db) {
+    FMDatabaseQueue *dbQueue = [FMDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath]];
+    XCTAssertNotNil(dbQueue);
+    [dbQueue inDatabase:^(FMDatabase *db) {
         [db executeUpdate:@"CREATE TABLE t(a, b)"];
         [db executeUpdate:@"INSERT INTO t(a, b) VALUES (123, 654)"];
         
-        GRResultSet *rs = [db executeQuery:@"SELECT a, b FROM t"];
+        FMResultSet *rs = [db executeQuery:@"SELECT a, b FROM t"];
         XCTAssertNotNil(rs);
         BOOL fetched = NO;
         while ([rs next]) {
@@ -154,12 +162,13 @@
 
 - (void)testExecuteQueryWithArgumentsInArray
 {
-    GRDatabaseQueue *dbQueue = [GRDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath] error:NULL];
-    [dbQueue inDatabase:^(GRDatabase *db) {
+    FMDatabaseQueue *dbQueue = [FMDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath]];
+    XCTAssertNotNil(dbQueue);
+    [dbQueue inDatabase:^(FMDatabase *db) {
         [db executeUpdate:@"CREATE TABLE t(a, b)"];
         [db executeUpdate:@"INSERT INTO t(a, b) VALUES (123, 654)"];
         
-        GRResultSet *rs = [db executeQuery:@"SELECT a, b FROM t WHERE a > ? AND a < ?"
+        FMResultSet *rs = [db executeQuery:@"SELECT a, b FROM t WHERE a > ? AND a < ?"
                    withArgumentsInArray:@[@(122), @(124)]];
         XCTAssertNotNil(rs);
         BOOL fetched = NO;
@@ -174,12 +183,13 @@
 
 - (void)testExecuteQueryWithParameterDictionary
 {
-    GRDatabaseQueue *dbQueue = [GRDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath] error:NULL];
-    [dbQueue inDatabase:^(GRDatabase *db) {
+    FMDatabaseQueue *dbQueue = [FMDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath]];
+    XCTAssertNotNil(dbQueue);
+    [dbQueue inDatabase:^(FMDatabase *db) {
         [db executeUpdate:@"CREATE TABLE t(a, b)"];
         [db executeUpdate:@"INSERT INTO t(a, b) VALUES (123, 654)"];
         
-        GRResultSet *rs = [db executeQuery:@"SELECT a, b FROM t WHERE a > :a AND a < :b"
+        FMResultSet *rs = [db executeQuery:@"SELECT a, b FROM t WHERE a > :a AND a < :b"
                    withParameterDictionary:@{@"a": @(122), @"b": @(124)}];
         XCTAssertNotNil(rs);
         BOOL fetched = NO;
@@ -194,13 +204,14 @@
 
 - (void)testExecuteQueryWithNilValues
 {
-    GRDatabaseQueue *dbQueue = [GRDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath] error:NULL];
-    [dbQueue inDatabase:^(GRDatabase *db) {
+    FMDatabaseQueue *dbQueue = [FMDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath]];
+    XCTAssertNotNil(dbQueue);
+    [dbQueue inDatabase:^(FMDatabase *db) {
         [db executeUpdate:@"CREATE TABLE t(a, b)"];
         [db executeUpdate:@"INSERT INTO t(a, b) VALUES (123, 654)"];
         
         NSError *error;
-        GRResultSet *rs = [db executeQuery:@"SELECT a, b FROM t WHERE a > 122 AND a < 124"
+        FMResultSet *rs = [db executeQuery:@"SELECT a, b FROM t WHERE a > 122 AND a < 124"
                                     values:nil
                                      error:&error];
         XCTAssertNotNil(rs, @"%@", error);
@@ -216,12 +227,13 @@
 
 - (void)testExecuteQueryWithValuesError
 {
-    GRDatabaseQueue *dbQueue = [GRDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath] error:NULL];
-    [dbQueue inDatabase:^(GRDatabase *db) {
+    FMDatabaseQueue *dbQueue = [FMDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath]];
+    XCTAssertNotNil(dbQueue);
+    [dbQueue inDatabase:^(FMDatabase *db) {
         db.logsErrors = YES;
         
         NSError *error;
-        GRResultSet *rs = [db executeQuery:@"Call me Ishmael." values:nil error:&error];
+        FMResultSet *rs = [db executeQuery:@"Call me Ishmael." values:nil error:&error];
         XCTAssertNil(rs);
         XCTAssertNotNil(error);
         XCTAssertEqualObjects(error.domain, @"GRDB.DatabaseError");
@@ -238,8 +250,9 @@
 
 - (void)testLastInsertRowId
 {
-    GRDatabaseQueue *dbQueue = [GRDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath] error:NULL];
-    [dbQueue inDatabase:^(GRDatabase *db) {
+    FMDatabaseQueue *dbQueue = [FMDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath]];
+    XCTAssertNotNil(dbQueue);
+    [dbQueue inDatabase:^(FMDatabase *db) {
         XCTAssertEqual(db.lastInsertRowId, 0);
         [db executeUpdate:@"CREATE TABLE t(id INTEGER PRIMARY KEY, a)"];
         [db executeUpdate:@"INSERT INTO t(a) VALUES (1)"];
@@ -255,8 +268,9 @@
 
 - (void)testChanges
 {
-    GRDatabaseQueue *dbQueue = [GRDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath] error:NULL];
-    [dbQueue inDatabase:^(GRDatabase *db) {
+    FMDatabaseQueue *dbQueue = [FMDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath]];
+    XCTAssertNotNil(dbQueue);
+    [dbQueue inDatabase:^(FMDatabase *db) {
         XCTAssertEqual(db.changes, 0);
         [db executeUpdate:@"CREATE TABLE t(id INTEGER PRIMARY KEY, a)"];
         [db executeUpdate:@"INSERT INTO t(a) VALUES (1)"];
@@ -270,8 +284,9 @@
 
 - (void)testTransaction
 {
-    GRDatabaseQueue *dbQueue = [GRDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath] error:NULL];
-    [dbQueue inDatabase:^(GRDatabase *db) {
+    FMDatabaseQueue *dbQueue = [FMDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath]];
+    XCTAssertNotNil(dbQueue);
+    [dbQueue inDatabase:^(FMDatabase *db) {
         XCTAssertFalse(db.isInTransaction);
         [db executeUpdate:@"BEGIN TRANSACTION"];
         XCTAssertTrue(db.isInTransaction);
@@ -312,8 +327,9 @@
 
 - (void)testSQLiteHandle
 {
-    GRDatabaseQueue *dbQueue = [GRDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath] error:NULL];
-    [dbQueue inDatabase:^(GRDatabase *db) {
+    FMDatabaseQueue *dbQueue = [FMDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath]];
+    XCTAssertNotNil(dbQueue);
+    [dbQueue inDatabase:^(FMDatabase *db) {
         sqlite3_exec(db.sqliteHandle, "CREATE TABLE t(a)", NULL, NULL, NULL);
         BOOL success = [db executeUpdate:@"INSERT INTO t(a) VALUES (1)"];
         XCTAssert(success);
@@ -322,8 +338,9 @@
 
 - (void)testTableExists
 {
-    GRDatabaseQueue *dbQueue = [GRDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath] error:NULL];
-    [dbQueue inDatabase:^(GRDatabase *db) {
+    FMDatabaseQueue *dbQueue = [FMDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath]];
+    XCTAssertNotNil(dbQueue);
+    [dbQueue inDatabase:^(FMDatabase *db) {
         [db executeUpdate:@"CREATE TABLE defined(a)"];
         XCTAssertTrue([db tableExists:@"defined"]);
         XCTAssertTrue([db tableExists:@"DEFINED"]);
@@ -333,8 +350,9 @@
 
 - (void)testInSavePointCommit
 {
-    GRDatabaseQueue *dbQueue = [GRDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath] error:NULL];
-    [dbQueue inDatabase:^(GRDatabase *db) {
+    FMDatabaseQueue *dbQueue = [FMDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath]];
+    XCTAssertNotNil(dbQueue);
+    [dbQueue inDatabase:^(FMDatabase *db) {
         [db executeUpdate:@"CREATE TABLE t(a)"];
         [db executeUpdate:@"INSERT INTO t(a) VALUES (123)"];
         NSError *error = [db inSavePoint:^(BOOL *rollback) {
@@ -342,15 +360,16 @@
             [db executeUpdate:@"DELETE FROM t"];
         }];
         XCTAssertNil(error);
-        GRResultSet *resultSet = [db executeQuery:@"SELECT a FROM t"];
+        FMResultSet *resultSet = [db executeQuery:@"SELECT a FROM t"];
         XCTAssertFalse([resultSet next]);
     }];
 }
 
 - (void)testInSavePointRollback
 {
-    GRDatabaseQueue *dbQueue = [GRDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath] error:NULL];
-    [dbQueue inDatabase:^(GRDatabase *db) {
+    FMDatabaseQueue *dbQueue = [FMDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath]];
+    XCTAssertNotNil(dbQueue);
+    [dbQueue inDatabase:^(FMDatabase *db) {
         [db executeUpdate:@"CREATE TABLE t(a)"];
         [db executeUpdate:@"INSERT INTO t(a) VALUES (123)"];
         NSError *error = [db inSavePoint:^(BOOL *rollback) {
@@ -359,15 +378,16 @@
             *rollback = YES;
         }];
         XCTAssertNil(error);
-        GRResultSet *resultSet = [db executeQuery:@"SELECT a FROM t"];
+        FMResultSet *resultSet = [db executeQuery:@"SELECT a FROM t"];
         XCTAssertTrue([resultSet next]);
     }];
 }
 
 - (void)testInSavePointNested
 {
-    GRDatabaseQueue *dbQueue = [GRDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath] error:NULL];
-    [dbQueue inDatabase:^(GRDatabase *db) {
+    FMDatabaseQueue *dbQueue = [FMDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath]];
+    XCTAssertNotNil(dbQueue);
+    [dbQueue inDatabase:^(FMDatabase *db) {
         [db executeUpdate:@"CREATE TABLE t(a)"];
         [db executeUpdate:@"INSERT INTO t(a) VALUES (123)"];
         NSError *error = [db inSavePoint:^(BOOL *rollback) {
@@ -379,22 +399,23 @@
                 [db executeUpdate:@"DELETE FROM t"];
             }];
             XCTAssertNil(error);
-            GRResultSet *resultSet = [db executeQuery:@"SELECT a FROM t"];
+            FMResultSet *resultSet = [db executeQuery:@"SELECT a FROM t"];
             XCTAssertFalse([resultSet next]);
             
             [db executeUpdate:@"INSERT INTO t(a) VALUES (123)"];
             *rollback = NO;
         }];
         XCTAssertNil(error);
-        GRResultSet *resultSet = [db executeQuery:@"SELECT a FROM t"];
+        FMResultSet *resultSet = [db executeQuery:@"SELECT a FROM t"];
         XCTAssertTrue([resultSet next]);
     }];
 }
 
 - (void)testSavePoint
 {
-    GRDatabaseQueue *dbQueue = [GRDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath] error:NULL];
-    [dbQueue inDatabase:^(GRDatabase *db) {
+    FMDatabaseQueue *dbQueue = [FMDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath]];
+    XCTAssertNotNil(dbQueue);
+    [dbQueue inDatabase:^(FMDatabase *db) {
         XCTAssertFalse(db.isInTransaction);
         
         NSError *error;
