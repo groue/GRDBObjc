@@ -95,3 +95,7 @@ xcuserdata
 
 # Performance test baselines
 *.xcbaseline
+
+##
+Tests/CocoaPods/TestApp/Pods
+Tests/CocoaPods/TestApp/Podfile.lock
