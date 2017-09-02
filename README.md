@@ -9,6 +9,9 @@ GRDBObjc helps Objective-C applications that use SQLite replace [FMDB](http://gi
 
 **Requirements**: iOS 8.0+ / OSX 10.10+ / watchOS 2.0+ • Xcode 9+ • Swift 4
 
+Follow [@groue](http://twitter.com/groue) on Twitter for release announcements and usage tips.
+
+
 ---
 
 <p align="center">
@@ -347,7 +350,6 @@ Now jump to the class you're interested into:
     - (int)intForColumn:(NSString*)columnName;
     ```
 
-
 ---
 
-Contact: [@groue](http://twitter.com/groue) on Twitter, or [Github issues](http://github.com/groue/GRDBObjc/issues).
+:bowtie: Happy GRDB!
