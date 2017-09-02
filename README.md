@@ -222,14 +222,11 @@ Now jump to the class you're interested into:
 - Available with compatibility warning:
     
     ```objc
-    // A database queue wants you to only use an FMDatabase connection
-    // inside its protected blocks. If you do otherwise, you lose all
-    // multi-threading safety. Nevertheless, FMDB allows an application
-    // to use a connection outside of its queue, in unmanaged threads,
-    // at its own risks. GRDBObjc does not: it opens the SQLite
-    // connection with the `SQLITE_OPEN_NOMUTEX` flag, which means that
-    // bad things will happen if an application uses the FMDatabase
-    // connection outside of its queue's protected blocks.
+    // FMDB lets you escape a FMDatabase connection from its database
+    // queue's protected blocks. You shouldn't do that, but it's
+    // possible. With GRDBObjc, it is a programmer error, with undefined
+    // consequences, to do so. Don't use an FMDatabase connection
+    // outside of a protected block.
     - (void)inDatabase:(__attribute__((noescape)) void (^)(FMDatabase *db))block;
     - (void)inTransaction:(__attribute__((noescape)) void (^)(FMDatabase *db, BOOL *rollback))block;
     - (void)inDeferredTransaction:(__attribute__((noescape)) void (^)(FMDatabase *db, BOOL *rollback))block;
