@@ -5,6 +5,8 @@ GRDBObjc [![Swift](https://img.shields.io/badge/swift-4-orange.svg?style=flat)](
 
 GRDBObjc helps Objective-C applications that use SQLite replace [FMDB](http://github.com/ccgus/fmdb) with [GRDB](http://github.com/groue/GRDB.swift), at minimal cost.
 
+**Latest release**: Septembre 2, 2017 &bull; version 0.1.0 &bull; [Release Notes](CHANGELOG.md)
+
 **Requirements**: iOS 8.0+ / OSX 10.10+ / watchOS 2.0+ • Xcode 9+ • Swift 4
 
 ---
@@ -154,17 +156,37 @@ extension DataStore {
 
 # Installation
 
-**GRDObjc can be installed with Cocoapods.** Specify in your Podfile:
+**Before considering using GRDBObjc**, please consider it is still very young software. Not all FMDB features have been ported yet: check the detailed [FMDB compatibility chart](#fmdb-compatibility-chart), and be ready to open a [pull request](https://github.com/groue/GRDBObjc/pulls) if some API you need is missing.
 
-```ruby
-pod 'GRDBObjc', :git => 'https://github.com/groue/GRDBObjc.git', branch: 'master'
-pod 'GRDB.swift', :git => 'https://github.com/groue/GRDB.swift.git', branch: 'Swift4'
-```
+**GRDObjc can be installed with Cocoapods:**
+
+1. Specify in your target's Build Settings: `SWIFT_VERSION = 4.0`.
+
+2. Replace FMDB with GRDBObjc and GRDB in your Podfile:
+
+    ```diff
+    -pod 'FMDB'
+    +pod 'GRDBObjc', :git => 'https://github.com/groue/GRDBObjc.git', branch: 'master'
+    +pod 'GRDB.swift', :git => 'https://github.com/groue/GRDB.swift.git', branch: 'Swift4'
+    ```
+
+3. Run `pod install`.
+
+4. Replace Objective-C import directives:
+
+    ```diff
+    -#import <fmdb/FMDB.h>
+    +#import <GRDBObjc/GRDBObjc.h>
+    +#import <GRDBObjc/GRDBObjc-Swift.h>
+    ```
+5. Run and test your application: make sure your Objective-C code handles GRDBObjc well.
+
+6. Expose your Objective-C `FMDatabaseQueue` to Swift, so that you can use a genuine GRDB `DatabaseQueue` from Swift. Get familiar with the [Swift and Objective-C in the Same Project](https://developer.apple.com/library/content/documentation/Swift/Conceptual/BuildingCocoaApps/MixandMatch.html) chaper in Apple's documentation. And see the [demo app](#demo) for an example.
 
 
 # Demo
 
-This repository ships with a demo application that sets up a database in Objective-C using FMDB-compatible APIs, and uses the database from Swift using GRDB.
+The demo application sets up a database in Objective-C using FMDB-compatible APIs, and uses the database from Swift using GRDB.
 
 To run this demo app:
 
@@ -182,13 +204,14 @@ To run this demo app:
 
 GRDB and FMDB usually behave exactly in the same manner. When there are differences, GRDBObjc favors FMDB compatibility over native GRDB behavior.
 
-Yet some FMDB features have not yet been ported to GRDBObjc. Please open a [pull request](https://github.com/groue/GRDBObjc/pulls) if some API you need is missing.
+Not all FMDB features have been ported to GRDBObjc yet. If some API you need is missing, please open a [pull request](https://github.com/groue/GRDBObjc/pulls).
 
 Jump to the class you're interested into:
 
 - [FMDatabaseQueue](#fmdatabasequeue)
 - [FMDatabase](#fmdatabase)
 - [FMResultSet](#fmresultset)
+
 
 #### FMDatabaseQueue
 
@@ -198,7 +221,7 @@ Jump to the class you're interested into:
     @property (atomic, retain, nullable) NSString *path;
     ```
 
-- Available with compatiblity warning:
+- Available with compatibility warning:
     
     ```objc
     // A database queue wants you to only use an FMDatabase connection
@@ -258,7 +281,7 @@ Jump to the class you're interested into:
     - (NSString *)stringFromDate:(NSDate *)date;
     ```
     
-- Available with compatiblity warning:
+- Available with compatibility warning:
     
     ```objc
     // This property reflects actual SQLite state instead of relying on
@@ -321,7 +344,7 @@ Jump to the class you're interested into:
     - (BOOL)columnIsNull:(NSString*)columnName;
     ```
     
-- Available with compatiblity warning:
+- Available with compatibility warning:
     
     ```objc
     // Those methods crash with a fatal error when database contains 64-bit
