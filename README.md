@@ -184,17 +184,6 @@ GRDB and FMDB usually behave exactly in the same manner. When there are differen
 
 Yet some FMDB features have not yet been ported to GRDBObjc. This includes support for custom SQL functions, for example.
 
-Finally, some FMDB features are simply unavailable. For example, GRDBObjc won't let you create a naked FMDatabase. To access the database, you must use a FMDatabaseQueue.
-
-We'll list all FMDB methods below. Each of them will be either:
-
-- Available with full compatibility
-- Available with compatiblity warning ([pull requests](https://github.com/groue/GRDBObjc/pulls) are welcome)
-- Not available yet  ([pull requests](https://github.com/groue/GRDBObjc/pulls) are welcome)
-- Not available and replaced with another method
-- Not available and requiring GRDB modifications ([discussion](https://github.com/groue/GRDBObjc/issues) is welcome)
-- Not available without any hope for eventual support
-
 Jump to the class you're interested into:
 
 - [FMDatabase](#fmdatabase)
@@ -202,7 +191,7 @@ Jump to the class you're interested into:
 
 #### FMDatabase
 
-- Available with full compatibility
+- Available with full compatibility:
     
     ```objc
     // Properties
@@ -264,106 +253,11 @@ Jump to the class you're interested into:
     - (FMResultSet * _Nullable)executeQuery:(NSString *)sql values:(NSArray * _Nullable)values error:(NSError * _Nullable __autoreleasing *)error;
     - (FMResultSet * _Nullable)executeQuery:(NSString *)sql withParameterDictionary:(NSDictionary * _Nullable)arguments;
     ```
-    
-- Not available yet (pull requests are welcome)
-    
-    ```objc
-    + (NSString*)sqliteLibVersion;
-    + (BOOL)isSQLiteThreadSafe;
-    
-    // Properties
-    @property (atomic, assign) BOOL traceExecution;
-    @property (nonatomic, readonly) BOOL goodConnection;
-    @property (nonatomic, readonly, nullable) NSString *databasePath;
-    @property (nonatomic, readonly, nullable) NSURL *databaseURL;
-    @property (nonatomic) NSTimeInterval maxBusyRetryTimeInterval;
-    
-    // Perform updates (¹)
-    - (BOOL)executeUpdate:(NSString*)sql withErrorAndBindings:(NSError * _Nullable *)outErr, ...;
-    - (BOOL)executeUpdate:(NSString*)sql, ...;
-    - (BOOL)executeUpdateWithFormat:(NSString *)format, ... NS_FORMAT_FUNCTION(1,2);
-    - (BOOL)executeUpdate:(NSString*)sql withVAList: (va_list)args;
-    - (BOOL)executeStatements:(NSString *)sql;
-    - (BOOL)executeStatements:(NSString *)sql withResultBlock:(__attribute__((noescape)) FMDBExecuteStatementsCallbackBlock _Nullable)block;
-    
-    // Retrieving results (¹)
-    - (FMResultSet * _Nullable)executeQuery:(NSString*)sql, ...;
-    - (FMResultSet * _Nullable)executeQueryWithFormat:(NSString*)format, ... NS_FORMAT_FUNCTION(1,2);
-    - (FMResultSet * _Nullable)executeQuery:(NSString *)sql withVAList:(va_list)args;
-    
-    // Cached statements and result sets
-    @property (nonatomic) BOOL shouldCacheStatements;
-    @property (atomic, retain, nullable) NSMutableDictionary *cachedStatements;
-    - (void)clearCachedStatements;    
-    - (void)closeOpenResultSets;
-    - (BOOL)interrupt;
-    
-    // Encryption methods
-    - (BOOL)setKey:(NSString*)key;
-    - (BOOL)rekey:(NSString*)key;
-    - (BOOL)setKeyWithData:(NSData *)keyData;
-    - (BOOL)rekeyWithData:(NSData *)keyData;
-    
-    // Retrieving error codes
-    - (NSString*)lastErrorMessage;
-    - (int)lastErrorCode;
-    - (int)lastExtendedErrorCode;
-    - (BOOL)hadError;
-    
-    // Make SQL function
-    - (void)makeFunctionNamed:(NSString *)name arguments:(int)arguments block:(void (^)(void *context, int argc, void * _Nonnull * _Nonnull argv))block;
-    - (void)makeFunctionNamed:(NSString *)name maximumArguments:(int)count withBlock:(void (^)(void *context, int argc, void * _Nonnull * _Nonnull argv))block __deprecated_msg("Use makeFunctionNamed:arguments:block:");
-    - (SqliteValueType)valueType:(void *)argv;
-    - (int)valueInt:(void *)value;
-    - (long long)valueLong:(void *)value;
-    - (double)valueDouble:(void *)value;
-    - (NSData * _Nullable)valueData:(void *)value;
-    - (NSString * _Nullable)valueString:(void *)value;
-    - (void)resultNullInContext:(void *)context NS_SWIFT_NAME(resultNull(context:));
-    - (void)resultInt:(int) value context:(void *)context;
-    - (void)resultLong:(long long)value context:(void *)context;
-    - (void)resultDouble:(double)value context:(void *)context;
-    - (void)resultData:(NSData *)data context:(void *)context;
-    - (void)resultString:(NSString *)value context:(void *)context;
-    - (void)resultError:(NSString *)error context:(void *)context;
-    - (void)resultErrorCode:(int)errorCode context:(void *)context;
-    - (void)resultErrorNoMemoryInContext:(void *)context NS_SWIFT_NAME(resultErrorNoMemory(context:));
-    - (void)resultErrorTooBigInContext:(void *)context NS_SWIFT_NAME(resultErrorTooBig(context:));
-    ```
-    
-- Not available and requiring GRDB modifications
-    
-    ```objc
-    /// Initialization
-    + (instancetype)databaseWithPath:(NSString * _Nullable)inPath;
-    + (instancetype)databaseWithURL:(NSURL * _Nullable)url;
-    - (instancetype)initWithPath:(NSString * _Nullable)path;
-    - (instancetype)initWithURL:(NSURL * _Nullable)url;
-    
-    // Opening and closing database
-    - (BOOL)open;
-    - (BOOL)openWithFlags:(int)flags;
-    - (BOOL)openWithFlags:(int)flags vfs:(NSString * _Nullable)vfsName;
-    - (BOOL)close;
-    ```
-    
-- Not available without any hope for eventual support
-    
-    ```objc
-    @property (atomic, assign) BOOL checkedOut;
-    @property (nonatomic, readonly) BOOL hasOpenResultSets;
-    + (NSString*)FMDBUserVersion;
-    + (SInt32)FMDBVersion;
-    - (BOOL)update:(NSString*)sql withErrorAndBindings:(NSError * _Nullable*)outErr, ...  __deprecated_msg("Use executeUpdate:withErrorAndBindings: instead");
-    - (BOOL)inTransaction __deprecated_msg("Use isInTransaction property instead");
-    ```
 
-(¹) I don't know how to expose the variadic methods
-    
 
 #### FMResultSet
 
-- Available with full compatibility
+- Available with full compatibility:
     
     ```objc
     @property (nonatomic, readonly, nullable) NSDictionary *resultDictionary;
@@ -408,33 +302,7 @@ Jump to the class you're interested into:
     - (int)intForColumnIndex:(int)columnIdx;
     - (int)intForColumn:(NSString*)columnName;
     ```
-    
-- Not available yet (pull requests are welcome)
-    
-    ```objc
-    @property (nonatomic, retain, nullable) FMDatabase *parentDB;
-    @property (atomic, retain, nullable) NSString *query;
-    @property (readonly) NSMutableDictionary *columnNameToIndexMap;
-    @property (atomic, retain, nullable) FMStatement *statement;
-    + (instancetype)resultSetWithStatement:(FMStatement *)statement usingParentDatabase:(FMDatabase*)aDB;
-    - (BOOL)hasAnotherRow;
-    @property (nonatomic, readonly) int columnCount;
-    - (NSString * _Nullable)columnNameForIndex:(int)columnIdx;
-    - (const unsigned char * _Nullable)UTF8StringForColumn:(NSString*)columnName;
-    - (const unsigned char * _Nullable)UTF8StringForColumnIndex:(int)columnIdx;
-    - (void)kvcMagic:(id)object;
-    - (BOOL)nextWithError:(NSError * _Nullable *)outErr;
-    ```
-    
-- Not available and replaced with another method
-- Not available and requiring GRDB modifications
-- Not available without any hope for eventual support
-    
-    ```objc
-    - (const unsigned char * _Nullable)UTF8StringForColumnName:(NSString*)columnName __deprecated_msg("Use UTF8StringForColumn instead");
-    - (id _Nullable)objectForColumnName:(NSString*)columnName __deprecated_msg("Use objectForColumn instead");
-    - (NSDictionary * _Nullable)resultDict __deprecated_msg("Use resultDictionary instead");
-    ```
+
 
 ---
 
