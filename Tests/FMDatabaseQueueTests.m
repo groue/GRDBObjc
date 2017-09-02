@@ -27,12 +27,6 @@
     return success;
 }
 
-- (void)testMemoryInitializer
-{
-    FMDatabaseQueue *dbQueue = [[FMDatabaseQueue alloc] init];
-    XCTAssert([self databaseQueueHasBasicFunctionnality:dbQueue]);
-}
-
 - (void)testPathFactoryMethod
 {
     NSError *error;

@@ -9,7 +9,7 @@ import Foundation
     init(_ db: Database) {
         self.db = db
         self.dateFormatter = nil
-        self.logsErrors = false
+        self.logsErrors = true
         self.crashOnErrors = false
     }
     

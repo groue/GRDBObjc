@@ -23,10 +23,6 @@ import GRDB
         return dbQueue.path
     }
     
-    @objc public override convenience init() {
-        self.init(DatabaseQueue())
-    }
-    
     @objc public static func databaseQueue(path: String) -> FMDatabaseQueue? {
         return try? FMDatabaseQueue(path: path)
     }

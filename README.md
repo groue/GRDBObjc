@@ -152,7 +152,7 @@ extension DataStore {
 ```
 
 
-### Installation
+# Installation
 
 **GRDObjc can be installed with Cocoapods.** Specify in your Podfile:
 
@@ -162,7 +162,7 @@ pod 'GRDB.swift', :git => 'https://github.com/groue/GRDB.swift.git', branch: 'Sw
 ```
 
 
-### Demo
+# Demo
 
 This repository ships with a demo application that sets up a database in Objective-C using FMDB-compatible APIs, and uses the database from Swift using GRDB.
 
@@ -178,7 +178,7 @@ To run this demo app:
 </p>
 
 
-### FMDB Compatibility Chart
+# FMDB Compatibility Chart
 
 GRDB and FMDB usually behave exactly in the same manner. When there are differences, GRDBObjc favors FMDB compatibility over native GRDB behavior.
 
@@ -186,8 +186,36 @@ Yet some FMDB features have not yet been ported to GRDBObjc. Please open a [pull
 
 Jump to the class you're interested into:
 
+- [FMDatabaseQueue](#fmdatabasequeue)
 - [FMDatabase](#fmdatabase)
 - [FMResultSet](#fmresultset)
+
+#### FMDatabaseQueue
+
+- Available with full compatibility:
+    
+    ```objc
+    @property (atomic, retain, nullable) NSString *path;
+    ```
+
+- Available with compatiblity warning:
+    
+    ```objc
+    // A database queue wants you to only use an FMDatabase connection
+    // inside its protected blocks. If you do otherwise, you lose all
+    // multi-threading safety. Nevertheless, FMDB allows an application
+    // to use a connection outside of its queue, in unmanaged threads,
+    // at its own risks. GRDBObjc does not: it opens the SQLite
+    // connection with the `SQLITE_OPEN_NOMUTEX` flag, which means that
+    // bad things will happen if an application uses the FMDatabase
+    // connection outside of its queue's protected blocks.
+    + (instancetype)databaseQueueWithPath:(NSString * _Nullable)aPath;
+    - (instancetype)initWithPath:(NSString * _Nullable)aPath;
+    - (void)inDatabase:(__attribute__((noescape)) void (^)(FMDatabase *db))block;
+    - (void)inTransaction:(__attribute__((noescape)) void (^)(FMDatabase *db, BOOL *rollback))block;
+    - (void)inDeferredTransaction:(__attribute__((noescape)) void (^)(FMDatabase *db, BOOL *rollback))block;
+    ```
+
 
 #### FMDatabase
 
@@ -230,7 +258,7 @@ Jump to the class you're interested into:
     - (NSString *)stringFromDate:(NSDate *)date;
     ```
     
-- Available with compatiblity warning
+- Available with compatiblity warning:
     
     ```objc
     // This property reflects actual SQLite state instead of relying on
@@ -293,7 +321,7 @@ Jump to the class you're interested into:
     - (BOOL)columnIsNull:(NSString*)columnName;
     ```
     
-- Available with compatiblity warning
+- Available with compatiblity warning:
     
     ```objc
     // Those methods crash with a fatal error when database contains 64-bit
