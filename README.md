@@ -11,6 +11,7 @@ GRDBObjc helps Objective-C applications that use SQLite replace [FMDB](http://gi
 
 <p align="center">
     <a href="#installation">Installation</a> &bull;
+    <a href="#demo">Demo</a> &bull;
     <a href="#fmdb-compatibility-chart">FMDB Compatibility Chart</a>
 </p>
 
@@ -153,11 +154,33 @@ extension DataStore {
 
 ### Installation
 
-TODO
+**GRDObjc can be installed with Cocoapods.** Specify in your Podfile:
+
+```ruby
+pod 'GRDBObjc', :git => 'https://github.com/groue/GRDBObjc.git', branch: 'master'
+pod 'GRDB.swift', :git => 'https://github.com/groue/GRDB.swift.git', branch: 'Swift4'
+```
+
+
+### Demo
+
+This repository ships with a demo application that sets up a database in Objective-C using FMDB-compatible APIs, and uses the database from Swift using GRDB.
+
+To run this demo app:
+
+- Download a copy of this repository. 
+- Run `pod install` from the `Tests/CocoaPods/TestApp` directory.
+- Open `Tests/CocoaPods/TestApp/TestApp.xcworkspace` in Xcode 9.
+- Run the app.
+
+<p align="center">
+    <a href= "https://cdn.rawgit.com/groue/GRDBObjc/master/Documentation/Pictures/TestApp.png" width=160><img src=""https://cdn.rawgit.com/groue/GRDBObjc/master/Documentation/Pictures/TestApp.png""></a>
+</p>
+
 
 ### FMDB Compatibility Chart
 
-GRDB and FMDB usually behave exactly in the same manner. When there are slight differences, GRDBObjc favors FMDB compatibility over native GRDB behavior.
+GRDB and FMDB usually behave exactly in the same manner. When there are differences, GRDBObjc favors FMDB compatibility over native GRDB behavior.
 
 Yet some FMDB features have not yet been ported to GRDBObjc. This includes support for custom SQL functions, for example.
 

@@ -19,18 +19,22 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oEA-xo-nop">
+                                <rect key="frame" x="16" y="36" width="343" height="615"/>
+                                <color key="backgroundColor" white="0.95103925540123457" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="hXc-O4-JCG">
-                                <rect key="frame" x="16" y="-5456.5" width="343" height="11580.5"/>
+                                <rect key="frame" x="16" y="-3646.5" width="343" height="7980"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Access to SQLite from both Objective-C and Swift:" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mNc-6e-LUx">
-                                        <rect key="frame" x="0.0" y="0.0" width="343" height="11552"/>
-                                        <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="343" height="7940.5"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H5H-75-2QA">
-                                        <rect key="frame" x="0.0" y="11560" width="343" height="20.5"/>
-                                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                        <rect key="frame" x="0.0" y="7948.5" width="343" height="31.5"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -39,13 +43,18 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="hXc-O4-JCG" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="Ujf-O7-bIe"/>
+                            <constraint firstItem="oEA-xo-nop" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="16" id="31i-8u-jr6"/>
+                            <constraint firstAttribute="trailing" secondItem="oEA-xo-nop" secondAttribute="trailing" constant="16" id="AIb-f4-RLc"/>
+                            <constraint firstItem="hXc-O4-JCG" firstAttribute="centerY" secondItem="oEA-xo-nop" secondAttribute="centerY" id="Gcf-em-PIf"/>
                             <constraint firstItem="hXc-O4-JCG" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="cpx-8c-x7q"/>
                             <constraint firstAttribute="trailingMargin" secondItem="hXc-O4-JCG" secondAttribute="trailing" id="hWL-1q-71V"/>
+                            <constraint firstItem="oEA-xo-nop" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="16" id="qdb-XS-cqg"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="oEA-xo-nop" secondAttribute="bottom" constant="16" id="vhq-Sa-NSi"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
+                        <outlet property="background" destination="oEA-xo-nop" id="dvg-tk-eYf"/>
                         <outlet property="statusLabel" destination="H5H-75-2QA" id="MHR-OS-rtw"/>
                     </connections>
                 </viewController>

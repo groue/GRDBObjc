@@ -13,7 +13,7 @@ static FMDatabaseQueue *dbQueue;
     [dbQueue inDatabase:^(FMDatabase *db) {
         if (![db tableExists:@"demo"]) {
             [db executeUpdate:@"CREATE TABLE demo(text TEXT)"];
-            [db executeUpdate:@"INSERT INTO demo(text) VALUES (?)" withArgumentsInArray:@[@"OK"]];
+            [db executeUpdate:@"INSERT INTO demo(text) VALUES (?)" withArgumentsInArray:@[@"OK 👍"]];
         }
     }];
 }
