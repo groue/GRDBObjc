@@ -8,7 +8,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         do {
-            let text = try AppDatabase.dbQueue.inDatabase { db in
+            let text = try DataStore.dbQueue.inDatabase { db in
                 try String.fetchOne(db, "SELECT text FROM demo")
             }
             statusLabel.text = text ?? "NOT OK"

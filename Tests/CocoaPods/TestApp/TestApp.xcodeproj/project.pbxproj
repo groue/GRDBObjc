@@ -14,8 +14,8 @@
 		56EB15FD1F5AC47900F43F2C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 56EB15FB1F5AC47900F43F2C /* LaunchScreen.storyboard */; };
 		56EB16001F5AC47900F43F2C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 56EB15FF1F5AC47900F43F2C /* main.m */; };
 		56EB16081F5AC99D00F43F2C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56EB16071F5AC99D00F43F2C /* ViewController.swift */; };
-		56EB160B1F5AC9CF00F43F2C /* AppDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 56EB160A1F5AC9CF00F43F2C /* AppDatabase.m */; };
-		56EB160D1F5ACC0000F43F2C /* AppDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56EB160C1F5ACC0000F43F2C /* AppDatabase.swift */; };
+		56EB160B1F5AC9CF00F43F2C /* DataStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 56EB160A1F5AC9CF00F43F2C /* DataStore.m */; };
+		56EB160D1F5ACC0000F43F2C /* DataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56EB160C1F5ACC0000F43F2C /* DataStore.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,9 +30,9 @@
 		56EB15FF1F5AC47900F43F2C /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		56EB16061F5AC99C00F43F2C /* TestApp-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TestApp-Bridging-Header.h"; sourceTree = "<group>"; };
 		56EB16071F5AC99D00F43F2C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		56EB16091F5AC9CF00F43F2C /* AppDatabase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDatabase.h; sourceTree = "<group>"; };
-		56EB160A1F5AC9CF00F43F2C /* AppDatabase.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDatabase.m; sourceTree = "<group>"; };
-		56EB160C1F5ACC0000F43F2C /* AppDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDatabase.swift; sourceTree = "<group>"; };
+		56EB16091F5AC9CF00F43F2C /* DataStore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DataStore.h; sourceTree = "<group>"; };
+		56EB160A1F5AC9CF00F43F2C /* DataStore.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DataStore.m; sourceTree = "<group>"; };
+		56EB160C1F5ACC0000F43F2C /* DataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStore.swift; sourceTree = "<group>"; };
 		CFF1F21AD3C83089784B1B95 /* Pods-TestApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TestApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-TestApp/Pods-TestApp.release.xcconfig"; sourceTree = "<group>"; };
 		F3AE456FEA47E0D985015855 /* Pods-TestApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TestApp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TestApp/Pods-TestApp.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -81,9 +81,9 @@
 			children = (
 				56EB15F01F5AC47900F43F2C /* AppDelegate.h */,
 				56EB15F11F5AC47900F43F2C /* AppDelegate.m */,
-				56EB16091F5AC9CF00F43F2C /* AppDatabase.h */,
-				56EB160A1F5AC9CF00F43F2C /* AppDatabase.m */,
-				56EB160C1F5ACC0000F43F2C /* AppDatabase.swift */,
+				56EB16091F5AC9CF00F43F2C /* DataStore.h */,
+				56EB160A1F5AC9CF00F43F2C /* DataStore.m */,
+				56EB160C1F5ACC0000F43F2C /* DataStore.swift */,
 				56EB16071F5AC99D00F43F2C /* ViewController.swift */,
 				56EB16061F5AC99C00F43F2C /* TestApp-Bridging-Header.h */,
 				56EB15F61F5AC47900F43F2C /* Main.storyboard */,
@@ -228,8 +228,8 @@
 			files = (
 				56EB16081F5AC99D00F43F2C /* ViewController.swift in Sources */,
 				56EB16001F5AC47900F43F2C /* main.m in Sources */,
-				56EB160B1F5AC9CF00F43F2C /* AppDatabase.m in Sources */,
-				56EB160D1F5ACC0000F43F2C /* AppDatabase.swift in Sources */,
+				56EB160B1F5AC9CF00F43F2C /* DataStore.m in Sources */,
+				56EB160D1F5ACC0000F43F2C /* DataStore.swift in Sources */,
 				56EB15F21F5AC47900F43F2C /* AppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

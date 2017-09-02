@@ -1,8 +1,8 @@
 // AppDelegate sets up the database at application startup, using the
-// +[AppDatabase setupDatabaseAtPath:] method.
+// +[DataStore setupDatabaseAtPath:] method.
 
 #import "AppDelegate.h"
-#import "AppDatabase.h"
+#import "DataStore.h"
 
 @interface AppDelegate ()
 @end
@@ -12,7 +12,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     NSString *documentsPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
     NSString *dbPath = [documentsPath stringByAppendingPathComponent:@"db.sqlite"];
-    [AppDatabase setupDatabaseAtPath:dbPath];
+    [DataStore setupDatabaseAtPath:dbPath];
     return YES;
 }
 

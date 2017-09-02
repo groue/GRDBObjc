@@ -1,10 +1,10 @@
-// AppDatabase creates and accesses the database using FMDB-compatible APIs.
+// DataStore creates and accesses the database using FMDB-compatible APIs.
 
-#import "AppDatabase.h"
+#import "DataStore.h"
 
 static FMDatabaseQueue *dbQueue;
 
-@implementation AppDatabase
+@implementation DataStore
 
 + (void)setupDatabaseAtPath:(NSString * _Nonnull)path
 {

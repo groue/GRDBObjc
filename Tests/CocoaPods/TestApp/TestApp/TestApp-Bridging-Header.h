@@ -1,2 +1,2 @@
-// Expose +[AppDatabase dbQueue] to Swift
-#import "AppDatabase.h"
+// Expose +[DataStore dbQueue] to Swift
+#import "DataStore.h"
