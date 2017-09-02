@@ -182,7 +182,7 @@ To run this demo app:
 
 GRDB and FMDB usually behave exactly in the same manner. When there are differences, GRDBObjc favors FMDB compatibility over native GRDB behavior.
 
-Yet some FMDB features have not yet been ported to GRDBObjc. This includes support for custom SQL functions, for example.
+Yet some FMDB features have not yet been ported to GRDBObjc. Please open a [pull request](https://github.com/groue/GRDBObjc/pulls) if some API you need is missing.
 
 Jump to the class you're interested into:
 
