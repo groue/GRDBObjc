@@ -121,42 +121,18 @@ Enter GRDBObjc. Very often, all you will have to do is remove FMDB, install GRDB
 
 This is enough for most of your Objective-C code that targets FMDB to compile on top of GRDB and GRDBObjc. Of course, the devil is in the detail, and we'll list below a detailed [compatibility chart](#fmdb-compatibility-chart).
 
-The `FMDatabaseQueue`, `FMResultSet`, etc. classes are now backed by GRDB. The databases initialized from Objective-C are usable from Swift, with the full GRDB toolkit. For example:
-
-```objc
-// Objective-C
-#import <GRDBObjc/GRDBObjc.h>
-#import <GRDBObjc/GRDBObjc-Swift.h>
-
-@interface DataStore
-// Use FMDB in Objective-C
-@property (nonatomic, nonnull) FMDatabaseQueue* dbQueue NS_REFINED_FOR_SWIFT;
-@end
-
-@implementation DataStore
-- (void)setupDatabase {
-    self.dbQueue = [FMDatabaseQueue databaseQueueWithPath:...];
-}
-@end
-```
-
-```swift
-// Swift
-import GRDB
-import GRDBObjc
-
-extension DataStore {
-    // Use GRDB in Swift
-    var dbQueue: DatabaseQueue {
-        return __dbQueue.dbQueue
-    }
-}
-```
+The `FMDatabaseQueue`, `FMResultSet`, etc. classes are now backed by GRDB. A database queue initialized from Objective-C is usable from Swift, and vice versa. See the [Installation](#installation) procedure below for detailed instructions.
 
 
 # Installation
 
-**Before considering using GRDBObjc**, please consider it is still very young software. Not all FMDB features have been ported yet: check the detailed [FMDB compatibility chart](#fmdb-compatibility-chart), and be ready to open a [pull request](https://github.com/groue/GRDBObjc/pulls) if some API you need is missing.
+**Before considering using GRDBObjc**, please consider it is still very young software. It is tested, but does not fuel many real-life apps yet.
+
+Get familiar with the ["Swift and Objective-C in the Same Project"](https://developer.apple.com/library/content/documentation/Swift/Conceptual/BuildingCocoaApps/MixandMatch.html) chaper of Swift documentation.
+
+Check the [FMDB compatibility chart](#fmdb-compatibility-chart).
+
+Be ready to open a [pull request](https://github.com/groue/GRDBObjc/pulls) if some API you need is missing, or if you discover a bug or a surprising behavior.
 
 **GRDObjc can be installed with Cocoapods:**
 
@@ -181,7 +157,19 @@ extension DataStore {
     ```
 5. Run and test your application: make sure your Objective-C code handles GRDBObjc well.
 
-6. Expose your Objective-C `FMDatabaseQueue` to Swift, so that you can use a genuine GRDB `DatabaseQueue` from Swift. Get familiar with the [Swift and Objective-C in the Same Project](https://developer.apple.com/library/content/documentation/Swift/Conceptual/BuildingCocoaApps/MixandMatch.html) chaper in Apple's documentation. And see the [demo app](#demo) for an example.
+6. Expose your Objective-C `FMDatabaseQueue` to Swift via the bridging header, so that you can use a genuine GRDB `DatabaseQueue` from Swift.
+
+    **Don't use the FMDB APIs from Swift**: that's not the goal of this library! Instead, convert a `FMDatabaseQueue` to GRDB's `DatabaseQueue`, and have you Swift code only use GRDB:
+    
+    ```swift
+    // Some FMDatabaseQueue exposed to Swift via the bridging header:
+    let fmdbQueue: FMDatabaseQueue = ...
+    
+    // The genuine GRDB's DatabaseQueue:
+    let dbQueue: DatabaseQueue = fmdbQueue.dbQueue
+    ```
+    
+    See the [demo app](#demo) for a detailed example.
 
 
 # Demo
@@ -204,9 +192,13 @@ To run this demo app:
 
 GRDB and FMDB usually behave exactly in the same manner. When there are differences, GRDBObjc favors FMDB compatibility over native GRDB behavior.
 
-Not all FMDB features have been ported to GRDBObjc yet. If some API you need is missing, please open a [pull request](https://github.com/groue/GRDBObjc/pulls).
+**Some FMDB features are missing, and out of scope for GRDBObjc.** For example, GRDBObjc requires that databases are accessed through the thread-safe FMDatabaseQueue.
 
-Jump to the class you're interested into:
+**Some other FMDB features have not been ported to GRDBObjc yet.** If some API you need is missing, please open a [pull request](https://github.com/groue/GRDBObjc/pulls).
+
+**Beware of NSDate.** By default, FMDB stores and reads dates as numerical timestamps. GRDB stores [dates](https://github.com/groue/GRDB.swift/blob/master/README.md#date-and-datecomponents) as strings, and interprets numerical values as Julian day numbers. So double check your code that deals with dates.
+
+Now jump to the class you're interested into:
 
 - [FMDatabaseQueue](#fmdatabasequeue)
 - [FMDatabase](#fmdatabase)
