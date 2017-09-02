@@ -159,7 +159,7 @@ Be ready to open a [pull request](https://github.com/groue/GRDBObjc/pulls) if so
 
 6. Expose your Objective-C `FMDatabaseQueue` to Swift via the bridging header, so that you can use a genuine GRDB `DatabaseQueue` from Swift.
 
-    **Don't use the FMDB APIs from Swift**: that's not the goal of this library! Instead, convert a `FMDatabaseQueue` to GRDB's `DatabaseQueue`, and have you Swift code only use GRDB:
+    **Don't use the FMDB APIs from Swift**: that's not the goal of this library! Instead, convert a `FMDatabaseQueue` to GRDB's `DatabaseQueue`, and make sure Swift code only uses GRDB:
     
     ```swift
     // Some FMDatabaseQueue exposed to Swift via the bridging header:
@@ -169,7 +169,7 @@ Be ready to open a [pull request](https://github.com/groue/GRDBObjc/pulls) if so
     let dbQueue: DatabaseQueue = fmdbQueue.dbQueue
     ```
     
-    See the [demo app](#demo) for a detailed example.
+    See the [demo app](#demo) for a sample setup.
 
 
 # Demo
@@ -182,6 +182,7 @@ To run this demo app:
 - Run `pod install` from the `Tests/CocoaPods/TestApp` directory.
 - Open `Tests/CocoaPods/TestApp/TestApp.xcworkspace` in Xcode 9.
 - Run the app.
+- The bridging between Objective-C and Swift happens in the DataStore class, and the bridging header.
 
 <p align="center">
     <a href= "https://cdn.rawgit.com/groue/GRDBObjc/master/Documentation/Pictures/Demo.png"><img src="https://cdn.rawgit.com/groue/GRDBObjc/master/Documentation/Pictures/Demo.png" height="320"></a>
