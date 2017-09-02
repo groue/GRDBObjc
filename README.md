@@ -174,7 +174,7 @@ To run this demo app:
 - Run the app.
 
 <p align="center">
-    <a href= "https://cdn.rawgit.com/groue/GRDBObjc/master/Documentation/Pictures/Demo.png"><img src="https://cdn.rawgit.com/groue/GRDBObjc/master/Documentation/Pictures/Demo.png" height="160"></a>
+    <a href= "https://cdn.rawgit.com/groue/GRDBObjc/master/Documentation/Pictures/Demo.png"><img src="https://cdn.rawgit.com/groue/GRDBObjc/master/Documentation/Pictures/Demo.png" height="320"></a>
 </p>
 
 
