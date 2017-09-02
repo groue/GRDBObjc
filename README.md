@@ -215,6 +215,8 @@ Now jump to the class you're interested into:
     
     ```objc
     @property (atomic, retain, nullable) NSString *path;
+    + (instancetype)databaseQueueWithPath:(NSString * _Nullable)aPath;
+    - (instancetype)initWithPath:(NSString * _Nullable)aPath;
     ```
 
 - Available with compatibility warning:
@@ -228,8 +230,6 @@ Now jump to the class you're interested into:
     // connection with the `SQLITE_OPEN_NOMUTEX` flag, which means that
     // bad things will happen if an application uses the FMDatabase
     // connection outside of its queue's protected blocks.
-    + (instancetype)databaseQueueWithPath:(NSString * _Nullable)aPath;
-    - (instancetype)initWithPath:(NSString * _Nullable)aPath;
     - (void)inDatabase:(__attribute__((noescape)) void (^)(FMDatabase *db))block;
     - (void)inTransaction:(__attribute__((noescape)) void (^)(FMDatabase *db, BOOL *rollback))block;
     - (void)inDeferredTransaction:(__attribute__((noescape)) void (^)(FMDatabase *db, BOOL *rollback))block;
