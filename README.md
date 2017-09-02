@@ -131,7 +131,7 @@ The `FMDatabaseQueue`, `FMResultSet`, etc. classes are now backed by GRDB. A dat
 
 **Before considering using GRDBObjc**, please consider it is still very young software. It is tested, but does not fuel many real-life apps yet.
 
-Get familiar with the ["Swift and Objective-C in the Same Project"](https://developer.apple.com/library/content/documentation/Swift/Conceptual/BuildingCocoaApps/MixandMatch.html) chaper of Swift documentation.
+Get familiar with the ["Swift and Objective-C in the Same Project"](https://developer.apple.com/library/content/documentation/Swift/Conceptual/BuildingCocoaApps/MixandMatch.html) chapter of Swift documentation.
 
 Check the [FMDB compatibility chart](#fmdb-compatibility-chart).
 
