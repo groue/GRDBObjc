@@ -290,9 +290,13 @@ Now jump to the class you're interested into:
     //   false when GRDBObjc returns true.
     @property (nonatomic, readonly) BOOL isInTransaction;
     
-    // When an NSDecimalNumber parameter contains a value that can be exactly
-    // represented as int64_t, GRDBObjc presents it to SQLite as an integer.
-    // FMDB presents all decimal numbers as doubles.
+    // When an NSDecimalNumber parameter contains a value that can be
+    // exactly represented as int64_t, GRDBObjc presents it to SQLite as
+    // an integer. FMDB presents all decimal numbers as doubles.
+    //
+    // When an NSNumber parameter contains an unsigned 64-bit integer
+    // higher than the maximum signed 64-bit integer, GRDBObjc crashes
+    // with a fatal error, when FMDB stores a negative value.
     - (BOOL)executeUpdate:(NSString*)sql withArgumentsInArray:(NSArray *)arguments;
     - (BOOL)executeUpdate:(NSString*)sql values:(NSArray * _Nullable)values error:(NSError * _Nullable __autoreleasing *)error;
     - (BOOL)executeUpdate:(NSString*)sql withParameterDictionary:(NSDictionary *)arguments;
