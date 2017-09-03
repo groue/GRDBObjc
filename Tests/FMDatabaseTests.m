@@ -84,6 +84,47 @@
     }];
 }
 
+- (void)testExecuteUpdateWithErrorAndBindings
+{
+    FMDatabaseQueue *dbQueue = [FMDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath]];
+    XCTAssertNotNil(dbQueue);
+    [dbQueue inDatabase:^(FMDatabase *db) {
+        [db executeUpdate:@"CREATE TABLE t(a, b)"];
+        
+        NSError *error;
+        BOOL success = [db executeUpdate:@"INSERT INTO t(a, b) VALUES (?, ?)"
+                                  withErrorAndBindings:&error, nil, @(654)]; // test that nil is not used as a sentinel, and exposed as NULL to SQLite.
+        XCTAssert(success, @"%@", error);
+        
+        FMResultSet *rs = [db executeQuery:@"SELECT a, b FROM t"];
+        XCTAssertNotNil(rs);
+        BOOL fetched = NO;
+        while ([rs next]) {
+            fetched = YES;
+            XCTAssertTrue([rs columnIndexIsNull:0]);
+            XCTAssertEqual([rs intForColumnIndex:1], 654);
+        }
+        XCTAssert(fetched);
+    }];
+}
+
+- (void)testExecuteUpdateWithErrorAndBindingsError
+{
+    FMDatabaseQueue *dbQueue = [FMDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath]];
+    XCTAssertNotNil(dbQueue);
+    [dbQueue inDatabase:^(FMDatabase *db) {
+        db.logsErrors = YES;
+        
+        NSError *error;
+        BOOL success = [db executeUpdate:@"When on board H.M.S. ‘Beable’ as naturalist," withErrorAndBindings:&error];
+        XCTAssertFalse(success);
+        XCTAssertNotNil(error);
+        XCTAssertEqualObjects(error.domain, @"FMDatabase");
+        XCTAssertEqual(error.code, SQLITE_ERROR);
+        XCTAssertEqualObjects(error.localizedDescription, @"SQLite error 1 with statement `When on board H.M.S. ‘Beable’ as naturalist,`: near \"When\": syntax error");
+    }];
+}
+
 - (void)testExecuteUpdateWithValues
 {
     FMDatabaseQueue *dbQueue = [FMDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath]];

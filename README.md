@@ -296,6 +296,7 @@ GRDB and FMDB usually behave exactly in the same manner. When there are differen
     // When an NSNumber parameter contains an unsigned 64-bit integer
     // higher than the maximum signed 64-bit integer, GRDBObjc crashes
     // with a fatal error, when FMDB stores a negative value.
+    - (BOOL)executeUpdate:(NSString * _Nonnull)sql withErrorAndBindings:(NSError * _Nullable * _Nullable)outErr, ...;
     - (BOOL)executeUpdate:(NSString*)sql withArgumentsInArray:(NSArray *)arguments;
     - (BOOL)executeUpdate:(NSString*)sql values:(NSArray * _Nullable)values error:(NSError * _Nullable __autoreleasing *)error;
     - (BOOL)executeUpdate:(NSString*)sql withParameterDictionary:(NSDictionary *)arguments;

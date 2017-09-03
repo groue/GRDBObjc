@@ -18,9 +18,10 @@
 		568FC2501F557DD300E176A4 /* FMResultSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568FC24F1F557DD300E176A4 /* FMResultSet.swift */; };
 		568FC2541F55882E00E176A4 /* FMDatabaseTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 568FC2531F55882E00E176A4 /* FMDatabaseTests.m */; };
 		568FC2561F55B7C800E176A4 /* FMResultSetTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 568FC2551F55B7C800E176A4 /* FMResultSetTests.m */; };
-		568FC25E1F560AE200E176A4 /* FMDatabase.h in Headers */ = {isa = PBXBuildFile; fileRef = 568FC25C1F560AE200E176A4 /* FMDatabase.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		568FC25F1F560AE200E176A4 /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 568FC25D1F560AE200E176A4 /* FMDatabase.m */; };
+		568FC25E1F560AE200E176A4 /* FMDatabase+Objc.h in Headers */ = {isa = PBXBuildFile; fileRef = 568FC25C1F560AE200E176A4 /* FMDatabase+Objc.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		568FC25F1F560AE200E176A4 /* FMDatabase+Objc.m in Sources */ = {isa = PBXBuildFile; fileRef = 568FC25D1F560AE200E176A4 /* FMDatabase+Objc.m */; };
 		568FC2611F560C8B00E176A4 /* FMUpdateStatement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568FC2601F560C8B00E176A4 /* FMUpdateStatement.swift */; };
+		56EB16361F5C6F1200F43F2C /* GRDBObjc-Objc.h in Headers */ = {isa = PBXBuildFile; fileRef = 56EB16351F5C6F0B00F43F2C /* GRDBObjc-Objc.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		56F45A021F55366F00656C1E /* GRDBObjc.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56F459F81F55366F00656C1E /* GRDBObjc.framework */; };
 		56F45A071F55366F00656C1E /* GRDBObjcTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 56F45A061F55366F00656C1E /* GRDBObjcTestCase.m */; };
 		56F45A091F55366F00656C1E /* GRDBObjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 56F459FB1F55366F00656C1E /* GRDBObjc.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -190,9 +191,10 @@
 		568FC24F1F557DD300E176A4 /* FMResultSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FMResultSet.swift; sourceTree = "<group>"; };
 		568FC2531F55882E00E176A4 /* FMDatabaseTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FMDatabaseTests.m; sourceTree = "<group>"; };
 		568FC2551F55B7C800E176A4 /* FMResultSetTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FMResultSetTests.m; sourceTree = "<group>"; };
-		568FC25C1F560AE200E176A4 /* FMDatabase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FMDatabase.h; sourceTree = "<group>"; };
-		568FC25D1F560AE200E176A4 /* FMDatabase.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FMDatabase.m; sourceTree = "<group>"; };
+		568FC25C1F560AE200E176A4 /* FMDatabase+Objc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "FMDatabase+Objc.h"; sourceTree = "<group>"; };
+		568FC25D1F560AE200E176A4 /* FMDatabase+Objc.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "FMDatabase+Objc.m"; sourceTree = "<group>"; };
 		568FC2601F560C8B00E176A4 /* FMUpdateStatement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FMUpdateStatement.swift; sourceTree = "<group>"; };
+		56EB16351F5C6F0B00F43F2C /* GRDBObjc-Objc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "GRDBObjc-Objc.h"; sourceTree = "<group>"; };
 		56F459F81F55366F00656C1E /* GRDBObjc.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = GRDBObjc.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		56F459FB1F55366F00656C1E /* GRDBObjc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GRDBObjc.h; sourceTree = "<group>"; };
 		56F45A011F55366F00656C1E /* GRDBObjcMacOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GRDBObjcMacOSTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -294,12 +296,13 @@
 		56F459FA1F55366F00656C1E /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				568FC25C1F560AE200E176A4 /* FMDatabase.h */,
-				568FC25D1F560AE200E176A4 /* FMDatabase.m */,
 				568FC24D1F55423900E176A4 /* FMDatabase.swift */,
+				568FC25C1F560AE200E176A4 /* FMDatabase+Objc.h */,
+				568FC25D1F560AE200E176A4 /* FMDatabase+Objc.m */,
 				568FC2411F5537A600E176A4 /* FMDatabaseQueue.swift */,
 				568FC24F1F557DD300E176A4 /* FMResultSet.swift */,
 				568FC2601F560C8B00E176A4 /* FMUpdateStatement.swift */,
+				56EB16351F5C6F0B00F43F2C /* GRDBObjc-Objc.h */,
 				56F459FB1F55366F00656C1E /* GRDBObjc.h */,
 			);
 			path = Sources;
@@ -338,7 +341,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				56F45A091F55366F00656C1E /* GRDBObjc.h in Headers */,
-				568FC25E1F560AE200E176A4 /* FMDatabase.h in Headers */,
+				568FC25E1F560AE200E176A4 /* FMDatabase+Objc.h in Headers */,
+				56EB16361F5C6F1200F43F2C /* GRDBObjc-Objc.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -580,7 +584,7 @@
 			files = (
 				568FC2611F560C8B00E176A4 /* FMUpdateStatement.swift in Sources */,
 				568FC2421F5537A600E176A4 /* FMDatabaseQueue.swift in Sources */,
-				568FC25F1F560AE200E176A4 /* FMDatabase.m in Sources */,
+				568FC25F1F560AE200E176A4 /* FMDatabase+Objc.m in Sources */,
 				568FC24E1F55423900E176A4 /* FMDatabase.swift in Sources */,
 				568FC2501F557DD300E176A4 /* FMResultSet.swift in Sources */,
 			);
