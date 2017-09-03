@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = 'GRDBObjc'
-  s.version      = '0.1'
+  s.version      = '0.2'
   
   s.license      = { :type => 'MIT' }
   s.homepage     = 'https://github.com/groue/GRDBObjc'
@@ -15,7 +15,7 @@ Pod::Spec.new do |s|
   
   s.pod_target_xcconfig = { 'SWIFT_VERSION' => '4.0' }
   s.source_files = 'Sources/*'
-  s.dependency "GRDB.swift" #, "~> 2.0"
+  s.dependency "GRDB.swift" #, "~> 2.0" uncomment when GRDB 2 is out
   s.framework = 'Foundation'
   s.library = 'sqlite3'
 end
