@@ -6,6 +6,17 @@
 
 @implementation FMDatabaseTests
 
+- (void)testExecuteStatements
+{
+    FMDatabaseQueue *dbQueue = [FMDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath]];
+    XCTAssertNotNil(dbQueue);
+    [dbQueue inDatabase:^(FMDatabase *db) {
+        BOOL success = [db executeStatements:@"CREATE TABLE t(a); DROP TABLE t; CREATE TABLE u(b);"];
+        XCTAssert(success);
+        XCTAssert([db tableExists:@"u"]);
+    }];
+}
+
 - (void)testExecuteUpdate
 {
     FMDatabaseQueue *dbQueue = [FMDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath]];

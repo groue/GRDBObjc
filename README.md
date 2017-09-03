@@ -251,6 +251,7 @@ GRDB and FMDB usually behave exactly in the same manner. When there are differen
     
     // Perform updates
     - (BOOL)executeUpdate:(NSString*)sql;
+    - (BOOL)executeStatements:(NSString*)sql;
     
     // Retrieving results
     - (FMResultSet * _Nullable)executeQuery:(NSString*)sql;

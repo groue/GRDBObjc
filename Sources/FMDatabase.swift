@@ -35,11 +35,23 @@ import Foundation
     
     // MARK: - Updates
     
+    @discardableResult @objc
+    public func executeStatements(_ sql: String) -> Bool {
+        do {
+            try db.execute(sql)
+            return true
+        } catch {
+            handleError(error)
+            return false
+        }
+    }
+    
     // TODO: remove once we have the variadic version `- (BOOL)executeUpdate:(NSString*)sql, ...`
     @discardableResult @objc
     public func executeUpdate(_ sql: String) -> Bool {
         do {
-            try db.execute(sql)
+            let statement = try db.makeUpdateStatement(sql)
+            try statement.execute()
             return true
         } catch {
             handleError(error)
@@ -51,7 +63,8 @@ import Foundation
     public func executeUpdate(_ sql: String, argumentsInArray values: [Any]?) -> Bool {
         do {
             let arguments = values.map { statementArguments(from: $0) }
-            try db.execute(sql, arguments: arguments)
+            let statement = try db.makeUpdateStatement(sql)
+            try statement.execute(arguments: arguments)
             return true
         } catch {
             handleError(error)
@@ -63,7 +76,8 @@ import Foundation
     public func executeUpdate(_ sql: String, parameterDictionary: [String: Any]?) -> Bool {
         do {
             let arguments = parameterDictionary.map { statementArguments(from: $0) }
-            try db.execute(sql, arguments: arguments)
+            let statement = try db.makeUpdateStatement(sql)
+            try statement.execute(arguments: arguments)
             return true
         } catch {
             handleError(error)
@@ -75,7 +89,8 @@ import Foundation
     public func executeUpdate(_ sql: String, values: [Any]?) throws {
         do {
             let arguments = values.map { statementArguments(from: $0) }
-            try db.execute(sql, arguments: arguments)
+            let statement = try db.makeUpdateStatement(sql)
+            try statement.execute(arguments: arguments)
         } catch {
             throw handleError(error)
         }
