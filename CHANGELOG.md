@@ -5,7 +5,8 @@ Release Notes
 
 ### New
 
-- Support for `-[FMResultSet nextWithError:]`
+- Implemented `-[FMResultSet nextWithError:]`
+- Implemented `-[FMDatabase executeStatements:]`
 
 ### Fixed
 
