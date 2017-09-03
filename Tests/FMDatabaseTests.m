@@ -105,7 +105,7 @@
         
         NSError *error;
         BOOL success = [db executeUpdate:@"INSERT INTO t(a, b) VALUES (?, ?)"
-                                  withErrorAndBindings:&error, nil, @(654)]; // test that nil is not used as a sentinel, and exposed as NULL to SQLite.
+                                  withErrorAndBindings:&error, nil, @(654)];
         XCTAssert(success, @"%@", error);
         
         FMResultSet *rs = [db executeQuery:@"SELECT a, b FROM t"];
@@ -209,10 +209,24 @@
     FMDatabaseQueue *dbQueue = [FMDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath]];
     XCTAssertNotNil(dbQueue);
     [dbQueue inDatabase:^(FMDatabase *db) {
-        [db executeUpdate:@"CREATE TABLE t(a, b)"];
-        [db executeUpdate:@"INSERT INTO t(a, b) VALUES (NULL, 654)"];
-        
-        FMResultSet *rs = [db executeQuery:@"SELECT a, b FROM t"];
+        FMResultSet *rs = [db executeQuery:@"SELECT NULL, 654"];
+        XCTAssertNotNil(rs);
+        BOOL fetched = NO;
+        while ([rs next]) {
+            fetched = YES;
+            XCTAssertTrue([rs columnIndexIsNull:0]);
+            XCTAssertEqual([rs intForColumnIndex:1], 654);
+        }
+        XCTAssert(fetched);
+    }];
+}
+
+- (void)testExecuteQueryWithArguments
+{
+    FMDatabaseQueue *dbQueue = [FMDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath]];
+    XCTAssertNotNil(dbQueue);
+    [dbQueue inDatabase:^(FMDatabase *db) {
+        FMResultSet *rs = [db executeQuery:@"SELECT ?, ?", nil, @(654)];
         XCTAssertNotNil(rs);
         BOOL fetched = NO;
         while ([rs next]) {
@@ -229,11 +243,8 @@
     FMDatabaseQueue *dbQueue = [FMDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath]];
     XCTAssertNotNil(dbQueue);
     [dbQueue inDatabase:^(FMDatabase *db) {
-        [db executeUpdate:@"CREATE TABLE t(a, b)"];
-        [db executeUpdate:@"INSERT INTO t(a, b) VALUES (NULL, 654)"];
-        
-        FMResultSet *rs = [db executeQuery:@"SELECT a, b FROM t WHERE a IS ? AND b < ?"
-                   withArgumentsInArray:@[[NSNull null], @(655)]];
+        FMResultSet *rs = [db executeQuery:@"SELECT ?, ?"
+                   withArgumentsInArray:@[[NSNull null], @(654)]];
         XCTAssertNotNil(rs);
         BOOL fetched = NO;
         while ([rs next]) {
@@ -250,11 +261,8 @@
     FMDatabaseQueue *dbQueue = [FMDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath]];
     XCTAssertNotNil(dbQueue);
     [dbQueue inDatabase:^(FMDatabase *db) {
-        [db executeUpdate:@"CREATE TABLE t(a, b)"];
-        [db executeUpdate:@"INSERT INTO t(a, b) VALUES (NULL, 654)"];
-        
-        FMResultSet *rs = [db executeQuery:@"SELECT a, b FROM t WHERE a IS :a AND b < :b"
-                   withParameterDictionary:@{@"a": [NSNull null], @"b": @(655)}];
+        FMResultSet *rs = [db executeQuery:@"SELECT :a, :b"
+                   withParameterDictionary:@{@"a": [NSNull null], @"b": @(654)}];
         XCTAssertNotNil(rs);
         BOOL fetched = NO;
         while ([rs next]) {
@@ -271,11 +279,8 @@
     FMDatabaseQueue *dbQueue = [FMDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath]];
     XCTAssertNotNil(dbQueue);
     [dbQueue inDatabase:^(FMDatabase *db) {
-        [db executeUpdate:@"CREATE TABLE t(a, b)"];
-        [db executeUpdate:@"INSERT INTO t(a, b) VALUES (NULL, 654)"];
-        
         NSError *error;
-        FMResultSet *rs = [db executeQuery:@"SELECT a, b FROM t WHERE a IS NULL AND b < 655"
+        FMResultSet *rs = [db executeQuery:@"SELECT NULL, 654"
                                     values:nil
                                      error:&error];
         XCTAssertNotNil(rs, @"%@", error);

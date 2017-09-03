@@ -252,9 +252,6 @@ GRDB and FMDB usually behave exactly in the same manner. When there are differen
     // Perform updates
     - (BOOL)executeStatements:(NSString*)sql;
     
-    // Retrieving results
-    - (FMResultSet * _Nullable)executeQuery:(NSString*)sql;
-    
     // Transactions
     - (BOOL)beginTransaction;
     - (BOOL)beginDeferredTransaction;
@@ -300,6 +297,7 @@ GRDB and FMDB usually behave exactly in the same manner. When there are differen
     - (BOOL)executeUpdate:(NSString*)sql withArgumentsInArray:(NSArray *)arguments;
     - (BOOL)executeUpdate:(NSString*)sql values:(NSArray * _Nullable)values error:(NSError * _Nullable __autoreleasing *)error;
     - (BOOL)executeUpdate:(NSString*)sql withParameterDictionary:(NSDictionary *)arguments;
+    - (FMResultSet * _Nullable)executeQuery:(NSString*)sql, ...;
     - (FMResultSet * _Nullable)executeQuery:(NSString *)sql withArgumentsInArray:(NSArray *)arguments;
     - (FMResultSet * _Nullable)executeQuery:(NSString *)sql values:(NSArray * _Nullable)values error:(NSError * _Nullable __autoreleasing *)error;
     - (FMResultSet * _Nullable)executeQuery:(NSString *)sql withParameterDictionary:(NSDictionary * _Nullable)arguments;

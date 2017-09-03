@@ -7,18 +7,18 @@
 {
     va_list args;
     va_start(args, outErr);
-    BOOL result = [self executeUpdate:sql va_list:args error:outErr];
+    BOOL success = [self executeUpdate:sql va_list:args error:outErr];
     va_end(args);
-    return result;
+    return success;
 }
 
 - (BOOL)executeUpdate:(NSString * _Nonnull)sql, ...
 {
     va_list args;
     va_start(args, sql);
-    BOOL result = [self executeUpdate:sql va_list:args error:NULL];
+    BOOL success = [self executeUpdate:sql va_list:args error:NULL];
     va_end(args);
-    return result;
+    return success;
 }
 
 - (BOOL)executeUpdate:(NSString * _Nonnull)sql va_list:(va_list)args error:(NSError **)outErr;
@@ -26,6 +26,30 @@
     FMUpdateStatement *statement = [self __makeUpdateStatement:sql error:outErr];
     if (!statement) {
         return NO;
+    }
+    
+    NSMutableArray *arguments = [NSMutableArray array];
+    for(int i = sqlite3_bind_parameter_count(statement.sqliteHandle); i > 0; i--) {
+        id obj = va_arg(args, id);
+        [arguments addObject:obj ?: [NSNull null]];
+    }
+    return [statement executeWithValues:arguments error:outErr];
+}
+
+- (FMResultSet * _Nullable)executeQuery:(NSString*)sql, ...
+{
+    va_list args;
+    va_start(args, sql);
+    FMResultSet *resultSet = [self executeQuery:sql va_list:args error:NULL];
+    va_end(args);
+    return resultSet;
+}
+
+- (FMResultSet * _Nullable)executeQuery:(NSString * _Nonnull)sql va_list:(va_list)args error:(NSError **)outErr;
+{
+    FMSelectStatement *statement = [self __makeSelectStatement:sql error:outErr];
+    if (!statement) {
+        return nil;
     }
     
     NSMutableArray *arguments = [NSMutableArray array];

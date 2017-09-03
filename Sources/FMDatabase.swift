@@ -85,18 +85,6 @@ import Foundation
     
     // MARK: - Queries
     
-    // TODO: remove once we have the variadic version `- (FMResultSet * _Nullable)executeQuery:(NSString*)sql, ...`
-    @objc
-    public func executeQuery(_ sql: String) -> FMResultSet? {
-        do {
-            let cursor = try Row.fetchCursor(db, sql)
-            return FMResultSet(database: self, cursor: cursor)
-        } catch {
-            handleError(error)
-            return nil
-        }
-    }
-
     @objc(executeQuery:withArgumentsInArray:)
     public func executeQuery(_ sql: String, argumentsInArray values: [Any]?) -> FMResultSet? {
         do {
@@ -270,6 +258,8 @@ import Foundation
         return (try? db.tableExists(tableName)) ?? false  // return false on error, for compatibility with FMDB
     }
     
+    // MARK: - Statements
+    
     @objc
     public func __makeUpdateStatement(_ sql: String) throws -> FMUpdateStatement {
         do {
@@ -279,6 +269,15 @@ import Foundation
         }
     }
     
+    @objc
+    public func __makeSelectStatement(_ sql: String) throws -> FMSelectStatement {
+        do {
+            return try FMSelectStatement(database: self, statement: db.makeSelectStatement(sql))
+        } catch {
+            throw handleError(error)
+        }
+    }
+
     // MARK: - Arguments
     
     func statementArguments(from values: [Any]) -> StatementArguments {

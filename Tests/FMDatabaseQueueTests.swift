@@ -10,10 +10,7 @@ class FMDatabaseQueueTests: GRDBObjcTestCase {
         fmdbQueue.inDatabase { db in
             try! db.executeUpdate("CREATE TABLE t(a)", values: nil)
             try! db.executeUpdate("INSERT INTO t(a) VALUES (123)", values: nil)
-            guard let resultSet = db.executeQuery("SELECT a FROM T") else {
-                XCTFail()
-                return
-            }
+            let resultSet = try! db.executeQuery("SELECT a FROM T", values: nil)
             XCTAssert(resultSet.next())
             XCTAssertEqual(resultSet.int(columnIndex: 0), 123)
         }

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		5659134E1F596527006D14E5 /* NSDataTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5659133C1F596527006D14E5 /* NSDataTests.m */; };
+		56687D951F5C76F100B82E51 /* FMSelectStatement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56687D941F5C76F100B82E51 /* FMSelectStatement.swift */; };
 		566FC3E31F586B6B00919F77 /* NSDateTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 566FC3E21F586B6B00919F77 /* NSDateTests.m */; };
 		5680BBE11F57BA5900F67DD0 /* FMDatabaseQueueTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5680BBE01F57BA5900F67DD0 /* FMDatabaseQueueTests.swift */; };
 		568FC23E1F55370500E176A4 /* GRDB.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56060B901F5536DE0020949D /* GRDB.framework */; };
@@ -180,6 +181,7 @@
 /* Begin PBXFileReference section */
 		56060B771F5536DE0020949D /* GRDB.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = GRDB.xcodeproj; path = Vendor/GRDB.swift/GRDB.xcodeproj; sourceTree = SOURCE_ROOT; };
 		5659133C1F596527006D14E5 /* NSDataTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NSDataTests.m; sourceTree = "<group>"; };
+		56687D941F5C76F100B82E51 /* FMSelectStatement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FMSelectStatement.swift; sourceTree = "<group>"; };
 		566FC3E21F586B6B00919F77 /* NSDateTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NSDateTests.m; sourceTree = "<group>"; };
 		5680BBDF1F57BA5900F67DD0 /* GRDBObjcTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "GRDBObjcTests-Bridging-Header.h"; sourceTree = "<group>"; };
 		5680BBE01F57BA5900F67DD0 /* FMDatabaseQueueTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FMDatabaseQueueTests.swift; sourceTree = "<group>"; };
@@ -301,6 +303,7 @@
 				568FC25D1F560AE200E176A4 /* FMDatabase+Objc.m */,
 				568FC2411F5537A600E176A4 /* FMDatabaseQueue.swift */,
 				568FC24F1F557DD300E176A4 /* FMResultSet.swift */,
+				56687D941F5C76F100B82E51 /* FMSelectStatement.swift */,
 				568FC2601F560C8B00E176A4 /* FMUpdateStatement.swift */,
 				56EB16351F5C6F0B00F43F2C /* GRDBObjc-Objc.h */,
 				56F459FB1F55366F00656C1E /* GRDBObjc.h */,
@@ -584,6 +587,7 @@
 			files = (
 				568FC2611F560C8B00E176A4 /* FMUpdateStatement.swift in Sources */,
 				568FC2421F5537A600E176A4 /* FMDatabaseQueue.swift in Sources */,
+				56687D951F5C76F100B82E51 /* FMSelectStatement.swift in Sources */,
 				568FC25F1F560AE200E176A4 /* FMDatabase+Objc.m in Sources */,
 				568FC24E1F55423900E176A4 /* FMDatabase.swift in Sources */,
 				568FC2501F557DD300E176A4 /* FMResultSet.swift in Sources */,
