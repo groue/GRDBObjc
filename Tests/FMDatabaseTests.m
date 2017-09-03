@@ -134,7 +134,7 @@
         BOOL success = [db executeUpdate:@"When on board H.M.S. ‘Beable’ as naturalist," values: nil error:&error];
         XCTAssertFalse(success);
         XCTAssertNotNil(error);
-        XCTAssertEqualObjects(error.domain, @"GRDB.DatabaseError");
+        XCTAssertEqualObjects(error.domain, @"FMDatabase");
         XCTAssertEqual(error.code, SQLITE_ERROR);
         XCTAssertEqualObjects(error.localizedDescription, @"SQLite error 1 with statement `When on board H.M.S. ‘Beable’ as naturalist,`: near \"When\": syntax error");
     }];
@@ -236,15 +236,15 @@
         FMResultSet *rs = [db executeQuery:@"Call me Ishmael." values:nil error:&error];
         XCTAssertNil(rs);
         XCTAssertNotNil(error);
-        XCTAssertEqualObjects(error.domain, @"GRDB.DatabaseError");
+        XCTAssertEqualObjects(error.domain, @"FMDatabase");
         XCTAssertEqual(error.code, SQLITE_ERROR);
         XCTAssertEqualObjects(error.localizedDescription, @"SQLite error 1 with statement `Call me Ishmael.`: near \"Call\": syntax error");
         
         NSError *lastError = db.lastError;
         XCTAssertNotNil(lastError);
-        XCTAssertEqualObjects(lastError.domain, @"GRDB.DatabaseError");
+        XCTAssertEqualObjects(lastError.domain, @"FMDatabase");
         XCTAssertEqual(lastError.code, SQLITE_ERROR);
-        XCTAssertEqualObjects(lastError.localizedDescription, @"SQLite error 1: near \"Call\": syntax error");
+        XCTAssertEqualObjects(lastError.localizedDescription, @"near \"Call\": syntax error");
     }];
 }
 

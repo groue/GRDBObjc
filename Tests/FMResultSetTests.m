@@ -413,6 +413,52 @@
     }];
 }
 
+- (void)testNextWithErrorWithoutActualError
+{
+    FMDatabaseQueue *dbQueue = [FMDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath]];
+    XCTAssertNotNil(dbQueue);
+    [dbQueue inDatabase:^(FMDatabase *db) {
+        [db executeUpdate:@"CREATE TABLE t(a, b)"];
+        [db executeUpdate:@"INSERT INTO t(a, b) VALUES (1, 2)"];
+        [db executeUpdate:@"INSERT INTO t(a, b) VALUES (3, 4)"];
+        
+        FMResultSet *rs = [db executeQuery:@"SELECT a, b FROM t"];
+        XCTAssertNotNil(rs);
+        
+        NSError *error = nil; // important
+        XCTAssert([rs nextWithError:&error]);
+        XCTAssertEqual([rs intForColumnIndex:0], 1);
+        XCTAssertEqual([rs intForColumnIndex:1], 2);
+        
+        XCTAssert([rs nextWithError:&error]);
+        XCTAssertEqual([rs intForColumnIndex:0], 3);
+        XCTAssertEqual([rs intForColumnIndex:1], 4);
+        
+        XCTAssertFalse([rs nextWithError:&error]);
+        XCTAssertNil(error);
+        XCTAssertFalse([rs nextWithError:&error]);
+        XCTAssertNil(error);
+    }];
+}
+
+- (void)testNextWithErrorWithActualError
+{
+    FMDatabaseQueue *dbQueue = [FMDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath]];
+    XCTAssertNotNil(dbQueue);
+    [dbQueue inDatabase:^(FMDatabase *db) {
+        [db executeUpdate:@"CREATE TABLE t(a NOT NULL)"];
+        FMResultSet *rs = [db executeQuery:@"INSERT INTO t(a) VALUES (NULL)"];
+        XCTAssertNotNil(rs);
+        
+        NSError *error = nil;
+        XCTAssertFalse([rs nextWithError:&error]);
+        XCTAssertNotNil(error);
+        XCTAssertEqualObjects(error.domain, @"FMDatabase");
+        XCTAssertEqual(error.code, SQLITE_CONSTRAINT);
+        XCTAssertEqualObjects(error.localizedDescription, @"SQLite error 1299 with statement `INSERT INTO t(a) VALUES (NULL)`: NOT NULL constraint failed: t.a");
+    }];
+}
+
 - (void)testClose
 {
     FMDatabaseQueue *dbQueue = [FMDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath]];

@@ -310,18 +310,24 @@ GRDB and FMDB usually behave exactly in the same manner. When there are differen
     
     ```objc
     @property (nonatomic, readonly, nullable) NSDictionary *resultDictionary;
-    
     - (void)close;
     - (BOOL)next;
-    
+    - (BOOL)nextWithError:(NSError * _Nullable *)outErr;
     - (int)columnIndexForName:(NSString*)columnName;
+    ```
     
+- Available with compatibility warning:
+    
+    ```objc
+    // GRDBObjc crashes with a fatal error when those methods are called
+    // after the result set has been exhausted, closed, or had an error.
+    // FMDB would always return a value.
+    - (BOOL)columnIndexIsNull:(int)columnIdx;
+    - (BOOL)columnIsNull:(NSString*)columnName;
     - (long)longForColumnIndex:(int)columnIdx;
     - (long)longForColumn:(NSString*)columnName;
     - (long long int)longLongIntForColumnIndex:(int)columnIdx;
     - (long long int)longLongIntForColumn:(NSString*)columnName;
-    - (unsigned long long int)unsignedLongLongIntForColumnIndex:(int)columnIdx;
-    - (unsigned long long int)unsignedLongLongIntForColumn:(NSString*)columnName;
     - (BOOL)boolForColumnIndex:(int)columnIdx;
     - (BOOL)boolForColumn:(NSString*)columnName;
     - (double)doubleForColumnIndex:(int)columnIdx;
@@ -330,26 +336,23 @@ GRDB and FMDB usually behave exactly in the same manner. When there are differen
     - (NSString * _Nullable)stringForColumn:(NSString*)columnName;
     - (NSData * _Nullable)dataForColumnIndex:(int)columnIdx;
     - (NSData * _Nullable)dataForColumn:(NSString*)columnName;
+    - (NSData * _Nullable)dataNoCopyForColumnIndex:(int)columnIdx NS_RETURNS_NOT_RETAINED;
+    - (NSData * _Nullable)dataNoCopyForColumn:(NSString *)columnName NS_RETURNS_NOT_RETAINED;
     - (NSDate * _Nullable)dateForColumn:(NSString*)columnName;
     - (NSDate * _Nullable)dateForColumnIndex:(int)columnIdx;
     - (id _Nullable)objectForColumnIndex:(int)columnIdx;
     - (id _Nullable)objectForColumn:(NSString*)columnName;
     - (id _Nullable)objectAtIndexedSubscript:(int)columnIdx;
     - (id _Nullable)objectForKeyedSubscript:(NSString *)columnName;
-    - (NSData * _Nullable)dataNoCopyForColumnIndex:(int)columnIdx NS_RETURNS_NOT_RETAINED;
-    - (NSData * _Nullable)dataNoCopyForColumn:(NSString *)columnName NS_RETURNS_NOT_RETAINED;
-    - (BOOL)columnIndexIsNull:(int)columnIdx;
-    - (BOOL)columnIsNull:(NSString*)columnName;
-    ```
     
-- Available with compatibility warning:
-    
-    ```objc
-    // Those methods crash with a fatal error when database contains 64-bit
-    // values that are not representable with `int`. FMDB would instead return
-    // a truncated value.
+    // On top of the previous compatibility warning (crash on exhausted
+    // result set), GRDBObjc also crashes with a fatal error when
+    // database contains a value that is not representable in the
+    // requested type. FMDB would always return a value.
     - (int)intForColumnIndex:(int)columnIdx;
     - (int)intForColumn:(NSString*)columnName;
+    - (unsigned long long int)unsignedLongLongIntForColumnIndex:(int)columnIdx;
+    - (unsigned long long int)unsignedLongLongIntForColumn:(NSString*)columnName;
     ```
 
 ---

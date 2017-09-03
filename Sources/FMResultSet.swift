@@ -39,7 +39,16 @@ import SQLite3
         self.state = .initialized(cursor)
     }
     
-    @objc public func next() -> Bool {
+    @objc
+    public func next() -> Bool {
+        return nextWithError(nil)
+    }
+    
+    @objc(nextWithError:)
+    public func nextWithError(_ outErr: NSErrorPointer) -> Bool {
+        // This FMDB method breaks error handling conventions very badly. The
+        // GRDBObjc version does the same. The problem is that the return value
+        // NO does not mean there is an error.
         switch state {
         case .initialized(let cursor), .row(let cursor, _):
             do {
@@ -51,15 +60,18 @@ import SQLite3
                     return false
                 }
             } catch {
-                db.handleError(error)
                 state = .error(error)
+                outErr?.pointee = db.handleError(error)
                 return false
             }
-        case .ended: return false
-        case .error: return false
+        case .ended:
+            return false
+        case .error(let error):
+            outErr?.pointee = db.handleError(error)
+            return false
         }
     }
-    
+
     @objc public func close() {
         state = .ended
     }

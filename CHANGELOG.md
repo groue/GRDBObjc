@@ -1,6 +1,17 @@
 Release Notes
 =============
 
+## Master branch
+
+### New
+
+- Support for `-[FMResultSet nextWithError:]`
+
+### Fixed
+
+- Errors outputed by GRDBObjc have the some domain and codes as errors outputed by FMDB.
+
+
 ## 0.2
 
 Released September 3, 2017

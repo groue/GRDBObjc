@@ -77,8 +77,7 @@ import Foundation
             let arguments = values.map { statementArguments(from: $0) }
             try db.execute(sql, arguments: arguments)
         } catch {
-            handleError(error)
-            throw error
+            throw handleError(error)
         }
     }
     
@@ -127,8 +126,7 @@ import Foundation
             let cursor = try Row.fetchCursor(db, sql, arguments: arguments)
             return FMResultSet(database: self, cursor: cursor)
         } catch {
-            handleError(error)
-            throw error
+            throw handleError(error)
         }
     }
     
@@ -202,8 +200,7 @@ import Foundation
         do {
             try db.execute("SAVEPOINT '\(espaceSavePointName(name))'")
         } catch {
-            handleError(error)
-            throw error
+            throw handleError(error)
         }
     }
     
@@ -212,8 +209,7 @@ import Foundation
         do {
             try db.execute("RELEASE SAVEPOINT '\(espaceSavePointName(name))'")
         } catch {
-            handleError(error)
-            throw error
+            throw handleError(error)
         }
     }
     
@@ -222,8 +218,7 @@ import Foundation
         do {
             try db.execute("ROLLBACK TRANSACTION TO SAVEPOINT '\(espaceSavePointName(name))'")
         } catch {
-            handleError(error)
-            throw error
+            throw handleError(error)
         }
     }
     
@@ -278,8 +273,7 @@ import Foundation
         do {
             return try FMUpdateStatement(database: self, statement: db.makeUpdateStatement(sql))
         } catch {
-            handleError(error)
-            throw error
+            throw handleError(error)
         }
     }
     
@@ -317,16 +311,35 @@ import Foundation
     
     // MARK: - Errors
     
+    private static let errorDomain = "FMDatabase"
+    
     @objc public var crashOnErrors: Bool
     @objc public var logsErrors: Bool
-    @objc public var lastError: Error {
-        return DatabaseError(
-            resultCode: ResultCode(rawValue: sqlite3_errcode(db.sqliteConnection)),
-            message: String(cString: sqlite3_errmsg(db.sqliteConnection)))
+    @objc public var lastError: NSError {
+        return NSError(
+            domain: FMDatabase.errorDomain,
+            code: Int(sqlite3_errcode(db.sqliteConnection)),
+            userInfo: [NSLocalizedDescriptionKey: String(cString: sqlite3_errmsg(db.sqliteConnection))])
     }
     
-    func handleError(_ error: Error) {
-        if logsErrors { NSLog("DB Error: %@", "\(error)") }
+    /// Return an FMDB-compatible error, and perform FMDB side effects on errors
+    /// such as logging or crashing.
+    @discardableResult
+    func handleError(_ error: Error) -> NSError {
+        var fmdbError: NSError
+        if let error = error as? DatabaseError {
+            // GRDB outputs extended result codes, when FMDB outputs primary
+            // result codes:
+            let primaryResultCode = Int(error.resultCode.primaryResultCode.rawValue)
+            fmdbError = NSError(
+                domain: FMDatabase.errorDomain,
+                code: primaryResultCode,
+                userInfo: [NSLocalizedDescriptionKey: error.description])
+        } else {
+            fmdbError = error as NSError
+        }
+        if logsErrors { NSLog("DB Error: %@", "\(fmdbError)") }
         if crashOnErrors { fatalError("\(error)") }
+        return fmdbError
     }
 }

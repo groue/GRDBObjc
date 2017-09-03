@@ -18,8 +18,7 @@ import GRDB
         do {
             try statement.execute(arguments: db.statementArguments(from: values))
         } catch {
-            db.handleError(error)
-            throw error
+            throw db.handleError(error)
         }
     }
 }
