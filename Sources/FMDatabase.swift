@@ -46,19 +46,6 @@ import Foundation
         }
     }
     
-    // TODO: remove once we have the variadic version `- (BOOL)executeUpdate:(NSString*)sql, ...`
-    @discardableResult @objc
-    public func executeUpdate(_ sql: String) -> Bool {
-        do {
-            let statement = try db.makeUpdateStatement(sql)
-            try statement.execute()
-            return true
-        } catch {
-            handleError(error)
-            return false
-        }
-    }
-    
     @discardableResult @objc(executeUpdate:withArgumentsInArray:)
     public func executeUpdate(_ sql: String, argumentsInArray values: [Any]?) -> Bool {
         do {

@@ -3,4 +3,5 @@
 // Here we define variadics methods that Swift can't handle
 @interface FMDatabase(Objc)
 - (BOOL)executeUpdate:(NSString * _Nonnull)sql withErrorAndBindings:(NSError * _Nullable * _Nullable)outErr, ...;
+- (BOOL)executeUpdate:(NSString * _Nonnull)sql, ...;
 @end

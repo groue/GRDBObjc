@@ -28,13 +28,25 @@
     }];
 }
 
-- (void)testExecuteUpdateWithoutErrorHandling
+- (void)testExecuteUpdateWithArguments
 {
     FMDatabaseQueue *dbQueue = [FMDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath]];
     XCTAssertNotNil(dbQueue);
     [dbQueue inDatabase:^(FMDatabase *db) {
-        BOOL success = [db executeUpdate:@"CREATE TABLE t(a)"];
+        [db executeUpdate:@"CREATE TABLE t(a, b)"];
+
+        BOOL success = [db executeUpdate:@"INSERT INTO t(a, b) VALUES (?, ?)", nil, @(654)];
         XCTAssert(success);
+        
+        FMResultSet *rs = [db executeQuery:@"SELECT a, b FROM t"];
+        XCTAssertNotNil(rs);
+        BOOL fetched = NO;
+        while ([rs next]) {
+            fetched = YES;
+            XCTAssertTrue([rs columnIndexIsNull:0]);
+            XCTAssertEqual([rs intForColumnIndex:1], 654);
+        }
+        XCTAssert(fetched);
     }];
 }
 
@@ -46,7 +58,7 @@
         [db executeUpdate:@"CREATE TABLE t(a, b)"];
         
         BOOL success = [db executeUpdate:@"INSERT INTO t(a, b) VALUES (?, ?)"
-                    withArgumentsInArray:@[@(123), @(654)]];
+                    withArgumentsInArray:@[[NSNull null], @(654)]];
         XCTAssert(success);
         
         FMResultSet *rs = [db executeQuery:@"SELECT a, b FROM t"];
@@ -54,7 +66,7 @@
         BOOL fetched = NO;
         while ([rs next]) {
             fetched = YES;
-            XCTAssertEqual([rs intForColumnIndex:0], 123);
+            XCTAssertTrue([rs columnIndexIsNull:0]);
             XCTAssertEqual([rs intForColumnIndex:1], 654);
         }
         XCTAssert(fetched);
@@ -69,7 +81,7 @@
         [db executeUpdate:@"CREATE TABLE t(a, b)"];
         
         BOOL success = [db executeUpdate:@"INSERT INTO t(a, b) VALUES (:a, :b)"
-                 withParameterDictionary:@{@"a": @(123), @"b": @(654)}];
+                 withParameterDictionary:@{@"a": [NSNull null], @"b": @(654)}];
         XCTAssert(success);
         
         FMResultSet *rs = [db executeQuery:@"SELECT a, b FROM t"];
@@ -77,7 +89,7 @@
         BOOL fetched = NO;
         while ([rs next]) {
             fetched = YES;
-            XCTAssertEqual([rs intForColumnIndex:0], 123);
+            XCTAssertTrue([rs columnIndexIsNull:0]);
             XCTAssertEqual([rs intForColumnIndex:1], 654);
         }
         XCTAssert(fetched);
@@ -134,7 +146,7 @@
         
         NSError *error;
         BOOL success = [db executeUpdate:@"INSERT INTO t(a, b) VALUES (?, ?)"
-                                  values:@[@(123), @(654)]
+                                  values:@[[NSNull null], @(654)]
                                    error:&error];
         XCTAssert(success, @"%@", error);
         
@@ -143,7 +155,7 @@
         BOOL fetched = NO;
         while ([rs next]) {
             fetched = YES;
-            XCTAssertEqual([rs intForColumnIndex:0], 123);
+            XCTAssertTrue([rs columnIndexIsNull:0]);
             XCTAssertEqual([rs intForColumnIndex:1], 654);
         }
         XCTAssert(fetched);
@@ -158,7 +170,7 @@
         [db executeUpdate:@"CREATE TABLE t(a, b)"];
         
         NSError *error;
-        BOOL success = [db executeUpdate:@"INSERT INTO t(a, b) VALUES (123, 654)"
+        BOOL success = [db executeUpdate:@"INSERT INTO t(a, b) VALUES (NULL, 654)"
                                   values:nil
                                    error:&error];
         XCTAssert(success, @"%@", error);
@@ -168,7 +180,7 @@
         BOOL fetched = NO;
         while ([rs next]) {
             fetched = YES;
-            XCTAssertEqual([rs intForColumnIndex:0], 123);
+            XCTAssertTrue([rs columnIndexIsNull:0]);
             XCTAssertEqual([rs intForColumnIndex:1], 654);
         }
         XCTAssert(fetched);
@@ -198,14 +210,14 @@
     XCTAssertNotNil(dbQueue);
     [dbQueue inDatabase:^(FMDatabase *db) {
         [db executeUpdate:@"CREATE TABLE t(a, b)"];
-        [db executeUpdate:@"INSERT INTO t(a, b) VALUES (123, 654)"];
+        [db executeUpdate:@"INSERT INTO t(a, b) VALUES (NULL, 654)"];
         
         FMResultSet *rs = [db executeQuery:@"SELECT a, b FROM t"];
         XCTAssertNotNil(rs);
         BOOL fetched = NO;
         while ([rs next]) {
             fetched = YES;
-            XCTAssertEqual([rs intForColumnIndex:0], 123);
+            XCTAssertTrue([rs columnIndexIsNull:0]);
             XCTAssertEqual([rs intForColumnIndex:1], 654);
         }
         XCTAssert(fetched);
@@ -218,15 +230,15 @@
     XCTAssertNotNil(dbQueue);
     [dbQueue inDatabase:^(FMDatabase *db) {
         [db executeUpdate:@"CREATE TABLE t(a, b)"];
-        [db executeUpdate:@"INSERT INTO t(a, b) VALUES (123, 654)"];
+        [db executeUpdate:@"INSERT INTO t(a, b) VALUES (NULL, 654)"];
         
-        FMResultSet *rs = [db executeQuery:@"SELECT a, b FROM t WHERE a > ? AND a < ?"
-                   withArgumentsInArray:@[@(122), @(124)]];
+        FMResultSet *rs = [db executeQuery:@"SELECT a, b FROM t WHERE a IS ? AND b < ?"
+                   withArgumentsInArray:@[[NSNull null], @(655)]];
         XCTAssertNotNil(rs);
         BOOL fetched = NO;
         while ([rs next]) {
             fetched = YES;
-            XCTAssertEqual([rs intForColumnIndex:0], 123);
+            XCTAssertTrue([rs columnIndexIsNull:0]);
             XCTAssertEqual([rs intForColumnIndex:1], 654);
         }
         XCTAssert(fetched);
@@ -239,15 +251,15 @@
     XCTAssertNotNil(dbQueue);
     [dbQueue inDatabase:^(FMDatabase *db) {
         [db executeUpdate:@"CREATE TABLE t(a, b)"];
-        [db executeUpdate:@"INSERT INTO t(a, b) VALUES (123, 654)"];
+        [db executeUpdate:@"INSERT INTO t(a, b) VALUES (NULL, 654)"];
         
-        FMResultSet *rs = [db executeQuery:@"SELECT a, b FROM t WHERE a > :a AND a < :b"
-                   withParameterDictionary:@{@"a": @(122), @"b": @(124)}];
+        FMResultSet *rs = [db executeQuery:@"SELECT a, b FROM t WHERE a IS :a AND b < :b"
+                   withParameterDictionary:@{@"a": [NSNull null], @"b": @(655)}];
         XCTAssertNotNil(rs);
         BOOL fetched = NO;
         while ([rs next]) {
             fetched = YES;
-            XCTAssertEqual([rs intForColumnIndex:0], 123);
+            XCTAssertTrue([rs columnIndexIsNull:0]);
             XCTAssertEqual([rs intForColumnIndex:1], 654);
         }
         XCTAssert(fetched);
@@ -260,17 +272,17 @@
     XCTAssertNotNil(dbQueue);
     [dbQueue inDatabase:^(FMDatabase *db) {
         [db executeUpdate:@"CREATE TABLE t(a, b)"];
-        [db executeUpdate:@"INSERT INTO t(a, b) VALUES (123, 654)"];
+        [db executeUpdate:@"INSERT INTO t(a, b) VALUES (NULL, 654)"];
         
         NSError *error;
-        FMResultSet *rs = [db executeQuery:@"SELECT a, b FROM t WHERE a > 122 AND a < 124"
+        FMResultSet *rs = [db executeQuery:@"SELECT a, b FROM t WHERE a IS NULL AND b < 655"
                                     values:nil
                                      error:&error];
         XCTAssertNotNil(rs, @"%@", error);
         BOOL fetched = NO;
         while ([rs next]) {
             fetched = YES;
-            XCTAssertEqual([rs intForColumnIndex:0], 123);
+            XCTAssertTrue([rs columnIndexIsNull:0]);
             XCTAssertEqual([rs intForColumnIndex:1], 654);
         }
         XCTAssert(fetched);
