@@ -18,6 +18,8 @@
         XCTAssert([resultSet next]);
         NSData *fetchedData = [resultSet dataForColumnIndex:0];
         XCTAssertEqualObjects(data, fetchedData);
+        fetchedData = [resultSet dataNoCopyForColumnIndex:0];
+        XCTAssertEqualObjects(data, fetchedData);
     }];
 }
 
@@ -32,6 +34,8 @@
         XCTAssertNotNil(resultSet, @"%@", error);
         XCTAssert([resultSet next]);
         NSData *fetchedData = [resultSet dataForColumnIndex:0];
+        XCTAssertEqualObjects(data, fetchedData);
+        fetchedData = [resultSet dataNoCopyForColumnIndex:0];
         XCTAssertEqualObjects(data, fetchedData);
     }];
 }

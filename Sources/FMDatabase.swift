@@ -300,12 +300,7 @@ import Foundation
         case is NSNull:
             return .null
         case let data as Data:
-            if data.isEmpty {
-                // Compatibility warning: GRDB turns empty data into NULL, because SQLite can't store zero-length NSData
-                return "".databaseValue
-            } else {
-                return data.databaseValue
-            }
+            return data.databaseValue
         case let date as Date:
             // Compatibility warning: GRDB turns dates into strings
             if let dateFormatter = dateFormatter {
