@@ -1,7 +1,9 @@
 Release Notes
 =============
 
-## Master branch
+## 0.3
+
+Released September 3, 2017
 
 ### New
 
