@@ -36,7 +36,7 @@
     return [statement executeWithValues:arguments error:outErr];
 }
 
-- (FMResultSet * _Nullable)executeQuery:(NSString*)sql, ...
+- (FMResultSet * _Nullable)executeQuery:(NSString * _Nonnull)sql, ...
 {
     va_list args;
     va_start(args, sql);
