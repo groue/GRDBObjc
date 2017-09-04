@@ -138,10 +138,12 @@ Be ready to open a [pull request](https://github.com/groue/GRDBObjc/pulls) if so
 
 **GRDObjc can be installed with Cocoapods:**
 
-1. Specify in your target's Build Settings: `SWIFT_VERSION = 4.0`.
+1. Make sure your application target compiles Objective-C with Automatic Reference Counting: `CLANG_ENABLE_OBJC_ARC = YES`.
 
-2. Replace FMDB with GRDBObjc and GRDB in your Podfile:
+2. Specify in your application target's Build Settings: `SWIFT_VERSION = 4.0`.
 
+3. Replace FMDB with GRDBObjc in your Podfile:
+    
     ```diff
     -pod 'FMDB'
     +pod 'GRDBObjc', :git => 'https://github.com/groue/GRDBObjc.git', branch: 'master'
@@ -157,11 +159,12 @@ Be ready to open a [pull request](https://github.com/groue/GRDBObjc/pulls) if so
     -#import <fmdb/FMDB.h>
     +#import <GRDBObjc/GRDBObjc.h>
     ```
+
 5. Run and test your application: make sure your Objective-C code handles GRDBObjc well.
 
-6. Expose your Objective-C `FMDatabaseQueue` to Swift via the bridging header, so that you can use a genuine GRDB `DatabaseQueue` from Swift.
+6. Expose your Objective-C `FMDatabaseQueue` to Swift via the bridging header.
 
-    **Don't use the FMDB APIs from Swift**: that's not the goal of this library! Instead, convert a `FMDatabaseQueue` to GRDB's `DatabaseQueue`, and make sure Swift code only uses GRDB:
+    **Don't use the FMDB APIs from Swift**: that's not the goal of this library! Instead, extract the genuine GRDB `DatabaseQueue` from the `FMDatabaseQueue`, and make sure Swift code only uses GRDB:
     
     ```swift
     import GRDB
