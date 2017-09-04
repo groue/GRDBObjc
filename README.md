@@ -196,9 +196,11 @@ To run this demo app:
 
 # FMDB Compatibility Chart
 
+**GRDBObjc targets compatibility with FMDB 2.7.2.**
+
 GRDB and FMDB usually behave exactly in the same manner. When there are differences, GRDBObjc favors FMDB compatibility over native GRDB behavior.
 
-**Some FMDB features are missing, and out of scope for GRDBObjc.** For example, GRDBObjc requires that databases are accessed through the thread-safe FMDatabaseQueue.
+**Some FMDB features are out of scope for GRDBObjc.** For example, GRDBObjc requires that databases are accessed through the thread-safe FMDatabaseQueue: you won't be able to create a naked FMDatabase instance.
 
 **Some other FMDB features have not been ported to GRDBObjc yet.** If some API you need is missing, please open a [pull request](https://github.com/groue/GRDBObjc/pulls).
 
@@ -206,6 +208,7 @@ GRDB and FMDB usually behave exactly in the same manner. When there are differen
 - [FMDatabaseQueue](#fmdatabasequeue)
 - [FMDatabase](#fmdatabase)
 - [FMResultSet](#fmresultset)
+
 
 ### General compatibility warnings
 
