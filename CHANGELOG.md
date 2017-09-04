@@ -1,6 +1,17 @@
 Release Notes
 =============
 
+## 0.4
+
+Released September 4, 2017
+
+### New
+
+- Implemented `-[FMDatabase executeQuery:]` (variadic version)
+- Implemented `-[FMDatabase executeUpdate:]` (variadic version)
+- Implemented `-[FMDatabase executeUpdate:withErrorAndBindings:]`
+
+
 ## 0.3
 
 Released September 3, 2017
