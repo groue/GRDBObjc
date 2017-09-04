@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "5687EB981F5D6B2700B4882E"
-               BuildableName = "GRDBObjcBindings.framework"
+               BuildableName = "GRDBObjcCore.framework"
                BlueprintName = "GRDBObjcCoreMacOS"
                ReferencedContainer = "container:GRDBObjc.xcodeproj">
             </BuildableReference>
@@ -48,7 +48,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "5687EB981F5D6B2700B4882E"
-            BuildableName = "GRDBObjcBindings.framework"
+            BuildableName = "GRDBObjcCore.framework"
             BlueprintName = "GRDBObjcCoreMacOS"
             ReferencedContainer = "container:GRDBObjc.xcodeproj">
          </BuildableReference>
@@ -66,7 +66,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "5687EB981F5D6B2700B4882E"
-            BuildableName = "GRDBObjcBindings.framework"
+            BuildableName = "GRDBObjcCore.framework"
             BlueprintName = "GRDBObjcCoreMacOS"
             ReferencedContainer = "container:GRDBObjc.xcodeproj">
          </BuildableReference>
