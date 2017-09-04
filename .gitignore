@@ -97,5 +97,6 @@ xcuserdata
 *.xcbaseline
 
 ##
+Tests/CocoaPods/TestApp/TestApp.xcworkspace
 Tests/CocoaPods/TestApp/Pods
 Tests/CocoaPods/TestApp/Podfile.lock
