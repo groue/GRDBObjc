@@ -119,7 +119,6 @@ Enter GRDBObjc. Very often, all you will have to do is remove FMDB, install GRDB
 ```diff
 -#import <fmdb/FMDB.h>
 +#import <GRDBObjc/GRDBObjc.h>
-+#import <GRDBObjc/GRDBObjc-Swift.h>
 ```
 
 This is enough for most of your Objective-C code that targets FMDB to compile on top of GRDB and GRDBObjc. Of course, the devil is in the detail, and we'll list below a detailed [compatibility chart](#fmdb-compatibility-chart).
@@ -146,6 +145,7 @@ Be ready to open a [pull request](https://github.com/groue/GRDBObjc/pulls) if so
     ```diff
     -pod 'FMDB'
     +pod 'GRDBObjc', :git => 'https://github.com/groue/GRDBObjc.git', branch: 'master'
+    +pod 'GRDBObjcCore', :git => 'https://github.com/groue/GRDBObjc.git', branch: 'master'
     +pod 'GRDB.swift', :git => 'https://github.com/groue/GRDB.swift.git', branch: 'Swift4'
     ```
 
@@ -156,7 +156,6 @@ Be ready to open a [pull request](https://github.com/groue/GRDBObjc/pulls) if so
     ```diff
     -#import <fmdb/FMDB.h>
     +#import <GRDBObjc/GRDBObjc.h>
-    +#import <GRDBObjc/GRDBObjc-Swift.h>
     ```
 5. Run and test your application: make sure your Objective-C code handles GRDBObjc well.
 
@@ -165,6 +164,9 @@ Be ready to open a [pull request](https://github.com/groue/GRDBObjc/pulls) if so
     **Don't use the FMDB APIs from Swift**: that's not the goal of this library! Instead, convert a `FMDatabaseQueue` to GRDB's `DatabaseQueue`, and make sure Swift code only uses GRDB:
     
     ```swift
+    import GRDB
+    import GRDBObjc
+    
     // Some FMDatabaseQueue exposed to Swift via the bridging header:
     let fmdbQueue: FMDatabaseQueue = ...
     

@@ -1,7 +1,7 @@
 // DataStore exposes a FMDB-compatible dbQueue to both Objective-C and Swift.
 
 #import <Foundation/Foundation.h>
-#import <GRDBObjc/GRDBObjc-Swift.h>
+#import <GRDBObjc/GRDBObjc.h>
 
 @interface DataStore : NSObject
 + (void)setupDatabaseAtPath:(NSString * _Nonnull)path;
