@@ -1,6 +1,6 @@
 import GRDB
 
-@objc public class FMUpdateStatement : NSObject {
+@objc public class _FMUpdateStatement : NSObject {
     private let db: FMDatabase
     private let statement: UpdateStatement
     

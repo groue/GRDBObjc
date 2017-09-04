@@ -1,4 +1,5 @@
-#import <GRDBObjc/GRDBObjc-Swift.h>
+#import <Foundation/Foundation.h>
+#import <GRDBObjcCore/GRDBObjcCore-Swift.h>
 
 // Here we define variadics methods that Swift can't handle
 @interface FMDatabase(Objc)

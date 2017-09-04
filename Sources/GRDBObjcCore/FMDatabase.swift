@@ -261,18 +261,18 @@ import Foundation
     // MARK: - Statements
     
     @objc
-    public func __makeUpdateStatement(_ sql: String) throws -> FMUpdateStatement {
+    public func _makeUpdateStatement(_ sql: String) throws -> _FMUpdateStatement {
         do {
-            return try FMUpdateStatement(database: self, statement: db.makeUpdateStatement(sql))
+            return try _FMUpdateStatement(database: self, statement: db.makeUpdateStatement(sql))
         } catch {
             throw handleError(error)
         }
     }
     
     @objc
-    public func __makeSelectStatement(_ sql: String) throws -> FMSelectStatement {
+    public func _makeSelectStatement(_ sql: String) throws -> _FMSelectStatement {
         do {
-            return try FMSelectStatement(database: self, statement: db.makeSelectStatement(sql))
+            return try _FMSelectStatement(database: self, statement: db.makeSelectStatement(sql))
         } catch {
             throw handleError(error)
         }

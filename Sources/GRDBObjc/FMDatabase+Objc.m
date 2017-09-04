@@ -23,7 +23,7 @@
 
 - (BOOL)executeUpdate:(NSString * _Nonnull)sql va_list:(va_list)args error:(NSError **)outErr;
 {
-    FMUpdateStatement *statement = [self __makeUpdateStatement:sql error:outErr];
+    _FMUpdateStatement *statement = [self _makeUpdateStatement:sql error:outErr];
     if (!statement) {
         return NO;
     }
@@ -47,7 +47,7 @@
 
 - (FMResultSet * _Nullable)executeQuery:(NSString * _Nonnull)sql va_list:(va_list)args error:(NSError **)outErr;
 {
-    FMSelectStatement *statement = [self __makeSelectStatement:sql error:outErr];
+    _FMSelectStatement *statement = [self _makeSelectStatement:sql error:outErr];
     if (!statement) {
         return nil;
     }

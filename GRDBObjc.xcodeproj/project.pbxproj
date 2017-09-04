@@ -8,24 +8,25 @@
 
 /* Begin PBXBuildFile section */
 		5659134E1F596527006D14E5 /* NSDataTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5659133C1F596527006D14E5 /* NSDataTests.m */; };
-		56687D951F5C76F100B82E51 /* FMSelectStatement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56687D941F5C76F100B82E51 /* FMSelectStatement.swift */; };
 		566FC3E31F586B6B00919F77 /* NSDateTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 566FC3E21F586B6B00919F77 /* NSDateTests.m */; };
 		5680BBE11F57BA5900F67DD0 /* FMDatabaseQueueTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5680BBE01F57BA5900F67DD0 /* FMDatabaseQueueTests.swift */; };
+		5687EBA51F5D6B6200B4882E /* _FMSelectStatement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5687EB8A1F5D6B0500B4882E /* _FMSelectStatement.swift */; };
+		5687EBA61F5D6B6200B4882E /* _FMUpdateStatement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5687EB8B1F5D6B0500B4882E /* _FMUpdateStatement.swift */; };
+		5687EBA71F5D6B6200B4882E /* FMDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5687EB8C1F5D6B0500B4882E /* FMDatabase.swift */; };
+		5687EBA81F5D6B6200B4882E /* FMDatabaseQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5687EB8D1F5D6B0500B4882E /* FMDatabaseQueue.swift */; };
+		5687EBA91F5D6B6200B4882E /* FMResultSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5687EB8E1F5D6B0500B4882E /* FMResultSet.swift */; };
+		5687EBAA1F5D6B6200B4882E /* GRDBObjcBindings.h in Headers */ = {isa = PBXBuildFile; fileRef = 5687EB8F1F5D6B0500B4882E /* GRDBObjcBindings.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5687EBAF1F5D6D5300B4882E /* GRDBObjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 5687EB931F5D6B0500B4882E /* GRDBObjc.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5687EBB01F5D6D5C00B4882E /* FMDatabase+Objc.h in Headers */ = {isa = PBXBuildFile; fileRef = 5687EB911F5D6B0500B4882E /* FMDatabase+Objc.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5687EBB11F5D6E7700B4882E /* FMDatabase+Objc.m in Sources */ = {isa = PBXBuildFile; fileRef = 5687EB921F5D6B0500B4882E /* FMDatabase+Objc.m */; };
+		5687EBB21F5D6ECC00B4882E /* GRDBObjcCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5687EB991F5D6B2700B4882E /* GRDBObjcCore.framework */; };
 		568FC23E1F55370500E176A4 /* GRDB.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56060B901F5536DE0020949D /* GRDB.framework */; };
-		568FC2421F5537A600E176A4 /* FMDatabaseQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568FC2411F5537A600E176A4 /* FMDatabaseQueue.swift */; };
 		568FC2451F5538E000E176A4 /* FMDatabaseQueueTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 568FC2441F5538E000E176A4 /* FMDatabaseQueueTests.m */; };
 		568FC2461F553BA900E176A4 /* GRDB.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56060B901F5536DE0020949D /* GRDB.framework */; };
-		568FC24E1F55423900E176A4 /* FMDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568FC24D1F55423900E176A4 /* FMDatabase.swift */; };
-		568FC2501F557DD300E176A4 /* FMResultSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568FC24F1F557DD300E176A4 /* FMResultSet.swift */; };
 		568FC2541F55882E00E176A4 /* FMDatabaseTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 568FC2531F55882E00E176A4 /* FMDatabaseTests.m */; };
 		568FC2561F55B7C800E176A4 /* FMResultSetTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 568FC2551F55B7C800E176A4 /* FMResultSetTests.m */; };
-		568FC25E1F560AE200E176A4 /* FMDatabase+Objc.h in Headers */ = {isa = PBXBuildFile; fileRef = 568FC25C1F560AE200E176A4 /* FMDatabase+Objc.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		568FC25F1F560AE200E176A4 /* FMDatabase+Objc.m in Sources */ = {isa = PBXBuildFile; fileRef = 568FC25D1F560AE200E176A4 /* FMDatabase+Objc.m */; };
-		568FC2611F560C8B00E176A4 /* FMUpdateStatement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568FC2601F560C8B00E176A4 /* FMUpdateStatement.swift */; };
-		56EB16361F5C6F1200F43F2C /* GRDBObjc-Objc.h in Headers */ = {isa = PBXBuildFile; fileRef = 56EB16351F5C6F0B00F43F2C /* GRDBObjc-Objc.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		56F45A021F55366F00656C1E /* GRDBObjc.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56F459F81F55366F00656C1E /* GRDBObjc.framework */; };
 		56F45A071F55366F00656C1E /* GRDBObjcTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 56F45A061F55366F00656C1E /* GRDBObjcTestCase.m */; };
-		56F45A091F55366F00656C1E /* GRDBObjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 56F459FB1F55366F00656C1E /* GRDBObjc.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -155,12 +156,26 @@
 			remoteGlobalIDString = 565490A01D5A4798005622CB;
 			remoteInfo = GRDBWatchOS;
 		};
-		568FC2291F5536FD00E176A4 /* PBXContainerItemProxy */ = {
+		5687EBA31F5D6B5000B4882E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 56060B771F5536DE0020949D /* GRDB.xcodeproj */;
 			proxyType = 1;
 			remoteGlobalIDString = DC3773F219C8CBB3004FCF85;
 			remoteInfo = GRDBOSX;
+		};
+		5687EBAB1F5D6BEB00B4882E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 56F459ED1F55359400656C1E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5687EB981F5D6B2700B4882E;
+			remoteInfo = GRDBObjcBindingsMacOS;
+		};
+		5687EBAD1F5D6C8E00B4882E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 56F459ED1F55359400656C1E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5687EB981F5D6B2700B4882E;
+			remoteInfo = GRDBObjcBindingsMacOS;
 		};
 		568FC2471F553BC000E176A4 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -181,34 +196,43 @@
 /* Begin PBXFileReference section */
 		56060B771F5536DE0020949D /* GRDB.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = GRDB.xcodeproj; path = Vendor/GRDB.swift/GRDB.xcodeproj; sourceTree = SOURCE_ROOT; };
 		5659133C1F596527006D14E5 /* NSDataTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NSDataTests.m; sourceTree = "<group>"; };
-		56687D941F5C76F100B82E51 /* FMSelectStatement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FMSelectStatement.swift; sourceTree = "<group>"; };
 		566FC3E21F586B6B00919F77 /* NSDateTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NSDateTests.m; sourceTree = "<group>"; };
 		5680BBDF1F57BA5900F67DD0 /* GRDBObjcTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "GRDBObjcTests-Bridging-Header.h"; sourceTree = "<group>"; };
 		5680BBE01F57BA5900F67DD0 /* FMDatabaseQueueTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FMDatabaseQueueTests.swift; sourceTree = "<group>"; };
+		5687EB8A1F5D6B0500B4882E /* _FMSelectStatement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = _FMSelectStatement.swift; sourceTree = "<group>"; };
+		5687EB8B1F5D6B0500B4882E /* _FMUpdateStatement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = _FMUpdateStatement.swift; sourceTree = "<group>"; };
+		5687EB8C1F5D6B0500B4882E /* FMDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FMDatabase.swift; sourceTree = "<group>"; };
+		5687EB8D1F5D6B0500B4882E /* FMDatabaseQueue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FMDatabaseQueue.swift; sourceTree = "<group>"; };
+		5687EB8E1F5D6B0500B4882E /* FMResultSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FMResultSet.swift; sourceTree = "<group>"; };
+		5687EB8F1F5D6B0500B4882E /* GRDBObjcBindings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GRDBObjcBindings.h; sourceTree = "<group>"; };
+		5687EB911F5D6B0500B4882E /* FMDatabase+Objc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "FMDatabase+Objc.h"; sourceTree = "<group>"; };
+		5687EB921F5D6B0500B4882E /* FMDatabase+Objc.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "FMDatabase+Objc.m"; sourceTree = "<group>"; };
+		5687EB931F5D6B0500B4882E /* GRDBObjc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GRDBObjc.h; sourceTree = "<group>"; };
+		5687EB991F5D6B2700B4882E /* GRDBObjcCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = GRDBObjcCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		568FC2401F55373300E176A4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		568FC2411F5537A600E176A4 /* FMDatabaseQueue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FMDatabaseQueue.swift; sourceTree = "<group>"; };
 		568FC2431F55389100E176A4 /* GRDBObjcTestCase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GRDBObjcTestCase.h; sourceTree = "<group>"; };
 		568FC2441F5538E000E176A4 /* FMDatabaseQueueTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FMDatabaseQueueTests.m; sourceTree = "<group>"; };
-		568FC24D1F55423900E176A4 /* FMDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FMDatabase.swift; sourceTree = "<group>"; };
-		568FC24F1F557DD300E176A4 /* FMResultSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FMResultSet.swift; sourceTree = "<group>"; };
 		568FC2531F55882E00E176A4 /* FMDatabaseTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FMDatabaseTests.m; sourceTree = "<group>"; };
 		568FC2551F55B7C800E176A4 /* FMResultSetTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FMResultSetTests.m; sourceTree = "<group>"; };
-		568FC25C1F560AE200E176A4 /* FMDatabase+Objc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "FMDatabase+Objc.h"; sourceTree = "<group>"; };
-		568FC25D1F560AE200E176A4 /* FMDatabase+Objc.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "FMDatabase+Objc.m"; sourceTree = "<group>"; };
-		568FC2601F560C8B00E176A4 /* FMUpdateStatement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FMUpdateStatement.swift; sourceTree = "<group>"; };
-		56EB16351F5C6F0B00F43F2C /* GRDBObjc-Objc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "GRDBObjc-Objc.h"; sourceTree = "<group>"; };
 		56F459F81F55366F00656C1E /* GRDBObjc.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = GRDBObjc.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		56F459FB1F55366F00656C1E /* GRDBObjc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GRDBObjc.h; sourceTree = "<group>"; };
 		56F45A011F55366F00656C1E /* GRDBObjcMacOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GRDBObjcMacOSTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		56F45A061F55366F00656C1E /* GRDBObjcTestCase.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GRDBObjcTestCase.m; sourceTree = "<group>"; };
 		56F45A081F55366F00656C1E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		5687EB951F5D6B2700B4882E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		56F459F41F55366F00656C1E /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5687EBB21F5D6ECC00B4882E /* GRDBObjcCore.framework in Frameworks */,
 				568FC23E1F55370500E176A4 /* GRDB.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -259,6 +283,29 @@
 			name = Support;
 			sourceTree = "<group>";
 		};
+		5687EB891F5D6B0500B4882E /* GRDBObjcCore */ = {
+			isa = PBXGroup;
+			children = (
+				5687EB8A1F5D6B0500B4882E /* _FMSelectStatement.swift */,
+				5687EB8B1F5D6B0500B4882E /* _FMUpdateStatement.swift */,
+				5687EB8C1F5D6B0500B4882E /* FMDatabase.swift */,
+				5687EB8D1F5D6B0500B4882E /* FMDatabaseQueue.swift */,
+				5687EB8E1F5D6B0500B4882E /* FMResultSet.swift */,
+				5687EB8F1F5D6B0500B4882E /* GRDBObjcBindings.h */,
+			);
+			path = GRDBObjcCore;
+			sourceTree = "<group>";
+		};
+		5687EB901F5D6B0500B4882E /* GRDBObjc */ = {
+			isa = PBXGroup;
+			children = (
+				5687EB911F5D6B0500B4882E /* FMDatabase+Objc.h */,
+				5687EB921F5D6B0500B4882E /* FMDatabase+Objc.m */,
+				5687EB931F5D6B0500B4882E /* GRDBObjc.h */,
+			);
+			path = GRDBObjc;
+			sourceTree = "<group>";
+		};
 		568FC23D1F55370500E176A4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -291,6 +338,7 @@
 			children = (
 				56F459F81F55366F00656C1E /* GRDBObjc.framework */,
 				56F45A011F55366F00656C1E /* GRDBObjcMacOSTests.xctest */,
+				5687EB991F5D6B2700B4882E /* GRDBObjcCore.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -298,15 +346,8 @@
 		56F459FA1F55366F00656C1E /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				568FC24D1F55423900E176A4 /* FMDatabase.swift */,
-				568FC25C1F560AE200E176A4 /* FMDatabase+Objc.h */,
-				568FC25D1F560AE200E176A4 /* FMDatabase+Objc.m */,
-				568FC2411F5537A600E176A4 /* FMDatabaseQueue.swift */,
-				568FC24F1F557DD300E176A4 /* FMResultSet.swift */,
-				56687D941F5C76F100B82E51 /* FMSelectStatement.swift */,
-				568FC2601F560C8B00E176A4 /* FMUpdateStatement.swift */,
-				56EB16351F5C6F0B00F43F2C /* GRDBObjc-Objc.h */,
-				56F459FB1F55366F00656C1E /* GRDBObjc.h */,
+				5687EB901F5D6B0500B4882E /* GRDBObjc */,
+				5687EB891F5D6B0500B4882E /* GRDBObjcCore */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -339,19 +380,45 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
+		5687EB961F5D6B2700B4882E /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5687EBAA1F5D6B6200B4882E /* GRDBObjcBindings.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		56F459F51F55366F00656C1E /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				56F45A091F55366F00656C1E /* GRDBObjc.h in Headers */,
-				568FC25E1F560AE200E176A4 /* FMDatabase+Objc.h in Headers */,
-				56EB16361F5C6F1200F43F2C /* GRDBObjc-Objc.h in Headers */,
+				5687EBB01F5D6D5C00B4882E /* FMDatabase+Objc.h in Headers */,
+				5687EBAF1F5D6D5300B4882E /* GRDBObjc.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		5687EB981F5D6B2700B4882E /* GRDBObjcCoreMacOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5687EB9E1F5D6B2700B4882E /* Build configuration list for PBXNativeTarget "GRDBObjcCoreMacOS" */;
+			buildPhases = (
+				5687EB941F5D6B2700B4882E /* Sources */,
+				5687EB951F5D6B2700B4882E /* Frameworks */,
+				5687EB961F5D6B2700B4882E /* Headers */,
+				5687EB971F5D6B2700B4882E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				5687EBA41F5D6B5000B4882E /* PBXTargetDependency */,
+			);
+			name = GRDBObjcCoreMacOS;
+			productName = GRDBObjcBindings;
+			productReference = 5687EB991F5D6B2700B4882E /* GRDBObjcCore.framework */;
+			productType = "com.apple.product-type.framework";
+		};
 		56F459F71F55366F00656C1E /* GRDBObjcMacOS */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 56F45A0A1F55366F00656C1E /* Build configuration list for PBXNativeTarget "GRDBObjcMacOS" */;
@@ -364,7 +431,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				568FC22A1F5536FD00E176A4 /* PBXTargetDependency */,
+				5687EBAC1F5D6BEB00B4882E /* PBXTargetDependency */,
 			);
 			name = GRDBObjcMacOS;
 			productName = GRDBObjc;
@@ -382,6 +449,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				5687EBAE1F5D6C8E00B4882E /* PBXTargetDependency */,
 				568FC2481F553BC000E176A4 /* PBXTargetDependency */,
 				56F45A041F55366F00656C1E /* PBXTargetDependency */,
 			);
@@ -398,6 +466,10 @@
 			attributes = {
 				LastUpgradeCheck = 0900;
 				TargetAttributes = {
+					5687EB981F5D6B2700B4882E = {
+						CreatedOnToolsVersion = 9.0;
+						ProvisioningStyle = Automatic;
+					};
 					56F459F71F55366F00656C1E = {
 						CreatedOnToolsVersion = 9.0;
 						LastSwiftMigration = 0900;
@@ -428,6 +500,7 @@
 			);
 			projectRoot = "";
 			targets = (
+				5687EB981F5D6B2700B4882E /* GRDBObjcCoreMacOS */,
 				56F459F71F55366F00656C1E /* GRDBObjcMacOS */,
 				56F45A001F55366F00656C1E /* GRDBObjcMacOSTests */,
 			);
@@ -564,6 +637,13 @@
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
+		5687EB971F5D6B2700B4882E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		56F459F61F55366F00656C1E /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -581,16 +661,23 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		5687EB941F5D6B2700B4882E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5687EBA51F5D6B6200B4882E /* _FMSelectStatement.swift in Sources */,
+				5687EBA81F5D6B6200B4882E /* FMDatabaseQueue.swift in Sources */,
+				5687EBA71F5D6B6200B4882E /* FMDatabase.swift in Sources */,
+				5687EBA91F5D6B6200B4882E /* FMResultSet.swift in Sources */,
+				5687EBA61F5D6B6200B4882E /* _FMUpdateStatement.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		56F459F31F55366F00656C1E /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				568FC2611F560C8B00E176A4 /* FMUpdateStatement.swift in Sources */,
-				568FC2421F5537A600E176A4 /* FMDatabaseQueue.swift in Sources */,
-				56687D951F5C76F100B82E51 /* FMSelectStatement.swift in Sources */,
-				568FC25F1F560AE200E176A4 /* FMDatabase+Objc.m in Sources */,
-				568FC24E1F55423900E176A4 /* FMDatabase.swift in Sources */,
-				568FC2501F557DD300E176A4 /* FMResultSet.swift in Sources */,
+				5687EBB11F5D6E7700B4882E /* FMDatabase+Objc.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -611,10 +698,20 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		568FC22A1F5536FD00E176A4 /* PBXTargetDependency */ = {
+		5687EBA41F5D6B5000B4882E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = GRDBOSX;
-			targetProxy = 568FC2291F5536FD00E176A4 /* PBXContainerItemProxy */;
+			targetProxy = 5687EBA31F5D6B5000B4882E /* PBXContainerItemProxy */;
+		};
+		5687EBAC1F5D6BEB00B4882E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5687EB981F5D6B2700B4882E /* GRDBObjcCoreMacOS */;
+			targetProxy = 5687EBAB1F5D6BEB00B4882E /* PBXContainerItemProxy */;
+		};
+		5687EBAE1F5D6C8E00B4882E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5687EB981F5D6B2700B4882E /* GRDBObjcCoreMacOS */;
+			targetProxy = 5687EBAD1F5D6C8E00B4882E /* PBXContainerItemProxy */;
 		};
 		568FC2481F553BC000E176A4 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -629,6 +726,101 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		5687EB9F1F5D6B2700B4882E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = AMD8W895CT;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_VERSION = A;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				INFOPLIST_FILE = Support/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.github.groue.GRDBObjcBindings;
+				PRODUCT_NAME = GRDBObjcCore;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.0;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		5687EBA01F5D6B2700B4882E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = AMD8W895CT;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_NS_ASSERTIONS = NO;
+				FRAMEWORK_VERSION = A;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				INFOPLIST_FILE = Support/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = com.github.groue.GRDBObjcBindings;
+				PRODUCT_NAME = GRDBObjcCore;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.0;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
 		56F459F11F55359400656C1E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -758,7 +950,7 @@
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -824,7 +1016,7 @@
 				PRODUCT_NAME = GRDBObjc;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -833,7 +1025,6 @@
 		56F45A0E1F55366F00656C1E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -892,14 +1083,13 @@
 				SDKROOT = macosx;
 				SWIFT_OBJC_BRIDGING_HEADER = "Tests/GRDBObjcTests-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
 		56F45A0F1F55366F00656C1E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -950,13 +1140,22 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SWIFT_OBJC_BRIDGING_HEADER = "Tests/GRDBObjcTests-Bridging-Header.h";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		5687EB9E1F5D6B2700B4882E /* Build configuration list for PBXNativeTarget "GRDBObjcCoreMacOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5687EB9F1F5D6B2700B4882E /* Debug */,
+				5687EBA01F5D6B2700B4882E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		56F459F01F55359400656C1E /* Build configuration list for PBXProject "GRDBObjc" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

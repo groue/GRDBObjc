@@ -1,6 +1,7 @@
 target "TestApp" do
   platform :ios, '11.0'
   use_frameworks!
-  pod 'GRDBObjc', :git => 'https://github.com/groue/GRDBObjc.git', branch: 'master'
+  pod 'GRDBObjc', :git => 'https://github.com/groue/GRDBObjc.git', branch: 'development'
+  pod 'GRDBObjcCore', :git => 'https://github.com/groue/GRDBObjc.git', branch: 'development'
   pod 'GRDB.swift', :git => 'https://github.com/groue/GRDB.swift.git', branch: 'Swift4'
 end
