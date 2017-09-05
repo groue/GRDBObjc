@@ -215,7 +215,7 @@ GRDB and FMDB usually behave exactly in the same manner. When there are differen
 
 ### General compatibility warnings
 
-**NSDate**: by default, FMDB stores and reads dates as numerical timestamps. GRDBObjc does the same, for compatibility's sake. However, GRDB stores [dates](https://github.com/groue/GRDB.swift/blob/master/README.md#date-and-datecomponents) as strings, and interprets numerical values as Julian day numbers.
+**NSDate**: by default, FMDB stores and reads dates as numerical unix timestamps. GRDBObjc does the same, for compatibility's sake. However, GRDB stores [dates](https://github.com/groue/GRDB.swift/blob/master/README.md#date-and-datecomponents) as `YYYY-MM-DD HH:MM:SS.SSS` strings. It can natively load dates from unix timestamps, though.
 
 
 ### FMDatabaseQueue
