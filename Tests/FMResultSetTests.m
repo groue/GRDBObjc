@@ -33,6 +33,7 @@
         XCTAssertFalse([rs columnIsNull:@"blob"]);
         XCTAssertTrue([rs columnIndexIsNull:4]);
         XCTAssertTrue([rs columnIsNull:@"null"]);
+        XCTAssertTrue([rs columnIsNull:@"missing"]);
     }];
 }
 
@@ -53,6 +54,7 @@
         XCTAssertEqual([rs intForColumn:@"blob"], 654);
         XCTAssertEqual([rs intForColumnIndex:4], 0);
         XCTAssertEqual([rs intForColumn:@"null"], 0);
+        XCTAssertEqual([rs intForColumn:@"missing"], 0);
     }];
 }
 
@@ -73,6 +75,7 @@
         XCTAssertEqual([rs longForColumn:@"blob"], 654);
         XCTAssertEqual([rs longForColumnIndex:4], 0);
         XCTAssertEqual([rs longForColumn:@"null"], 0);
+        XCTAssertEqual([rs longForColumn:@"missing"], 0);
     }];
 }
 
@@ -93,6 +96,7 @@
         XCTAssertEqual([rs longLongIntForColumn:@"blob"], 654);
         XCTAssertEqual([rs longLongIntForColumnIndex:4], 0);
         XCTAssertEqual([rs longLongIntForColumn:@"null"], 0);
+        XCTAssertEqual([rs longLongIntForColumn:@"missing"], 0);
     }];
 }
 
@@ -113,6 +117,7 @@
         XCTAssertEqual([rs unsignedLongLongIntForColumn:@"blob"], 654);
         XCTAssertEqual([rs unsignedLongLongIntForColumnIndex:4], 0);
         XCTAssertEqual([rs unsignedLongLongIntForColumn:@"null"], 0);
+        XCTAssertEqual([rs unsignedLongLongIntForColumn:@"missing"], 0);
     }];
 }
 
@@ -133,6 +138,7 @@
         XCTAssertEqual([rs boolForColumn:@"blob"], YES);
         XCTAssertEqual([rs boolForColumnIndex:4], NO);
         XCTAssertEqual([rs boolForColumn:@"null"], NO);
+        XCTAssertEqual([rs boolForColumn:@"missing"], NO);
     }];
 }
 
@@ -153,6 +159,7 @@
         XCTAssertEqual([rs doubleForColumn:@"blob"], 654.0);
         XCTAssertEqual([rs doubleForColumnIndex:4], 0.0);
         XCTAssertEqual([rs doubleForColumn:@"null"], 0.0);
+        XCTAssertEqual([rs doubleForColumn:@"missing"], 0.0);
     }];
 }
 
@@ -173,6 +180,7 @@
         XCTAssertEqualObjects([rs stringForColumn:@"blob"], @"654");
         XCTAssertNil([rs stringForColumnIndex:4]);
         XCTAssertNil([rs stringForColumn:@"null"]);
+        XCTAssertNil([rs stringForColumn:@"missing"]);
     }];
 }
 
@@ -193,6 +201,7 @@
         XCTAssertEqualObjects([rs dataForColumn:@"blob"], [@"654" dataUsingEncoding:NSUTF8StringEncoding]);
         XCTAssertNil([rs dataForColumnIndex:4]);
         XCTAssertNil([rs dataForColumn:@"null"]);
+        XCTAssertNil([rs dataForColumn:@"missing"]);
     }];
 }
 
@@ -213,6 +222,7 @@
         XCTAssertEqualObjects([rs dataNoCopyForColumn:@"blob"], [@"654" dataUsingEncoding:NSUTF8StringEncoding]);
         XCTAssertNil([rs dataNoCopyForColumnIndex:4]);
         XCTAssertNil([rs dataNoCopyForColumn:@"null"]);
+        XCTAssertNil([rs dataNoCopyForColumn:@"missing"]);
     }];
 }
 
@@ -230,19 +240,7 @@
             XCTAssertEqual([value integerValue], 123);
         }
         {
-            NSNumber *value = [rs objectForColumn:@"integer"];
-            XCTAssert([value isKindOfClass:[NSNumber class]]);
-            XCTAssert(strcmp([value objCType], @encode(sqlite3_int64)) == 0);
-            XCTAssertEqual([value integerValue], 123);
-        }
-        {
             NSNumber *value = [rs objectForColumnIndex:1];
-            XCTAssert([value isKindOfClass:[NSNumber class]]);
-            XCTAssert(strcmp([value objCType], @encode(double)) == 0);
-            XCTAssertEqual([value doubleValue], 1.5);
-        }
-        {
-            NSNumber *value = [rs objectForColumn:@"double"];
             XCTAssert([value isKindOfClass:[NSNumber class]]);
             XCTAssert(strcmp([value objCType], @encode(double)) == 0);
             XCTAssertEqual([value doubleValue], 1.5);
@@ -253,22 +251,65 @@
             XCTAssertEqualObjects(value, @"20 little cigars");
         }
         {
-            NSString *value = [rs objectForColumn:@"text"];
-            XCTAssert([value isKindOfClass:[NSString class]]);
-            XCTAssertEqualObjects(value, @"20 little cigars");
-        }
-        {
             NSData *value = [rs objectForColumnIndex:3];
             XCTAssert([value isKindOfClass:[NSData class]]);
             XCTAssertEqualObjects(value, [@"654" dataUsingEncoding:NSUTF8StringEncoding]);
+        }
+        XCTAssertNil([rs objectForColumnIndex:4]);
+        
+        {
+            NSNumber *value = [rs objectForColumn:@"integer"];
+            XCTAssert([value isKindOfClass:[NSNumber class]]);
+            XCTAssert(strcmp([value objCType], @encode(sqlite3_int64)) == 0);
+            XCTAssertEqual([value integerValue], 123);
+        }
+        {
+            NSNumber *value = [rs objectForColumn:@"double"];
+            XCTAssert([value isKindOfClass:[NSNumber class]]);
+            XCTAssert(strcmp([value objCType], @encode(double)) == 0);
+            XCTAssertEqual([value doubleValue], 1.5);
+        }
+        {
+            NSString *value = [rs objectForColumn:@"text"];
+            XCTAssert([value isKindOfClass:[NSString class]]);
+            XCTAssertEqualObjects(value, @"20 little cigars");
         }
         {
             NSData *value = [rs objectForColumn:@"blob"];
             XCTAssert([value isKindOfClass:[NSData class]]);
             XCTAssertEqualObjects(value, [@"654" dataUsingEncoding:NSUTF8StringEncoding]);
         }
-        XCTAssertNil([rs objectForColumnIndex:4]);
         XCTAssertNil([rs objectForColumn:@"null"]);
+        XCTAssertNil([rs objectForColumn:@"missing"]);
+
+        
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+        {
+            NSNumber *value = [rs objectForColumnName:@"integer"];
+            XCTAssert([value isKindOfClass:[NSNumber class]]);
+            XCTAssert(strcmp([value objCType], @encode(sqlite3_int64)) == 0);
+            XCTAssertEqual([value integerValue], 123);
+        }
+        {
+            NSNumber *value = [rs objectForColumnName:@"double"];
+            XCTAssert([value isKindOfClass:[NSNumber class]]);
+            XCTAssert(strcmp([value objCType], @encode(double)) == 0);
+            XCTAssertEqual([value doubleValue], 1.5);
+        }
+        {
+            NSString *value = [rs objectForColumnName:@"text"];
+            XCTAssert([value isKindOfClass:[NSString class]]);
+            XCTAssertEqualObjects(value, @"20 little cigars");
+        }
+        {
+            NSData *value = [rs objectForColumnName:@"blob"];
+            XCTAssert([value isKindOfClass:[NSData class]]);
+            XCTAssertEqualObjects(value, [@"654" dataUsingEncoding:NSUTF8StringEncoding]);
+        }
+        XCTAssertNil([rs objectForColumnName:@"null"]);
+        XCTAssertNil([rs objectForColumnName:@"missing"]);
+#pragma clang diagnostic pop
     }];
 }
 
@@ -335,6 +376,7 @@
             XCTAssertEqualObjects(value, [@"654" dataUsingEncoding:NSUTF8StringEncoding]);
         }
         XCTAssertNil(rs[@"null"]);
+        XCTAssertNil(rs[@"missing"]);
     }];
 }
 
@@ -475,6 +517,17 @@
         [rs close];
         XCTAssertFalse([rs next]);
         XCTAssertFalse([rs next]);
+    }];
+}
+
+- (void)testColumnCount
+{
+    FMDatabaseQueue *dbQueue = [FMDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath]];
+    XCTAssertNotNil(dbQueue);
+    [dbQueue inDatabase:^(FMDatabase *db) {
+        FMResultSet *rs = [db executeQuery:@"SELECT 1 AS foo, 2 AS bar, 3 AS bar"];
+        XCTAssertNotNil(rs);
+        XCTAssertEqual(rs.columnCount, 3);
     }];
 }
 

@@ -20,6 +20,8 @@
 		5687EBB01F5D6D5C00B4882E /* FMDatabase+Objc.h in Headers */ = {isa = PBXBuildFile; fileRef = 5687EB911F5D6B0500B4882E /* FMDatabase+Objc.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5687EBB11F5D6E7700B4882E /* FMDatabase+Objc.m in Sources */ = {isa = PBXBuildFile; fileRef = 5687EB921F5D6B0500B4882E /* FMDatabase+Objc.m */; };
 		5687EBB21F5D6ECC00B4882E /* GRDBObjcCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5687EB991F5D6B2700B4882E /* GRDBObjcCore.framework */; };
+		5688E2E31F62E83100DE2722 /* FMResultSet+Objc.h in Headers */ = {isa = PBXBuildFile; fileRef = 5688E2E11F62E83100DE2722 /* FMResultSet+Objc.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5688E2E41F62E83100DE2722 /* FMResultSet+Objc.m in Sources */ = {isa = PBXBuildFile; fileRef = 5688E2E21F62E83100DE2722 /* FMResultSet+Objc.m */; };
 		568FC23E1F55370500E176A4 /* GRDB.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56060B901F5536DE0020949D /* GRDB.framework */; };
 		568FC2451F5538E000E176A4 /* FMDatabaseQueueTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 568FC2441F5538E000E176A4 /* FMDatabaseQueueTests.m */; };
 		568FC2461F553BA900E176A4 /* GRDB.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56060B901F5536DE0020949D /* GRDB.framework */; };
@@ -209,6 +211,8 @@
 		5687EB921F5D6B0500B4882E /* FMDatabase+Objc.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "FMDatabase+Objc.m"; sourceTree = "<group>"; };
 		5687EB931F5D6B0500B4882E /* GRDBObjc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GRDBObjc.h; sourceTree = "<group>"; };
 		5687EB991F5D6B2700B4882E /* GRDBObjcCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = GRDBObjcCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5688E2E11F62E83100DE2722 /* FMResultSet+Objc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "FMResultSet+Objc.h"; sourceTree = "<group>"; };
+		5688E2E21F62E83100DE2722 /* FMResultSet+Objc.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "FMResultSet+Objc.m"; sourceTree = "<group>"; };
 		568FC2401F55373300E176A4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		568FC2431F55389100E176A4 /* GRDBObjcTestCase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GRDBObjcTestCase.h; sourceTree = "<group>"; };
 		568FC2441F5538E000E176A4 /* FMDatabaseQueueTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FMDatabaseQueueTests.m; sourceTree = "<group>"; };
@@ -301,6 +305,8 @@
 			children = (
 				5687EB911F5D6B0500B4882E /* FMDatabase+Objc.h */,
 				5687EB921F5D6B0500B4882E /* FMDatabase+Objc.m */,
+				5688E2E11F62E83100DE2722 /* FMResultSet+Objc.h */,
+				5688E2E21F62E83100DE2722 /* FMResultSet+Objc.m */,
 				5687EB931F5D6B0500B4882E /* GRDBObjc.h */,
 			);
 			path = GRDBObjc;
@@ -392,6 +398,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5688E2E31F62E83100DE2722 /* FMResultSet+Objc.h in Headers */,
 				5687EBB01F5D6D5C00B4882E /* FMDatabase+Objc.h in Headers */,
 				5687EBAF1F5D6D5300B4882E /* GRDBObjc.h in Headers */,
 			);
@@ -677,6 +684,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5688E2E41F62E83100DE2722 /* FMResultSet+Objc.m in Sources */,
 				5687EBB11F5D6E7700B4882E /* FMDatabase+Objc.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

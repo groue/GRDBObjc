@@ -1,6 +1,18 @@
 Release Notes
 =============
 
+## Master Branch
+
+### Fixed
+
+- FMResultSet returns NULL values (nil, 0, 0.0, NO) when asked for a column name that isn't in the row.
+
+### New
+
+- Implemented `-[FMResultSet columnCount]`
+- Implemented `-[FMResultSet objectForColumnName:]`
+
+
 ## 0.4
 
 Released September 4, 2017

@@ -332,31 +332,35 @@ GRDB and FMDB usually behave exactly in the same manner. When there are differen
     // FMDB would always return a value.
     - (BOOL)columnIndexIsNull:(int)columnIdx;
     - (BOOL)columnIsNull:(NSString*)columnName;
-    - (long)longForColumnIndex:(int)columnIdx;
-    - (long)longForColumn:(NSString*)columnName;
-    - (long long int)longLongIntForColumnIndex:(int)columnIdx;
-    - (long long int)longLongIntForColumn:(NSString*)columnName;
-    - (BOOL)boolForColumnIndex:(int)columnIdx;
-    - (BOOL)boolForColumn:(NSString*)columnName;
-    - (double)doubleForColumnIndex:(int)columnIdx;
-    - (double)doubleForColumn:(NSString*)columnName;
-    - (NSString * _Nullable)stringForColumnIndex:(int)columnIdx;
     - (NSString * _Nullable)stringForColumn:(NSString*)columnName;
-    - (NSData * _Nullable)dataForColumnIndex:(int)columnIdx;
     - (NSData * _Nullable)dataForColumn:(NSString*)columnName;
-    - (NSData * _Nullable)dataNoCopyForColumnIndex:(int)columnIdx NS_RETURNS_NOT_RETAINED;
     - (NSData * _Nullable)dataNoCopyForColumn:(NSString *)columnName NS_RETURNS_NOT_RETAINED;
     - (NSDate * _Nullable)dateForColumn:(NSString*)columnName;
+    - (id _Nullable)objectForColumn:(NSString*)columnName;
+    - (id _Nullable)objectForColumnName:(NSString * _Nonnull)columnName __deprecated_msg("Use objectForColumn instead");
+    - (id _Nullable)objectForKeyedSubscript:(NSString *)columnName;
+    - (long)longForColumn:(NSString*)columnName;
+    - (long long int)longLongIntForColumn:(NSString*)columnName;
+    - (BOOL)boolForColumn:(NSString*)columnName;
+    - (double)doubleForColumn:(NSString*)columnName;
+    
+    // On top of the previous compatibility warning, GRDBObjc will crash with
+    // a fatal error when indexes are out of range. FMDB would always return a
+    // value.
+    - (NSData * _Nullable)dataForColumnIndex:(int)columnIdx;
+    - (NSData * _Nullable)dataNoCopyForColumnIndex:(int)columnIdx NS_RETURNS_NOT_RETAINED;
     - (NSDate * _Nullable)dateForColumnIndex:(int)columnIdx;
     - (id _Nullable)objectForColumnIndex:(int)columnIdx;
-    - (id _Nullable)objectForColumn:(NSString*)columnName;
     - (id _Nullable)objectAtIndexedSubscript:(int)columnIdx;
-    - (id _Nullable)objectForKeyedSubscript:(NSString *)columnName;
+    - (long)longForColumnIndex:(int)columnIdx;
+    - (long long int)longLongIntForColumnIndex:(int)columnIdx;
+    - (BOOL)boolForColumnIndex:(int)columnIdx;
+    - (double)doubleForColumnIndex:(int)columnIdx;
+    - (NSString * _Nullable)stringForColumnIndex:(int)columnIdx;
     
-    // On top of the previous compatibility warning (crash on exhausted
-    // result set), GRDBObjc also crashes with a fatal error when
-    // database contains a value that is not representable in the
-    // requested type. FMDB would always return a value.
+    // On top of the previous compatibility warnings, GRDBObjc also crashes
+    // with a fatal error when database contains a value that is not
+    // representable in the requested type. FMDB would always return a value.
     - (int)intForColumnIndex:(int)columnIdx;
     - (int)intForColumn:(NSString*)columnName;
     - (unsigned long long int)unsignedLongLongIntForColumnIndex:(int)columnIdx;

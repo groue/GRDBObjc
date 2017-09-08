@@ -40,6 +40,11 @@ import SQLite3
     }
     
     @objc
+    public var columnCount: CInt {
+        return CInt(cursor.statement.columnCount)
+    }
+    
+    @objc
     public func next() -> Bool {
         return nextWithError(nil)
     }
@@ -77,7 +82,7 @@ import SQLite3
     }
     
     @objc(columnIndexForName:) public func columnIndex(_ columnName: String) -> Int {
-        return columIndexForLowercaseColumnName[columnName.lowercased()] ?? -1
+        return index(forColumn: columnName) ?? -1
     }
     
     @objc public func columnIndexIsNull(_ columnIndex: Int) -> Bool {
@@ -85,7 +90,7 @@ import SQLite3
     }
     
     @objc public func columnIsNull(_ columnName: String) -> Bool {
-        return columnIndexIsNull(columnIndex(columnName))
+        return index(forColumn: columnName).map { columnIndexIsNull($0) } ?? true
     }
     
     @objc public subscript(_ columnIndex: Int) -> Any? { return row[columnIndex] }
@@ -108,18 +113,18 @@ import SQLite3
         }
     }
 
-    @objc public subscript(_ columnName: String) -> Any? { return self[columnIndex(columnName)] }
-    @objc(objectForColumn:) public func object(columnName: String) -> Any? { return object(columnIndex: columnIndex(columnName)) }
-    @objc(intForColumn:) public func int(columnName: String) -> CInt { return int(columnIndex: columnIndex(columnName)) }
-    @objc(longForColumn:) public func long(columnName: String) -> CLong { return long(columnIndex: columnIndex(columnName)) }
-    @objc(longLongIntForColumn:) public func longlong(columnName: String) -> CLongLong { return longlong(columnIndex: columnIndex(columnName)) }
-    @objc(unsignedLongLongIntForColumn:) public func unsignedLongLong(columnName: String) -> CUnsignedLongLong { return unsignedLongLong(columnIndex: columnIndex(columnName)) }
-    @objc(boolForColumn:) public func bool(columnName: String) -> Bool { return bool(columnIndex: columnIndex(columnName)) }
-    @objc(doubleForColumn:) public func double(columnName: String) -> Double { return double(columnIndex: columnIndex(columnName)) }
-    @objc(stringForColumn:) public func string(columnName: String) -> String? { return string(columnIndex: columnIndex(columnName)) }
-    @objc(dataForColumn:) public func data(columnName: String) -> Data? { return data(columnIndex: columnIndex(columnName)) }
-    @objc(dataNoCopyForColumn:) public func dataNoCopy(columnName: String) -> Data? { return dataNoCopy(columnIndex: columnIndex(columnName)) }
-    @objc(dateForColumn:) public func date(columnName: String) -> Date? { return date(columnIndex: columnIndex(columnName)) }
+    @objc public subscript(_ columnName: String) -> Any? { return index(forColumn: columnName).map { self[$0] } ?? nil }
+    @objc(objectForColumn:) public func object(columnName: String) -> Any? { return index(forColumn: columnName).map { object(columnIndex: $0) } ?? nil }
+    @objc(intForColumn:) public func int(columnName: String) -> CInt { return index(forColumn: columnName).map { int(columnIndex: $0) } ?? 0 }
+    @objc(longForColumn:) public func long(columnName: String) -> CLong { return index(forColumn: columnName).map { long(columnIndex: $0) } ?? 0 }
+    @objc(longLongIntForColumn:) public func longlong(columnName: String) -> CLongLong { return index(forColumn: columnName).map { longlong(columnIndex: $0) } ?? 0 }
+    @objc(unsignedLongLongIntForColumn:) public func unsignedLongLong(columnName: String) -> CUnsignedLongLong { return index(forColumn: columnName).map { unsignedLongLong(columnIndex: $0) } ?? 0 }
+    @objc(boolForColumn:) public func bool(columnName: String) -> Bool { return index(forColumn: columnName).map { bool(columnIndex: $0) } ?? false }
+    @objc(doubleForColumn:) public func double(columnName: String) -> Double { return index(forColumn: columnName).map { double(columnIndex: $0) } ?? 0 }
+    @objc(stringForColumn:) public func string(columnName: String) -> String? { return index(forColumn: columnName).map { string(columnIndex: $0) } ?? nil }
+    @objc(dataForColumn:) public func data(columnName: String) -> Data? { return index(forColumn: columnName).map { data(columnIndex: $0) } ?? nil }
+    @objc(dataNoCopyForColumn:) public func dataNoCopy(columnName: String) -> Data? { return index(forColumn: columnName).map { dataNoCopy(columnIndex: $0) } ?? nil }
+    @objc(dateForColumn:) public func date(columnName: String) -> Date? { return index(forColumn: columnName).map { date(columnIndex: $0) } ?? nil }
     
     @objc public var resultDictionary: [String: AnyObject]? {
         switch state {
@@ -130,5 +135,9 @@ import SQLite3
         default:
             return nil
         }
+    }
+    
+    private func index(forColumn columnName: String) -> Int? {
+        return columIndexForLowercaseColumnName[columnName.lowercased()]
     }
 }
