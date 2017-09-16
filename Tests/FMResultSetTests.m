@@ -497,7 +497,7 @@
         XCTAssertNotNil(error);
         XCTAssertEqualObjects(error.domain, @"FMDatabase");
         XCTAssertEqual(error.code, SQLITE_CONSTRAINT);
-        XCTAssertEqualObjects(error.localizedDescription, @"SQLite error 1299 with statement `INSERT INTO t(a) VALUES (NULL)`: NOT NULL constraint failed: t.a");
+        XCTAssertEqualObjects(error.localizedDescription, @"SQLite error 19 with statement `INSERT INTO t(a) VALUES (NULL)`: NOT NULL constraint failed: t.a");
     }];
 }
 

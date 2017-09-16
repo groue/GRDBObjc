@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = 'GRDBObjc'
-  s.version      = '0.4'
+  s.version      = '0.5'
   
   s.license      = { :type => 'MIT' }
   s.homepage     = 'https://github.com/groue/GRDBObjc'

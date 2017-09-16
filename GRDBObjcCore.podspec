@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = 'GRDBObjcCore'
-  s.version      = '0.4'
+  s.version      = '0.5'
   
   s.license      = { :type => 'MIT' }
   s.homepage     = 'https://github.com/groue/GRDBObjc'
@@ -14,6 +14,6 @@ Pod::Spec.new do |s|
   s.watchos.deployment_target = '2.0'
   
   s.source_files = 'Sources/GRDBObjcCore/*'
-  s.dependency "GRDB.swift" #, "~> 2.0" uncomment when GRDB 2 is out
+  s.dependency "GRDB.swift", "~> 2.0"
   s.framework = 'Foundation'
 end
