@@ -148,7 +148,6 @@ Be ready to open a [pull request](https://github.com/groue/GRDBObjc/pulls) if so
     -pod 'FMDB'
     +pod 'GRDBObjc', :git => 'https://github.com/groue/GRDBObjc.git', branch: 'master'
     +pod 'GRDBObjcCore', :git => 'https://github.com/groue/GRDBObjc.git', branch: 'master'
-    +pod 'GRDB.swift', :git => 'https://github.com/groue/GRDB.swift.git', branch: 'Swift4'
     ```
 
 3. Run `pod install`.
