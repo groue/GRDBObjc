@@ -1,0 +1,1 @@
+- Use [`+[NSMutableDictionary dictionaryWithSharedKeySet:]`](https://developer.apple.com/documentation/foundation/nsmutabledictionary/1412658-dictionarywithsharedkeyset)
