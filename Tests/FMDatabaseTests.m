@@ -504,4 +504,19 @@
     }];
 }
 
+// Regression test
+- (void)testDropTable
+{
+    FMDatabaseQueue *dbQueue = [FMDatabaseQueue databaseQueueWithPath:[self makeTemporaryDatabasePath]];
+    XCTAssertNotNil(dbQueue);
+    [dbQueue inDatabase:^(FMDatabase *db) {
+        [db executeUpdate:@"CREATE TABLE t(a)"];
+        FMResultSet *rs = [db executeQuery:@"SELECT * FROM sqlite_master WHERE name = 't'"];
+        XCTAssertTrue([rs next]);
+        [db executeUpdate:@"DROP TABLE t"];
+        rs = [db executeQuery:@"SELECT * FROM sqlite_master WHERE name = 't'"];
+        XCTAssertFalse([rs next]);
+    }];
+}
+
 @end
