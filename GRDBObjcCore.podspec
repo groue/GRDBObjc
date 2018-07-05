@@ -14,6 +14,6 @@ Pod::Spec.new do |s|
   s.watchos.deployment_target = '2.0'
   
   s.source_files = 'Sources/GRDBObjcCore/*'
-  s.dependency "GRDB.swift", "~> 2.0"
+  s.dependency "GRDB.swift", "~> 3.1"
   s.framework = 'Foundation'
 end
