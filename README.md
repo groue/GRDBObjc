@@ -1,13 +1,13 @@
-GRDBObjc [![Swift](https://img.shields.io/badge/swift-4-orange.svg?style=flat)](https://developer.apple.com/swift/) [![License](https://img.shields.io/github/license/RxSwiftCommunity/RxGRDB.svg?maxAge=2592000)](/LICENSE)
+GRDBObjc [![Swift](https://img.shields.io/badge/swift-4.1-orange.svg?style=flat)](https://developer.apple.com/swift/) [![License](https://img.shields.io/github/license/RxSwiftCommunity/RxGRDB.svg?maxAge=2592000)](/LICENSE)
 ========
 
 ### FMDB-compatible bindings to GRDB.swift.
 
 GRDBObjc helps Objective-C applications that use SQLite replace [FMDB](http://github.com/ccgus/fmdb) with [GRDB](http://github.com/groue/GRDB.swift), at minimal cost.
 
-**Latest release**: September 8, 2017 &bull; version 0.5 &bull; [Release Notes](CHANGELOG.md)
+**Latest release**: July 8, 2018 &bull; version 0.6 &bull; [Release Notes](CHANGELOG.md)
 
-**Requirements**: iOS 8.0+ / OSX 10.10+ / watchOS 2.0+ • Xcode 9+ • Swift 4
+**Requirements**: iOS 8.0+ / OSX 10.10+ / watchOS 2.0+ • Xcode 9.3+ • Swift 4.1+
 
 Follow [@groue](http://twitter.com/groue) on Twitter for release announcements and usage tips.
 
@@ -36,48 +36,46 @@ In such a mixed application that has an Objective-C trunk, the few Swift leaves 
 
 We at [Pierlis](http://pierlis.com) feel this itch quite acutely with FMDB. FMDB does a tremendous job, but GRDB does even better.
 
-In 2015, GRDB was an internal project heavily inspired by FMDB. Two years and four versions of Swift later, this library has reached API stability, and offers a strong toolkit focused on application development. Fundamentals are the same: GRDB speaks SQL just as well as its venerable precursor. It offers the same robust concurrency guarantees. Yet GRBD adds that inimitable Swift taste, and features such as database observation and record types that are nowhere to be seen with FMDB.
+In 2015, GRDB was an internal project heavily inspired by FMDB. Three years and four versions of Swift later, this library has reached API stability, and offers a strong toolkit focused on application development. Fundamentals are the same: GRDB speaks SQL just as well as its venerable precursor. It offers the same robust concurrency guarantees. Yet GRBD adds that inimitable Swift taste, and features such as database observation and record types that are nowhere to be seen with FMDB.
 
 For example, let's compare two equivalent code snippets that load an array of application models. With GRDB, it gives:
 
 ```swift
-struct Player: RowConvertible {
-    init(row: Row) { ... }
+struct Player: FetchableRecord { 
+    ...
 }
 
-func fetchPlayers(dbQueue: DatabaseQueue) throws -> [Player] {
-    return try dbQueue.inDatabase { db in
-        try Player.fetchAll(db, "SELECT * FROM players")
-    }
+let players: [Player] = try dbQueue.read { db in
+    try Player.fetchAll(db, "SELECT * FROM player")
 }
+// use players array
 ```
 
 FMDB composes another kind of poetry:
 
 ```swift
 struct Player {
+    ...
     init(dictionary: [AnyHashable: Any]) { ... }
 }
 
-func fetchPlayers(dbQueue: FMDatabaseQueue) throws -> [Player] {
-    var queryError: Error? = nil
-    var players: [Player] = []
-    dbQueue.inDatabase { db in
-        do {
-            let resultSet = try db.executeQuery("SELECT * FROM players", values: nil)
-            while resultSet.next() {
-                let player = Player(dictionary: resultSet.resultDictionary!)
-                players.append(player)
-            }
-        } catch {
-            queryError = error
+var queryError: Error? = nil
+var players: [Player] = []
+dbQueue.inDatabase { db in
+    do {
+        let resultSet = try db.executeQuery("SELECT * FROM player", values: nil)
+        while resultSet.next() {
+            let player = Player(dictionary: resultSet.resultDictionary!)
+            players.append(player)
         }
+    } catch {
+        queryError = error
     }
-    if let queryError = queryError {
-        throw queryError
-    }
-    return players
 }
+if let queryError = queryError {
+    throw queryError
+}
+// use players array
 ```
 
 You may think: "I never use FMDB like that!". Indeed error handling with FMDB is a pain to read and write, and barely nobody does it. And yet this kind of robustness is what allows your application to run safely in the background on a [locked device](https://developer.apple.com/library/content/documentation/iPhone/Conceptual/iPhoneOSProgrammingGuide/StrategiesforImplementingYourApp/StrategiesforImplementingYourApp.html#//apple_ref/doc/uid/TP40007072-CH5-SW21), for example. GRDB is concise, won't miss any error, and yet runs the code above [much faster](https://github.com/groue/GRDB.swift/wiki/Performance) than FMDB.
@@ -90,9 +88,8 @@ You may think: "I never use FMDB like that!". Indeed error handling with FMDB is
 For example, GRDB comes with high-level tools such as [FetchedRecordsController](https://github.com/groue/GRDB.swift#fetchedrecordscontroller), and the companion library [RxGRDB](http://github.com/RxSwiftCommunity/RxGRDB) which lets you observe database changes in the reactive way. Since observation happens at the SQLite level, it won't be fooled by raw SQL updates, foreign key cascades, or even SQL triggers. Don't miss a single commit:
 
 ```swift
-let request = SQLRequest(
+let request = SQLRequest<Player>(
     "SELECT * FROM players ORDER BY score DESC LIMIT 10")
-    .asRequest(of: Player.self)
 
 // Observe request changes with FetchedRecordsController:
 let controller = FetchedRecordsController(dbQueue, request: request)
@@ -146,8 +143,7 @@ Be ready to open a [pull request](https://github.com/groue/GRDBObjc/pulls) if so
     
     ```diff
     -pod 'FMDB'
-    +pod 'GRDBObjc', :git => 'https://github.com/groue/GRDBObjc.git', branch: 'master'
-    +pod 'GRDBObjcCore', :git => 'https://github.com/groue/GRDBObjc.git', branch: 'master'
+    +pod 'GRDBObjc'
     ```
 
 3. Run `pod install`.

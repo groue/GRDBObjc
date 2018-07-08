@@ -1,14 +1,18 @@
 Release Notes
 =============
 
-## Next Version
+## 0.6
+
+Released July 8, 2018
 
 ### New
 
-- Podspec bumps the GRDB.swift dependency to `~> 3.1`
+- GRDB.swift dependency bumped to `~> 3.1`
 
 
 ## 0.5
+
+Released Septembre 8, 2017
 
 ### Fixed
 
