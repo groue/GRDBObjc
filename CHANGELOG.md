@@ -1,6 +1,13 @@
 Release Notes
 =============
 
+## Next Version
+
+### New
+
+- Podspec bumps the GRDB.swift dependency to `~> 3.1`
+
+
 ## 0.5
 
 ### Fixed

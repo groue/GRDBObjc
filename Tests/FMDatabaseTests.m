@@ -513,6 +513,7 @@
         [db executeUpdate:@"CREATE TABLE t(a)"];
         FMResultSet *rs = [db executeQuery:@"SELECT * FROM sqlite_master WHERE name = 't'"];
         XCTAssertTrue([rs next]);
+        XCTAssertFalse([rs next]); // Necessary so that result set is closed, and we don't get SQLITE_LOCKED with DROP TABLE below
         [db executeUpdate:@"DROP TABLE t"];
         rs = [db executeQuery:@"SELECT * FROM sqlite_master WHERE name = 't'"];
         XCTAssertFalse([rs next]);
