@@ -26,5 +26,13 @@ class FMDatabaseQueueTests: GRDBObjcTestCase {
             XCTAssertEqual(int, 123)
         }
     }
-
+    
+    func testFMDatabaseExposesGRDBDatabase() throws {
+        let fmdbQueue = try FMDatabaseQueue(path: makeTemporaryDatabasePath())
+        fmdbQueue.inDatabase { (db: FMDatabase) in
+            // Use GRDB API from FMDatabase
+            let string = try! String.fetchOne(db.grdbConnection, "SELECT 'foo'")
+            XCTAssertEqual(string, "foo")
+        }
+    }
 }
