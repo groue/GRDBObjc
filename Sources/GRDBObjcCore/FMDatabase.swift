@@ -6,6 +6,9 @@ import Foundation
     let db: Database
     var dateFormatter: DateFormatter?
 
+    /// The GRDB database connection that fuels this FMDatabase instance.
+    public var grdbConnection: Database { return db }
+    
     init(_ db: Database) {
         self.db = db
         self.dateFormatter = nil
