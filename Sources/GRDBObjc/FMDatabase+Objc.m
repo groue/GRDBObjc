@@ -23,17 +23,19 @@
 
 - (BOOL)executeUpdate:(NSString * _Nonnull)sql va_list:(va_list)args error:(NSError **)outErr;
 {
-    _FMUpdateStatement *statement = [self _makeUpdateStatement:sql error:outErr];
-    if (!statement) {
-        return NO;
+    @autoreleasepool {
+        _FMUpdateStatement *statement = [self _makeUpdateStatement:sql error:outErr];
+        if (!statement) {
+            return NO;
+        }
+        
+        NSMutableArray *arguments = [NSMutableArray array];
+        for(int i = sqlite3_bind_parameter_count(statement.sqliteHandle); i > 0; i--) {
+            id obj = va_arg(args, id);
+            [arguments addObject:obj ?: [NSNull null]];
+        }
+        return [statement executeWithValues:arguments error:outErr];
     }
-    
-    NSMutableArray *arguments = [NSMutableArray array];
-    for(int i = sqlite3_bind_parameter_count(statement.sqliteHandle); i > 0; i--) {
-        id obj = va_arg(args, id);
-        [arguments addObject:obj ?: [NSNull null]];
-    }
-    return [statement executeWithValues:arguments error:outErr];
 }
 
 - (FMResultSet * _Nullable)executeQuery:(NSString * _Nonnull)sql, ...
@@ -47,17 +49,19 @@
 
 - (FMResultSet * _Nullable)executeQuery:(NSString * _Nonnull)sql va_list:(va_list)args error:(NSError **)outErr;
 {
-    _FMSelectStatement *statement = [self _makeSelectStatement:sql error:outErr];
-    if (!statement) {
-        return nil;
+    @autoreleasepool {
+        _FMSelectStatement *statement = [self _makeSelectStatement:sql error:outErr];
+        if (!statement) {
+            return nil;
+        }
+        
+        NSMutableArray *arguments = [NSMutableArray array];
+        for(int i = sqlite3_bind_parameter_count(statement.sqliteHandle); i > 0; i--) {
+            id obj = va_arg(args, id);
+            [arguments addObject:obj ?: [NSNull null]];
+        }
+        return [statement executeWithValues:arguments error:outErr];
     }
-    
-    NSMutableArray *arguments = [NSMutableArray array];
-    for(int i = sqlite3_bind_parameter_count(statement.sqliteHandle); i > 0; i--) {
-        id obj = va_arg(args, id);
-        [arguments addObject:obj ?: [NSNull null]];
-    }
-    return [statement executeWithValues:arguments error:outErr];
 }
 
 @end
