@@ -1,3 +1,0 @@
-[submodule "Vendor/GRDB.swift"]
-	path = Vendor/GRDB.swift
-	url = https://github.com/groue/GRDB.swift.git
