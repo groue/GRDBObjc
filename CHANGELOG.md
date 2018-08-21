@@ -1,6 +1,14 @@
 Release Notes
 =============
 
+## 0.7
+
+Released August 21, 2018
+
+- [#2](https://github.com/groue/GRDB.swift/pull/2): Improve support for Swift and Objective-C interlacing
+- [#3](https://github.com/groue/GRDB.swift/pull/3): Don't let statements outlive their execution
+
+
 ## 0.6
 
 Released July 8, 2018

@@ -5,7 +5,7 @@ GRDBObjc [![Swift](https://img.shields.io/badge/swift-4.1-orange.svg?style=flat)
 
 GRDBObjc helps Objective-C applications that use SQLite replace [FMDB](http://github.com/ccgus/fmdb) with [GRDB](http://github.com/groue/GRDB.swift), at minimal cost.
 
-**Latest release**: July 8, 2018 &bull; version 0.6 &bull; [Release Notes](CHANGELOG.md)
+**Latest release**: August 21, 2018 &bull; version 0.7 &bull; [Release Notes](CHANGELOG.md)
 
 **Requirements**: iOS 8.0+ / OSX 10.10+ / watchOS 2.0+ • Xcode 9.3+ • Swift 4.1+
 
