@@ -63,14 +63,14 @@
     // @autoreleasepool asserts intermediate GRDB values are deinited on the
     // current (correct) thread.
     @autoreleasepool {
-        _FMSelectStatement *statement = [self _makeSelectStatement:sql error:outErr];
+        _FMSelectStatement *statement = [self _makeSelectStatement:sql error:&error];
         if (statement) {
             NSMutableArray *arguments = [NSMutableArray array];
             for(int i = sqlite3_bind_parameter_count(statement.sqliteHandle); i > 0; i--) {
                 id obj = va_arg(args, id);
                 [arguments addObject:obj ?: [NSNull null]];
             }
-            result = [statement executeWithValues:arguments error:outErr];
+            result = [statement executeWithValues:arguments error:&error];
         }
     }
     
