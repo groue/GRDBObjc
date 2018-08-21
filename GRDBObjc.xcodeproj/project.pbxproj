@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		247785166AFF08AD6394B89C /* Pods_GRDBObjcCoreMacOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83042AD404118DCBC569746D /* Pods_GRDBObjcCoreMacOS.framework */; };
 		5659134E1F596527006D14E5 /* NSDataTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5659133C1F596527006D14E5 /* NSDataTests.m */; };
 		566FC3E31F586B6B00919F77 /* NSDateTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 566FC3E21F586B6B00919F77 /* NSDateTests.m */; };
 		5680BBE11F57BA5900F67DD0 /* FMDatabaseQueueTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5680BBE01F57BA5900F67DD0 /* FMDatabaseQueueTests.swift */; };
@@ -22,79 +23,15 @@
 		5687EBB21F5D6ECC00B4882E /* GRDBObjcCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5687EB991F5D6B2700B4882E /* GRDBObjcCore.framework */; };
 		5688E2E31F62E83100DE2722 /* FMResultSet+Objc.h in Headers */ = {isa = PBXBuildFile; fileRef = 5688E2E11F62E83100DE2722 /* FMResultSet+Objc.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5688E2E41F62E83100DE2722 /* FMResultSet+Objc.m in Sources */ = {isa = PBXBuildFile; fileRef = 5688E2E21F62E83100DE2722 /* FMResultSet+Objc.m */; };
-		568FC23E1F55370500E176A4 /* GRDB.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56060B901F5536DE0020949D /* GRDB.framework */; };
 		568FC2451F5538E000E176A4 /* FMDatabaseQueueTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 568FC2441F5538E000E176A4 /* FMDatabaseQueueTests.m */; };
-		568FC2461F553BA900E176A4 /* GRDB.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56060B901F5536DE0020949D /* GRDB.framework */; };
 		568FC2541F55882E00E176A4 /* FMDatabaseTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 568FC2531F55882E00E176A4 /* FMDatabaseTests.m */; };
 		568FC2561F55B7C800E176A4 /* FMResultSetTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 568FC2551F55B7C800E176A4 /* FMResultSetTests.m */; };
 		56F45A021F55366F00656C1E /* GRDBObjc.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56F459F81F55366F00656C1E /* GRDBObjc.framework */; };
 		56F45A071F55366F00656C1E /* GRDBObjcTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 56F45A061F55366F00656C1E /* GRDBObjcTestCase.m */; };
+		F6641037DCF26B4A5C27A3E8 /* Pods_GRDBObjcMacOSTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AFBADFAEE380F43EED419842 /* Pods_GRDBObjcMacOSTests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		56060B8F1F5536DE0020949D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 56060B771F5536DE0020949D /* GRDB.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = DC3773F319C8CBB3004FCF85;
-			remoteInfo = GRDBOSX;
-		};
-		56060B911F5536DE0020949D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 56060B771F5536DE0020949D /* GRDB.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 56E5D7F91B4D422D00430942;
-			remoteInfo = GRDBOSXTests;
-		};
-		56060B931F5536DE0020949D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 56060B771F5536DE0020949D /* GRDB.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 560C981A1C0E22D300BF8471;
-			remoteInfo = GRDBOSXPerformanceTests;
-		};
-		56060B951F5536DE0020949D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 56060B771F5536DE0020949D /* GRDB.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 56439B501F4CA1DC0066043F;
-			remoteInfo = GRDBOSXPerformanceComparisonTests;
-		};
-		56060B971F5536DE0020949D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 56060B771F5536DE0020949D /* GRDB.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 56553C181C3E906C00522B5C;
-			remoteInfo = GRDBOSXCrashTests;
-		};
-		56060BA31F5536DE0020949D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 56060B771F5536DE0020949D /* GRDB.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 56E5D7CA1B4D3FED00430942;
-			remoteInfo = GRDBiOS;
-		};
-		56060BA51F5536DE0020949D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 56060B771F5536DE0020949D /* GRDB.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 56E5D7D31B4D3FEE00430942;
-			remoteInfo = GRDBiOSTests;
-		};
-		56060BB11F5536DE0020949D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 56060B771F5536DE0020949D /* GRDB.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 565490A01D5A4798005622CB;
-			remoteInfo = GRDBWatchOS;
-		};
-		5687EBA31F5D6B5000B4882E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 56060B771F5536DE0020949D /* GRDB.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = DC3773F219C8CBB3004FCF85;
-			remoteInfo = GRDBOSX;
-		};
 		5687EBAB1F5D6BEB00B4882E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 56F459ED1F55359400656C1E /* Project object */;
@@ -109,13 +46,6 @@
 			remoteGlobalIDString = 5687EB981F5D6B2700B4882E;
 			remoteInfo = GRDBObjcBindingsMacOS;
 		};
-		568FC2471F553BC000E176A4 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 56060B771F5536DE0020949D /* GRDB.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = DC3773F219C8CBB3004FCF85;
-			remoteInfo = GRDBOSX;
-		};
 		56F45A031F55366F00656C1E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 56F459ED1F55359400656C1E /* Project object */;
@@ -126,7 +56,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		56060B771F5536DE0020949D /* GRDB.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = GRDB.xcodeproj; path = Vendor/GRDB.swift/GRDB.xcodeproj; sourceTree = SOURCE_ROOT; };
+		2EC2AE0F2B0D46384DCCF2E5 /* Pods_GRDBObjcMacOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GRDBObjcMacOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5659133C1F596527006D14E5 /* NSDataTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NSDataTests.m; sourceTree = "<group>"; };
 		566FC3E21F586B6B00919F77 /* NSDateTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NSDateTests.m; sourceTree = "<group>"; };
 		5680BBDF1F57BA5900F67DD0 /* GRDBObjcTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "GRDBObjcTests-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -152,6 +82,12 @@
 		56F45A011F55366F00656C1E /* GRDBObjcMacOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GRDBObjcMacOSTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		56F45A061F55366F00656C1E /* GRDBObjcTestCase.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GRDBObjcTestCase.m; sourceTree = "<group>"; };
 		56F45A081F55366F00656C1E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		83042AD404118DCBC569746D /* Pods_GRDBObjcCoreMacOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GRDBObjcCoreMacOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8B24F5A0AF95B3BA9DE25B08 /* Pods-GRDBObjcCoreMacOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GRDBObjcCoreMacOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-GRDBObjcCoreMacOS/Pods-GRDBObjcCoreMacOS.debug.xcconfig"; sourceTree = "<group>"; };
+		A4AC815772F87C03472BA9BB /* Pods-GRDBObjcMacOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GRDBObjcMacOSTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-GRDBObjcMacOSTests/Pods-GRDBObjcMacOSTests.release.xcconfig"; sourceTree = "<group>"; };
+		AFBADFAEE380F43EED419842 /* Pods_GRDBObjcMacOSTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GRDBObjcMacOSTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		CEA7CB0A2753ED90DF449BC4 /* Pods-GRDBObjcCoreMacOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GRDBObjcCoreMacOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-GRDBObjcCoreMacOS/Pods-GRDBObjcCoreMacOS.release.xcconfig"; sourceTree = "<group>"; };
+		F3C5D607A25EF8416391567F /* Pods-GRDBObjcMacOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GRDBObjcMacOSTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-GRDBObjcMacOSTests/Pods-GRDBObjcMacOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -159,6 +95,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				247785166AFF08AD6394B89C /* Pods_GRDBObjcCoreMacOS.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -167,7 +104,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				5687EBB21F5D6ECC00B4882E /* GRDBObjcCore.framework in Frameworks */,
-				568FC23E1F55370500E176A4 /* GRDB.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -175,29 +111,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				568FC2461F553BA900E176A4 /* GRDB.framework in Frameworks */,
 				56F45A021F55366F00656C1E /* GRDBObjc.framework in Frameworks */,
+				F6641037DCF26B4A5C27A3E8 /* Pods_GRDBObjcMacOSTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		56060B781F5536DE0020949D /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				56060B901F5536DE0020949D /* GRDB.framework */,
-				56060B921F5536DE0020949D /* GRDBOSXTests.xctest */,
-				56060B941F5536DE0020949D /* GRDBOSXPerformanceTests.xctest */,
-				56060B961F5536DE0020949D /* GRDBOSXPerformanceComparisonTests.xctest */,
-				56060B981F5536DE0020949D /* GRDBOSXCrashTests.xctest */,
-				56060BA41F5536DE0020949D /* GRDB.framework */,
-				56060BA61F5536DE0020949D /* GRDBiOSTests.xctest */,
-				56060BB21F5536DE0020949D /* GRDB.framework */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		5680BBF31F57BAA000F67DD0 /* Support */ = {
 			isa = PBXGroup;
 			children = (
@@ -235,6 +156,9 @@
 		568FC23D1F55370500E176A4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2EC2AE0F2B0D46384DCCF2E5 /* Pods_GRDBObjcMacOS.framework */,
+				AFBADFAEE380F43EED419842 /* Pods_GRDBObjcMacOSTests.framework */,
+				83042AD404118DCBC569746D /* Pods_GRDBObjcCoreMacOS.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -253,9 +177,9 @@
 				56F459FA1F55366F00656C1E /* Sources */,
 				568FC23F1F55373300E176A4 /* Support */,
 				56F45A051F55366F00656C1E /* Tests */,
-				56F45A101F5536AD00656C1E /* Vendor */,
 				56F459F91F55366F00656C1E /* Products */,
 				568FC23D1F55370500E176A4 /* Frameworks */,
+				F06D3F0BF932B6F4F0BB6E54 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -294,13 +218,15 @@
 			path = Tests;
 			sourceTree = "<group>";
 		};
-		56F45A101F5536AD00656C1E /* Vendor */ = {
+		F06D3F0BF932B6F4F0BB6E54 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				56060B771F5536DE0020949D /* GRDB.xcodeproj */,
+				F3C5D607A25EF8416391567F /* Pods-GRDBObjcMacOSTests.debug.xcconfig */,
+				A4AC815772F87C03472BA9BB /* Pods-GRDBObjcMacOSTests.release.xcconfig */,
+				8B24F5A0AF95B3BA9DE25B08 /* Pods-GRDBObjcCoreMacOS.debug.xcconfig */,
+				CEA7CB0A2753ED90DF449BC4 /* Pods-GRDBObjcCoreMacOS.release.xcconfig */,
 			);
-			name = Vendor;
-			path = Tests;
+			name = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -331,6 +257,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5687EB9E1F5D6B2700B4882E /* Build configuration list for PBXNativeTarget "GRDBObjcCoreMacOS" */;
 			buildPhases = (
+				9A37CA921008FEE004214711 /* [CP] Check Pods Manifest.lock */,
 				5687EB941F5D6B2700B4882E /* Sources */,
 				5687EB951F5D6B2700B4882E /* Frameworks */,
 				5687EB961F5D6B2700B4882E /* Headers */,
@@ -339,7 +266,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				5687EBA41F5D6B5000B4882E /* PBXTargetDependency */,
 			);
 			name = GRDBObjcCoreMacOS;
 			productName = GRDBObjcBindings;
@@ -369,15 +295,16 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 56F45A0D1F55366F00656C1E /* Build configuration list for PBXNativeTarget "GRDBObjcMacOSTests" */;
 			buildPhases = (
+				FFF628E9D2873D7FE89D4AE8 /* [CP] Check Pods Manifest.lock */,
 				56F459FD1F55366F00656C1E /* Sources */,
 				56F459FE1F55366F00656C1E /* Frameworks */,
 				56F459FF1F55366F00656C1E /* Resources */,
+				DB93489268AE435531A079C2 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 				5687EBAE1F5D6C8E00B4882E /* PBXTargetDependency */,
-				568FC2481F553BC000E176A4 /* PBXTargetDependency */,
 				56F45A041F55366F00656C1E /* PBXTargetDependency */,
 			);
 			name = GRDBObjcMacOSTests;
@@ -419,12 +346,6 @@
 			mainGroup = 56F459EC1F55359400656C1E;
 			productRefGroup = 56F459F91F55366F00656C1E /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = 56060B781F5536DE0020949D /* Products */;
-					ProjectRef = 56060B771F5536DE0020949D /* GRDB.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				5687EB981F5D6B2700B4882E /* GRDBObjcCoreMacOS */,
@@ -433,65 +354,6 @@
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		56060B901F5536DE0020949D /* GRDB.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = GRDB.framework;
-			remoteRef = 56060B8F1F5536DE0020949D /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		56060B921F5536DE0020949D /* GRDBOSXTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = GRDBOSXTests.xctest;
-			remoteRef = 56060B911F5536DE0020949D /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		56060B941F5536DE0020949D /* GRDBOSXPerformanceTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = GRDBOSXPerformanceTests.xctest;
-			remoteRef = 56060B931F5536DE0020949D /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		56060B961F5536DE0020949D /* GRDBOSXPerformanceComparisonTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = GRDBOSXPerformanceComparisonTests.xctest;
-			remoteRef = 56060B951F5536DE0020949D /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		56060B981F5536DE0020949D /* GRDBOSXCrashTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = GRDBOSXCrashTests.xctest;
-			remoteRef = 56060B971F5536DE0020949D /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		56060BA41F5536DE0020949D /* GRDB.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = GRDB.framework;
-			remoteRef = 56060BA31F5536DE0020949D /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		56060BA61F5536DE0020949D /* GRDBiOSTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = GRDBiOSTests.xctest;
-			remoteRef = 56060BA51F5536DE0020949D /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		56060BB21F5536DE0020949D /* GRDB.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = GRDB.framework;
-			remoteRef = 56060BB11F5536DE0020949D /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		5687EB971F5D6B2700B4882E /* Resources */ = {
@@ -516,6 +378,63 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		9A37CA921008FEE004214711 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-GRDBObjcCoreMacOS-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		DB93489268AE435531A079C2 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-GRDBObjcMacOSTests/Pods-GRDBObjcMacOSTests-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/GRDB.swift/GRDB.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GRDB.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-GRDBObjcMacOSTests/Pods-GRDBObjcMacOSTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		FFF628E9D2873D7FE89D4AE8 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-GRDBObjcMacOSTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		5687EB941F5D6B2700B4882E /* Sources */ = {
@@ -556,11 +475,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		5687EBA41F5D6B5000B4882E /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = GRDBOSX;
-			targetProxy = 5687EBA31F5D6B5000B4882E /* PBXContainerItemProxy */;
-		};
 		5687EBAC1F5D6BEB00B4882E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 5687EB981F5D6B2700B4882E /* GRDBObjcCoreMacOS */;
@@ -570,11 +484,6 @@
 			isa = PBXTargetDependency;
 			target = 5687EB981F5D6B2700B4882E /* GRDBObjcCoreMacOS */;
 			targetProxy = 5687EBAD1F5D6C8E00B4882E /* PBXContainerItemProxy */;
-		};
-		568FC2481F553BC000E176A4 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = GRDBOSX;
-			targetProxy = 568FC2471F553BC000E176A4 /* PBXContainerItemProxy */;
 		};
 		56F45A041F55366F00656C1E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -586,6 +495,7 @@
 /* Begin XCBuildConfiguration section */
 		5687EB9F1F5D6B2700B4882E /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8B24F5A0AF95B3BA9DE25B08 /* Pods-GRDBObjcCoreMacOS.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -636,6 +546,7 @@
 		};
 		5687EBA01F5D6B2700B4882E /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = CEA7CB0A2753ED90DF449BC4 /* Pods-GRDBObjcCoreMacOS.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -886,6 +797,7 @@
 		};
 		56F45A0E1F55366F00656C1E /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F3C5D607A25EF8416391567F /* Pods-GRDBObjcMacOSTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -951,6 +863,7 @@
 		};
 		56F45A0F1F55366F00656C1E /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A4AC815772F87C03472BA9BB /* Pods-GRDBObjcMacOSTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
