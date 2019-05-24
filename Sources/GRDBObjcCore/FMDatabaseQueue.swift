@@ -36,8 +36,13 @@ import GRDB
     }
     
     @objc public func inDatabase(_ block: (FMDatabase) -> ()) {
-        dbQueue.inDatabase { db in
-            block(database(db))
+        withoutActuallyEscaping(block) { block in
+            dbQueue.inDatabase { db in
+                let fmdb = self.database(db)
+                fmdb.autoclosingResultSets {
+                    block(fmdb)
+                }
+            }
         }
     }
     
@@ -54,13 +59,16 @@ import GRDB
         var logsErrors = false
         do {
             try dbQueue.inTransaction(transactionKind) { db in
+                let fmdb = database(db)
                 var rollback: ObjCBool = false
                 let transactionCompletion = withUnsafeMutablePointer(to: &rollback) { rollbackp -> Database.TransactionCompletion in
-                    block(database(db), rollbackp)
+                    fmdb.autoclosingResultSets {
+                        block(fmdb, rollbackp)
+                    }
                     return rollbackp.pointee.boolValue ? .rollback : .commit
                 }
-                crashOnErrors = database(db).crashOnErrors
-                logsErrors = database(db).crashOnErrors
+                crashOnErrors = fmdb.crashOnErrors
+                logsErrors = fmdb.crashOnErrors
                 return transactionCompletion
             }
         } catch {
