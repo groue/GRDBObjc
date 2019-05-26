@@ -11,7 +11,7 @@ class ViewController: UIViewController {
         background.layer.cornerRadius = 10
         do {
             let text = try DataStore.dbQueue.inDatabase { db in
-                try String.fetchOne(db, "SELECT text FROM demo")
+                try String.fetchOne(db, sql: "SELECT text FROM demo")
             }
             statusLabel.text = text ?? "NOT OK 😭"
         } catch {
