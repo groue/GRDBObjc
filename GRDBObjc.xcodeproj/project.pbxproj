@@ -322,6 +322,7 @@
 				TargetAttributes = {
 					5687EB981F5D6B2700B4882E = {
 						CreatedOnToolsVersion = 9.0;
+						LastSwiftMigration = 1020;
 						ProvisioningStyle = Automatic;
 					};
 					56F459F71F55366F00656C1E = {
@@ -331,7 +332,7 @@
 					};
 					56F45A001F55366F00656C1E = {
 						CreatedOnToolsVersion = 9.0;
-						LastSwiftMigration = 0900;
+						LastSwiftMigration = 1020;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -342,6 +343,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				Base,
 			);
 			mainGroup = 56F459EC1F55359400656C1E;
 			productRefGroup = 56F459F91F55366F00656C1E /* Products */;
