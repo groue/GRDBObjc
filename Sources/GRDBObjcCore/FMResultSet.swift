@@ -38,7 +38,7 @@ import SQLite3
         self.db = database
         self.state = .initialized(cursor)
         super.init()
-        self.db.openResultSets.append(WeakResultSet(self))
+        self.db.autoclosingPool.add(self)
     }
     
     @objc

@@ -2,16 +2,20 @@ import GRDB
 
 @objc public class FMDatabaseQueue : NSObject {
     public let dbQueue: DatabaseQueue
-    private var _db: FMDatabase?
+    private var _fmdb: FMDatabase?
     
-    private func database(_ db: Database) -> FMDatabase {
-        if let _db = _db {
-            precondition(_db.db === db)
-            return _db
+    private func inFMDB<T>(_ db: Database, _ block: (FMDatabase) throws -> T) rethrows -> T {
+        let fmdb: FMDatabase
+        if let _fmdb = _fmdb {
+            precondition(_fmdb.db === db)
+            fmdb = _fmdb
         } else {
-            let _db = FMDatabase(db)
-            self._db = _db
-            return _db
+            fmdb = FMDatabase(db)
+            self._fmdb = fmdb
+        }
+        
+        return try withoutActuallyEscaping(block) { block in
+            try fmdb.autoclosingResultSets { try block(fmdb) }
         }
     }
     
@@ -38,10 +42,7 @@ import GRDB
     @objc public func inDatabase(_ block: (FMDatabase) -> ()) {
         withoutActuallyEscaping(block) { block in
             dbQueue.inDatabase { db in
-                let fmdb = self.database(db)
-                fmdb.autoclosingResultSets {
-                    block(fmdb)
-                }
+                inFMDB(db, block)
             }
         }
     }
@@ -58,18 +59,19 @@ import GRDB
         var crashOnErrors = false
         var logsErrors = false
         do {
-            try dbQueue.inTransaction(transactionKind) { db in
-                let fmdb = database(db)
-                var rollback: ObjCBool = false
-                let transactionCompletion = withUnsafeMutablePointer(to: &rollback) { rollbackp -> Database.TransactionCompletion in
-                    fmdb.autoclosingResultSets {
-                        block(fmdb, rollbackp)
+            try withoutActuallyEscaping(block) { block in
+                try dbQueue.inTransaction(transactionKind) { db in
+                    inFMDB(db) { fmdb in
+                        var rollback: ObjCBool = false
+                        let transactionCompletion = withUnsafeMutablePointer(to: &rollback) { rollbackp -> Database.TransactionCompletion in
+                            block(fmdb, rollbackp)
+                            return rollbackp.pointee.boolValue ? .rollback : .commit
+                        }
+                        crashOnErrors = fmdb.crashOnErrors
+                        logsErrors = fmdb.crashOnErrors
+                        return transactionCompletion
                     }
-                    return rollbackp.pointee.boolValue ? .rollback : .commit
                 }
-                crashOnErrors = fmdb.crashOnErrors
-                logsErrors = fmdb.crashOnErrors
-                return transactionCompletion
             }
         } catch {
             if logsErrors { NSLog("DB Error: %@", "\(error)") }

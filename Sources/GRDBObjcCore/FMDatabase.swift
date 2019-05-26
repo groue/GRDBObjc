@@ -5,8 +5,8 @@ import Foundation
 @objc public class FMDatabase : NSObject {
     let db: Database
     var dateFormatter: DateFormatter?
-    var openResultSets: [WeakResultSet] = []
-
+    var autoclosingPool = AutoclosingPool()
+    
     /// The GRDB database connection that fuels this FMDatabase instance.
     public var grdbConnection: Database { return db }
     
@@ -348,29 +348,47 @@ import Foundation
         return fmdbError
     }
     
-    // Private
+    // Internal
     
-    func autoclosingResultSets<T>(_ block: () -> T) -> T {
+    // Objective-C autorelease pools will not release and close FMResultSet.
+    // This does not play well with GRDB cursors, which MUST be deinited in
+    // specific dispatch queues.
+    //
+    // So wrap FMDB accesses in a autoclosingPool:
+    func autoclosingResultSets<T>(_ block: () throws -> T) rethrows -> T {
         defer {
-            for openResultSet in openResultSets {
-                openResultSet.close()
-            }
-            openResultSets = []
+            autoclosingPool.close()
         }
-        return block()
+        return try block()
     }
-
 }
 
-class WeakResultSet {
-    weak var resultSet: FMResultSet?
+class AutoclosingPool {
+    private class WeakResultSet {
+        weak var resultSet: FMResultSet?
+        
+        init(_ resultSet: FMResultSet) {
+            self.resultSet = resultSet
+        }
+        
+        func close() {
+            resultSet?.close()
+            resultSet = nil
+        }
+    }
     
-    init(_ resultSet: FMResultSet) {
-        self.resultSet = resultSet
+    private var resultSets: [WeakResultSet] = []
+    
+    init() { }
+    
+    func add(_ resultSet: FMResultSet) {
+        resultSets.append(WeakResultSet(resultSet))
     }
     
     func close() {
-        resultSet?.close()
-        resultSet = nil
+        for resultSet in resultSets {
+            resultSet.close()
+        }
+        resultSets = []
     }
 }
