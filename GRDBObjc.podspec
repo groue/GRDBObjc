@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = 'GRDBObjc'
-  s.version      = '0.7'
+  s.version      = '0.8'
   
   s.license      = { :type => 'MIT' }
   s.homepage     = 'https://github.com/groue/GRDBObjc'
@@ -16,6 +16,6 @@ Pod::Spec.new do |s|
   
   s.swift_version = '4.0'
   s.source_files = 'Sources/GRDBObjc/*'
-  s.dependency 'GRDBObjcCore', '0.7'
+  s.dependency 'GRDBObjcCore', '0.8'
   s.framework = 'Foundation'
 end

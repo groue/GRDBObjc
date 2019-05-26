@@ -1,6 +1,12 @@
 Release Notes
 =============
 
+## 0.8
+
+Released May 26, 2019
+
+- [#6](https://github.com/groue/GRDB.swift/pull/6): Support for GRDB 4
+
 ## 0.7
 
 Released August 21, 2018

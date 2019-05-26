@@ -1,13 +1,13 @@
-GRDBObjc [![Swift](https://img.shields.io/badge/swift-4.1-orange.svg?style=flat)](https://developer.apple.com/swift/) [![License](https://img.shields.io/github/license/RxSwiftCommunity/RxGRDB.svg?maxAge=2592000)](/LICENSE)
+GRDBObjc [![Swift 4.2](https://img.shields.io/badge/swift-4.2-orange.svg?style=flat)](https://developer.apple.com/swift/) [![Swift 5](https://img.shields.io/badge/swift-5-orange.svg?style=flat)](https://developer.apple.com/swift/)[![License](https://img.shields.io/github/license/RxSwiftCommunity/RxGRDB.svg?maxAge=2592000)](/LICENSE)
 ========
 
 ### FMDB-compatible bindings to GRDB.swift.
 
 GRDBObjc helps Objective-C applications that use SQLite replace [FMDB](http://github.com/ccgus/fmdb) with [GRDB](http://github.com/groue/GRDB.swift), at minimal cost.
 
-**Latest release**: August 21, 2018 &bull; version 0.7 &bull; [Release Notes](CHANGELOG.md)
+**Latest release**: May 26, 2019 &bull; version 0.8 &bull; [Release Notes](CHANGELOG.md)
 
-**Requirements**: iOS 8.0+ / OSX 10.10+ / watchOS 2.0+ • Xcode 9.3+ • Swift 4.1+
+**Requirements**: iOS 9.0+ / macOS 10.9+ / watchOS 2.0+ &bull; Swift 4.2+ / Xcode 10.0+
 
 Follow [@groue](http://twitter.com/groue) on Twitter for release announcements and usage tips.
 
@@ -46,7 +46,7 @@ struct Player: FetchableRecord {
 }
 
 let players: [Player] = try dbQueue.read { db in
-    try Player.fetchAll(db, "SELECT * FROM player")
+    try Player.fetchAll(db, sql: "SELECT * FROM player")
 }
 // use players array
 ```
@@ -89,7 +89,7 @@ For example, GRDB comes with high-level tools such as [FetchedRecordsController]
 
 ```swift
 let request = SQLRequest<Player>(
-    "SELECT * FROM players ORDER BY score DESC LIMIT 10")
+    sql: "SELECT * FROM players ORDER BY score DESC LIMIT 10")
 
 // Observe request changes with FetchedRecordsController:
 let controller = FetchedRecordsController(dbQueue, request: request)
