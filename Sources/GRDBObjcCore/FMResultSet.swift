@@ -9,7 +9,7 @@ import SQLite3
         case error(Error)
     }
     
-    private var db: FMDatabase
+    private unowned var db: FMDatabase
     private var state: State
     
     private var cursor: RowCursor {
@@ -37,6 +37,8 @@ import SQLite3
     init(database: FMDatabase, cursor: RowCursor) {
         self.db = database
         self.state = .initialized(cursor)
+        super.init()
+        self.db.autoclosingPool.add(self)
     }
     
     @objc

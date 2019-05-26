@@ -20,9 +20,9 @@ class FMDatabaseQueueTests: GRDBObjcTestCase {
         let fmdbQueue = try FMDatabaseQueue(path: makeTemporaryDatabasePath())
         let dbQueue: DatabaseQueue = fmdbQueue.dbQueue
         try dbQueue.inDatabase { db in
-            try db.execute("CREATE TABLE t(a)")
-            try db.execute("INSERT INTO t(a) VALUES (123)")
-            let int = try Int.fetchOne(db, "SELECT a FROM T")
+            try db.execute(sql: "CREATE TABLE t(a)")
+            try db.execute(sql: "INSERT INTO t(a) VALUES (123)")
+            let int = try Int.fetchOne(db, sql: "SELECT a FROM T")
             XCTAssertEqual(int, 123)
         }
     }
@@ -31,7 +31,7 @@ class FMDatabaseQueueTests: GRDBObjcTestCase {
         let fmdbQueue = try FMDatabaseQueue(path: makeTemporaryDatabasePath())
         fmdbQueue.inDatabase { (db: FMDatabase) in
             // Use GRDB API from FMDatabase
-            let string = try! String.fetchOne(db.grdbConnection, "SELECT 'foo'")
+            let string = try! String.fetchOne(db.grdbConnection, sql: "SELECT 'foo'")
             XCTAssertEqual(string, "foo")
         }
     }
